@@ -1,0 +1,61 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:payment_details' %}" >My Invoices</a></li>
+    </ol>
+ </nav>
+<div class="container mb-3 mt-1">
+	<div class="row mt-2 justify-content-center">
+		<div class="col-md-11">
+			<div class="card shadow mb-3">
+				<div class="card-body">
+					<h5 class="text-muted mt-1 ml-5"><i class="fas fa-file-invoice"></i>&nbsp;&nbsp;My Invoices</h5>
+					<div class="row justify-content-center">
+					<div class="col-md-11">
+					<div class="table-responsive">
+					  <table class="table">
+					  <thead class="text-center">
+			            <tr>
+			              <th>#</th>	
+			              <th>Invoice No.</th>
+			              <th>Pay Date</th>
+			              <th>Subject</th>
+			              <th>Class Level</th>
+			              <th>Duration</th>
+			              <th>Tax</th>
+			              <th>Total</th>
+			            </tr>
+			          </thead>
+			          <tbody class="text-center">
+			          	{% if my_pay_records %}
+			          	{% for pay_records in my_pay_records %}
+			            <tr>
+			              <td>{{forloop.counter}}</td>
+			              <td>222222</td>
+			              <td>{{pay_records.date_of_subscription}}</td>
+			              <td>{{pay_records.subject.subject_name}}</td>
+			              <td>{{pay_records.class_n.name}}</td>
+			              <td>{{pay_records.duration}}</td>
+			              <td>0.0</td>
+			              <td>{{pay_records.Amount}}</td>
+			            </tr>
+			            {% endfor %}
+			            {% else %}
+			            {% endif %}
+			          </tbody>
+					  </table>
+					</div>
+				   </div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

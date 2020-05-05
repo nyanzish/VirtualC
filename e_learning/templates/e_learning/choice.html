@@ -1,0 +1,39 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+{% load tz %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:dialogs' %}">Chatroom</a>
+    </li>
+    <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{% url 'e_learning:choose' %}">Start Chat</a>
+    </li>
+  </ol>
+</nav>
+<div class="container bg-white pt-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="card p-3">
+            <div class="card-body">
+                <div id="message_form">
+                    <form id="message-form" class="panel panel-body"  method="post" >
+                        {% csrf_token %}
+                        {{ form.type.as_hidden }}
+                        {{ form.chat_title|as_crispy_field }}
+                        {{ form.members|as_crispy_field}}
+                        <button type="submit" class="btn btn-primary btn-sm" ><span class="ico ico-comment"></span>{% trans "Submit" %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2 bg-white">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item"><a href="{% url 'e_learning:home_view' %}" class="text-dark">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{% url 'e_learning:my_subjects' %}">My Subjects</a></li>
+    </ol>
+ </nav>
+<div class="container-fluid">
+	<div class="card shadow-sm mb-3 pb-4 h-100 p-2">
+		{% if student_subjects  %}
+		<h6 class="text-dark pt-4 pl-4 pb-1" style="font-size: 18px;"><i class="fas fa-book-open fa-1x ml-2">&nbsp;&nbsp;My Subjects</i></h6>
+		<div class="row p-3">
+			{% for my_subject in student_subjects %}
+			<div class="col-md-3 p-3">
+				<div class="card shadow w-100 h-100" style="width: 18rem;">
+				  <img class="card-img-top" src="{{ my_subject.subject_overview.image.url}}" alt="Card image cap" style="height: 200px;">
+				  <div class="card-body text-center">
+				    <h6 class="card-title text-primary"><b>{{my_subject.subject.subject_name}}</b></h6>
+					<h6 class="text-center"><b>{{my_subject.class_n.name}}</b></h6>
+					<hr>
+					<p class="text-muted text-center">
+					By: Mr. {{my_subject.teacher.user_profile.firstname}}&nbsp;{{my_subject.teacher.user_profile.lastname}}
+					</p>
+					<a href="{{ my_subject.get_subject_start_learning_id }}" class="btn btn-outline-primary hero-button plat btn-sm mt-1" style="border-radius: 18px;">
+					<i class="fas fa-award rounded-circle text-dark bg-white p-1">
+                      </i>&nbsp;&nbsp;Read now....&nbsp;</a>
+				  </div>
+				</div>
+			</div>
+			{% endfor %}
+			</div>
+        {% else %}
+        <div class="row p-2">
+        	<div class="col-md-12">
+        		<h1 class="text-center mt-4 text-muted" style="font-family: Times;">!Ooops</h1>
+		         <h3 class="text-center mt-3 text-muted" style="font-family: Times;">You haven't subscribed to any <br> subject yet.....<br>please subscribe and get started! </h3>
+		         <h6 class="text-center pt-4 pb-4">click<span><a href="{% url 'e_learning:home_view' %}" class="text-primary">&nbsp;here&nbsp;</a></span>to get started</h6>
+        	</div>
+        </div>
+        {% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

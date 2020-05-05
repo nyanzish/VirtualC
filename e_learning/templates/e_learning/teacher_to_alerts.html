@@ -1,0 +1,38 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item text-dark" aria-current="page"><a href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_alerts' %}">notifications</a>
+    </li>
+  </ol>
+</nav>
+<div class="container bg-white">
+	<div class="row justify-content-center">
+		<div class="col-md-10">
+			<div class="card  mt-4 mb-4 shadow">
+				<div class="card-body">
+					<i class="fas fa-bell fa-fw fa-3x mt-2 mb-1">
+					</i><span class="badge badge-danger badge-counter" style="font-size: 20px;">{{counter}}</span>
+					<h6 class="text-muted pb-3 pt-3">Choose the subject to reply to</h6>
+					{% for overview in teacher_uploaded_subjects %}
+					<ul>
+						<li>
+							<a href="{{ overview.get_teacher_to_alert }}">{{overview.class_n.name}}&nbsp;{{overview.subject.subject_name}}</a>
+						</li>
+					</ul>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item" ><a class="text-dark" href="{% url 'e_learning:upload_content' %}" >Upload content</a>
+    </li>
+    <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:upload_content' %}" >view uploaded content</a>
+    </li>
+  </ol>
+</nav>
+<div class="container-fluid bg-white">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mt-3 mb-3">View New Uploaded Content</h1>
+  <!-- DataTales Example -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Uploaded Subject Details</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered mt-0" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+		        <th scope="col">#</th>
+		        <th scope="col">TOPIC</th>
+		        <th scope="col">class_level</th>
+		        <th scope="col">subject</th>
+		        <th scope="col">content</th>
+		        <th scope="col">notes</th>
+		        <th scope="col">video</th>
+		     
+		    </tr>
+          </thead>
+          <tfoot>
+            <tr>
+		        <th scope="col">#</th>
+		        <th scope="col">TOPIC</th>
+		        <th scope="col">class_level</th>
+		        <th scope="col">subject</th>
+		        <th scope="col">content</th>
+		        <th scope="col">notes</th>
+		        <th scope="col">video</th>
+		    </tr>
+          </tfoot>
+          <tbody>
+            {% for result in content %}
+		      <tr>
+		        <th scope="row">1</th>
+		        <td>{{ result.topic }}</td>
+		        <td>{{ result.class_level }}</td>
+		        <td>{{ result.subject }}</td>
+		        <td>{{ result.content | safe }}</td>
+		        <td><a href="{{ result.notes.url}}" target="_blank">{{ result.notes }}</a></td>
+		        <td><a href="{{ result.get_video_url }}">{{ result.video }}</a></td>
+		 
+		      </tr>
+		    {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+<i class="fas fa-angle-up"></i>
+</a>
+
+{% endblock%}

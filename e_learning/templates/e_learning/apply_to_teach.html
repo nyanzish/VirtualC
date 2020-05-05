@@ -1,0 +1,67 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item"><a href="{% url 'e_learning:home_view'  %}" class="text-dark">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" aria-current="page"><a href="#">Apply-to-start-teaching</a></li>
+    </ol>
+ </nav>
+<div class="container mt-3 mb-4">
+<div class="row justify-content-center">
+<div class="col-md-10">
+	<div class="card shadow-sm w-100">
+	<div class="card-body">
+		<div class="row p-5">
+		<div class="col-md-12 col-sm-12 col-lg-12">
+			<h5 class="text-center">Please fill this form. This will be used by the administrators to approve your account
+			</h5>
+			<hr>
+			<form class="form-horizontal pt-4" method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.schools_taught |as_crispy_field }}
+					{{ form.current_school |as_crispy_field }}
+					{{ form.level_of_teaching |as_crispy_field }}
+					{{ form.teacher_registration_id |as_crispy_field }}
+					{{ form.subject_one |as_crispy_field }}
+					{{ form.subject_two |as_crispy_field }}
+					{{ form.Brief_Self_description |as_crispy_field }}
+
+					<p class="text-center pt-2 pb-2">By applying you have accepted to follow <a href="{% url 'e_learning:terms_and_conditions' %}">terms and conditions</a>&nbsp;of use</p>
+
+				<div class="text-center">
+				<button class="text-white text-center btn btn-primary styled-button pl-2 pr-2" name="register">
+                    Apply Now
+                   </button>
+			  </div>
+			</form>
+		</div>
+		</div>
+		</div>
+	</div>
+	</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

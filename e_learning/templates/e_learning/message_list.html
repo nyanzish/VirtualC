@@ -1,0 +1,55 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+{% load tz %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:dialogs' %}">Chatroom</a>
+    </li>
+    <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{% url 'e_learning:choose' %}">&nbsp;Online</a>
+    </li>
+  </ol>
+</nav>
+<div class="container">
+  <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-center p-2">
+               <div class="col-md-9">
+                {% if not chat %}
+                    <div class="">
+                        {% trans "It's impossible to start a conversation.No user is found or you do not have access to this conversation." %}
+                    </div>
+                {% else %}
+                {% load poll_extras %}
+                   
+                    {% if chat %}
+                        <div id="messages" class="">
+                            <div id="innerMessages">
+                                {% for message in chat.message_set.all %}
+                                        {% include 'messages.html' with message_item=message %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div id="message_form">
+                        <form id="message-form" class=" pt-5" method="POST" >
+                           
+                            {% csrf_token %}
+                            {{ form |crispy}}
+                            
+                            <button type="submit" class="btn btn-primary btn-sm"><span class="ico ico-comment"></span>{% trans "Reply" %}</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+             </div> 
+            </div>
+    </div>  
+</div>
+{% endblock %} 

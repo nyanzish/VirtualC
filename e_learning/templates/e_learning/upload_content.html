@@ -1,0 +1,32 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:upload_content' %}" >Upload content</a>
+    </li>
+  </ol>
+</nav>
+<div class="container-fluid bg-white">
+
+<h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Upload New Content</h1>
+ 
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.media}}
+  {{ form.as_p}}
+  <div class="text-center">
+    <input type="submit" value="Upload Content" class="btn btn-primary mb-4 w-25" name="register" style="border-radius: 17px;" />
+  </div>
+</form>
+</div>
+<!-- /.container-fluid -->
+
+{% endblock %}

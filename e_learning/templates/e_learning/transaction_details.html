@@ -1,0 +1,55 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item " aria-current="page"><a class="text-dark" href="">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:transaction_details' %}">Transaction details</a></li>
+  </ol>
+</nav>
+<div class="container-fluid bg-white">
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<h1 class="h3 mb-0 text-gray-800 mb-2">My Transaction Details</h1>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <canvas id="myAreaChart"></canvas>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="col-md-6">
+     <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+      </div>
+      <div class="card-body">
+        <div class="chart-bar">
+          <canvas id="myBarChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- /.container-fluid -->
+
+  
+
+{% endblock %}

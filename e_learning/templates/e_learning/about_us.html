@@ -1,0 +1,23 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:about' %}" >About</a></li>
+    </ol>
+ </nav>
+<div class="container mb-3 mt-2">
+	<div class="row mt-4 justify-content-center">
+		<div class="col-md-10">
+			<h3 class="text-center text-dark welcome_about">Welcome to Virtual<span class="text-primary">-Class</span><br>e-learning platform</h3>
+			<p class="text-center text-dark pt-3">
+				Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam Nullam id dolor id nibh ultricies vehicula ut id elit Cras justo odio, dapibus ac facilisis in, egestas eget quam Nullam id dolor id nibh ultricies vehicula ut id elit Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+			</p>
+		</div>
+	</div>
+</div>
+{% endblock %}

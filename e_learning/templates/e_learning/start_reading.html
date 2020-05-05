@@ -1,0 +1,37 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item" aria-current="page"><a href="{% url 'e_learning:home' %}" class="text-dark">Home</a>
+      </li>
+      <li class="breadcrumb-item" ><a href="{% url 'e_learning:my_subjects' %}" class="text-dark">My Subjects</a></li>
+      <li class="breadcrumb-item active text-primary" ><a href="#">Start Reading</a></li>
+    </ol>
+ </nav>
+<div class="container mt-2 mb-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow-sm">
+        <h3 class="text-primary pt-3 pl-4 text-center">{{material_name}}</h3>
+        <h6 class="text-dark pt-1 pl-4 text-center">{{material_class}}</h6>
+        <hr>
+        <div class="card-body">
+          <h6 class="text-center pb-3"><u>Table of content</u></h6>
+          {% for topic in my_reading_material %}
+            <ul>
+              <li>
+                <a href="{{ topic.get_open_content }}">{{topic.topic}}</a>
+              </li>
+            </ul>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

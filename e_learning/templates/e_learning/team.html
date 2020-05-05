@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:team' %}" >Team</a></li>
+    </ol>
+ </nav>
+<div class="container mb-5">
+	<h5 class="text-muted text-center mt-2 pb-2">Development Team</h5><hr>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="">
+				<div class="text-center">
+				  <img class="img-fluid rounded-circle" src="{% static 'e_learning/image/riley3.jpg' %}" class="card-img-top" width="80%" height="100%" alt="...">
+				  </div>
+				  <div class="text-center">
+				    <h6 class="card-title text-dark pt-4">Nyanzi Shafik
+				    </h6>
+				    <p class="text-muted">Role</p>
+				    <p class="text-center text-muted">info@gmail.com</p>
+				    <div class=" p-3">
+			        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+			        <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+			        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+			        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+			      </div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="">
+				<div class="text-center">
+				  <img class="img-fluid rounded-circle" src="{% static 'e_learning/image/default.png' %}" class="card-img-top" width="80%" height="100%" alt="...">
+				  </div>
+				  <div class=" text-center">
+				    <h6 class="card-title text-dark pt-4">Egaru Felix
+				    </h6>
+				    <p class="text-muted">Role</p>
+				    <p class="text-center text-muted">info@gmail.com</p>
+				    <div class=" p-3">
+			        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+			        <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+			        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+			        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+			      </div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="">
+				<div class="text-center">
+				  <img class="img-fluid rounded-circle" src="{% static 'e_learning/image/riley.jpg' %}" class="card-img-top" width="80%" height="100%" alt="...">
+				  </div>
+				  <div class=" text-center">
+				    <h6 class="card-title text-dark pt-4">Kiguli Emmanuel
+				    </h6>
+				    <p class="text-muted">Role</p>
+				    <p class="text-center text-muted">info@gmail.com</p>
+				    <div class=" p-3">
+			        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+			        <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+			        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+			        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+			      </div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="">
+				<div class="text-center">
+				  <img class="img-fluid rounded-circle" src="{% static 'e_learning/image/riley4.jpg' %}" class="card-img-top" width="80%" height="100%" alt="...">
+				  </div>
+				  <div class=" text-center">
+				    <h6 class="card-title text-dark pt-4">Amazo Laban
+				    </h6>
+				    <p class="text-muted">Role</p>
+				    <p class="text-center text-muted">info@gmail.com</p>
+				    <div class=" p-3">
+			        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+			        <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+			        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+			        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+			      </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

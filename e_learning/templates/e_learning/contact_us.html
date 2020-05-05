@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:contact_us' %}" >Contact&nbsp;Us</a></li>
+    </ol>
+ </nav>
+<div class="container mb-5 mt-2">
+	<div class="row mt-4 justify-content-center">
+		<div class="col-md-10">
+		  <div class="card">
+		  	<div class="card-body p-5 shadow">
+			<h3 class="text-center text-muted pb-2">Get in touch</h3>
+			<p class="text-center text-muted pb-4">Let's talk about your problem</p>
+			<form action = "{% url 'e_learning:contact_us'%}" method ="POST">
+			    {% csrf_token %}
+				<div class="row">
+					<div class="col-md-4">
+						<div class="input-group mb-3 bg-white">
+						    <div class="input-group-prepend">
+						      <span class="input-group-text" style="background-color: white;">
+						      	<i class="fas fa-user"></i>
+						      </span>
+						    </div>
+						    <input type="text" class="form-control" placeholder="Your name" name="your_name">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group mb-3 bg-white">
+						    <div class="input-group-prepend">
+						      <span class="input-group-text" style="background-color: white;">
+						      	<i class="fas fa-phone"></i>
+						      </span>
+						    </div>
+						    <input type="text" class="form-control" placeholder="Your phone number" name ="phone_no">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group mb-3 bg-white">
+						    <div class="input-group-prepend">
+						      <span class="input-group-text" style="background-color: white;">
+						      	<i class="fas fa-envelope"></i>
+						      </span>
+						    </div>
+						    <input type="text" class="form-control" placeholder="Your email" name ="email">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group mt-4">
+	                      <label class="text-muted">Message</label>
+	                      <textarea class="form-control" rows="6" name ="message"></textarea>
+	                    </div>
+					</div>
+					<div class="col-md-12 text-right pt-2">
+				    	<button type="submit" class="btn btn-primary">SUBMIT</button>
+		    		</div>
+				</div>
+			</form>
+		     </div>
+		   </div>
+		</div>
+	</div>
+</div>
+{% endblock %}

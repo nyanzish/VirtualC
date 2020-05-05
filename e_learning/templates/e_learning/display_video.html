@@ -1,0 +1,57 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item" ><a class="text-dark" href="{% url 'e_learning:upload_content' %}" >Upload content</a>
+    </li>
+    <li class="breadcrumb-item" ><a class="text-dark" href="{% url 'e_learning:view_new_uploaded_content' %}" >view uploaded content</a>
+    </li>
+    <li class="breadcrumb-item active text-primary" ><a href="" >watch video</a>
+    </li>
+  </ol>
+</nav>
+<div class="container-fluid bg-white mb-2">
+
+<!-- Page Heading -->
+<!--<div class="d-sm-flex align-items-center justify-content-between">-->
+<!--h6 class="mb-0 text-gray-800 pt-2 pb-2">Watch Video</h6-->
+<!--a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a-->
+<!--</div>-->
+
+<div class="embed-responsive embed-responsive-16by9 hoverable">
+  <video class="embed-responsive-item" controls>
+    <source src="{{ object.video.url }}" type="video/mp4">
+  </video>
+</div>
+
+</div>
+<!-- Content Row -->
+<!--div class="row justify-content-center">
+  <div class="col-md-12">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+      <div class="text-center mt-2">
+      <video class="video-fluid" loop controls width="70%" height="70%" >
+        <source src="{% static 'e_learning/video/movie.mp4' %}" type="video/mp4" />
+      </video>
+      </div>
+    </div>
+    </div>
+    <div class="container border-2">
+      hhhhhhhhhhhhh
+    </div>
+  </div>
+</div>
+</div-->
+<!-- /.container-fluid -->
+
+  
+
+{% endblock %}

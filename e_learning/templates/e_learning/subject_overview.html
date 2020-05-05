@@ -1,0 +1,165 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item" aria-current="page"><a href="{% url 'e_learning:home_view' %}" class="text-dark">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" ><a href="{{ overview.get_absolute_url }}">{{overview.subject}}</a></li>
+    </ol>
+ </nav>
+ <hr>
+<div class="container-fluid mt-2 mb-2">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card shadow-0 border-0">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                  <div class="col-md-4">
+                    <img class="img-fluid img-thumbnail overview_image" src="{{overview.image.url}}" class="card-img-top"alt="..." style="height:170px">
+                  </div>
+                  <div class="col-md-8 mt-4 overview_details">
+                    <h4 class="text-dark subject_namex" style="font-family: Times;font-size: 20px !important;">Subject:&nbsp;{{overview.subject}}</h4>
+                    <h6 class="text-dark subject_classx" style="font-family: Times;font-size: 18px !important;">Class:&nbsp;{{overview.class_n}}
+                    </h6>
+                    <h6 class="text-dark subject_durationx" style="font-family: Times;font-size: 18px !important;">Duration:&nbsp;{{overview.duration}}</h6>
+                  </div>
+              </div>
+              <hr>
+              <h5 class="text-center text-dark overview_header" style="font-family: Times;">Overview</h5>
+              <p class="text-dark overview_body">{{overview.over_view}}</p>
+            </div>
+            <div class="col-md-6">
+              <h5 class="pb-2 ml-4 pt-2" style="font-family: Times;"><i class="fa fa-video-camera" ></i>&nbsp;(Preview Video)</h5>
+              <div class="embed-responsive embed-responsive-16by9 hoverable">
+                <video class="embed-responsive-item" controls>
+                  <source src="{{ overview.video.url }}" type="video/mp4">
+                </video>
+              </div>
+          </div>
+          </div>
+          <hr>
+          <div class="row pt-2">
+            <div class="col-md-12 text-center">
+              <!--div class="h5 mb-0 text-gray-800 pb-4 pt-3 mt-5">
+                <span class="text-danger">USD:</span>&nbsp;${{ overview.price }}<br><span class="text-danger">UGX:</span>&nbsp;{{ overview.price }}/=
+              </div>-->
+              <div class="pt-3 pb-3">
+                <a href="{% url 'e_learning:subscription_approval' slug %}" class="btn btn-outline-primary mt-2" style="border-radius: 19px;">
+                    <span class="btn-fa fas fa-award rounded-circle text-dark bg-white p-1">
+                    </span>&nbsp;&nbsp;Subscribe Now
+                </a>
+              </div>
+            </div>
+          </div>
+          <h5 class="text-center pt-3 pb-2"><u>Teacher Details</u></h5>
+          <div class="row mt-3 mb-3">
+            <div class="col-md-2 text-center">
+              <div class="pt-2 pb-2 mr-3">
+                <img class="img-thumbnail" src="{{overview.teacher.user_profile.image.url}}" style="height:120px;width: 120px;">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="mt-3">
+                <h6 class="text-muted pt-2"><i class="fas fa-address-book" style="font-size: 12px !important;"></i>&nbsp;name: <span style="font-size: 13px !important;"><b>&nbsp;Mr.{{overview.teacher.user_profile.firstname}} {{overview.teacher.user_profile.lastname}}</b></span>
+                </h6>
+                <h6 class="text-muted"><br><i class="fas fa-school" style="font-size: 12px !important;"></i>&nbsp;current School:<b>&nbsp;<span style="font-size: 13px !important;">{{overview.teacher.current_school}}</span></b>
+                </h6>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <h6 class="text-muted pt-3"><i class="far fa-address-card" style="font-size: 14px !important;"></i>&nbsp;<b>Bio</b></h6>
+              <p class="text-muted" style="font-size: 15px !important;">
+                {{overview.teacher.Brief_Self_description}}
+              </p>
+            </div>
+          </div><hr>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center ">
+    <div class="col-md-11">
+      <h5 class="text-center">Other Subjects Recommeded for you:</h5>
+    </div>
+  </div>
+<div class="row p-3">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+      <div class="carousel-item active">
+        {% if recomended <= 2 %}
+        <div class="row p-3">
+            {% for item in recomend %}
+            <div class="col-md-3 p-3">
+              <div class="card shadow w-100 h-100" style="width: 18rem;">
+                  <a href="{{ item.get_absolute_url }}">
+                <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">
+                    </a>
+                <div class="card-body text-center">
+                  <h6 class="card-title text-primary"><b>{{ item.subject }}</b>
+                  </h6>
+                  <h6 class="text-center"><b>{{ item.class_n }}</b></h6>
+                  <p class="text-muted text-center">
+                  <span style="font-size: 14px;">Duration: {{ item.duration }}</span>
+                  </p><hr>
+                  <!--div class="h5 mb-0 font-weight-bold text-gray-800"><small><b>
+                    <span class="text-danger">USD:</span>&nbsp;{{ item.price }}<br><span class="text-danger">UGX:</span>&nbsp;{{ item.price }}/=</b></small>
+                  </div-->
+                  <p class="text-muted text-center">
+
+                  <span>By: Mr. {{item.teacher.user_profile.firstname}} {{item.teacher.user_profile.lastname}}</span>
+                  </p>
+                  <a href="{{ item.get_absolute_url }}" class="btn btn-outline-primary icon-btn btn-sm mt-2 " style="border-radius: 19px;">
+                    <i class="fas fa-award rounded-circle text-dark bg-white p-1">
+                    </i>&nbsp;&nbsp;Learn More
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+          <div class="row">
+            {% for item in recomend %}
+            <div class="col-md-3 p-3">
+              <div class="card shadow w-100 h-100" style="width: 18rem;">
+                  <a href="{{ item.get_absolute_url }}">
+                    <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">
+                </a>
+                <div class="card-body text-center">
+                  <h6 class="card-title text-primary"><b>{{ item.subject }}</b>
+                  </h6>
+                  <h6 class="text-center"><b>{{ item.class_n }}</b></h6>
+                  <p class="text-muted text-center">
+                  <span style="font-size: 14px;">Duration: {{ item.duration }}</span>
+                  </p><hr>
+                  <!--div class="h5 mb-0 font-weight-bold text-gray-800"><small><b>
+                    <span class="text-danger">USD:</span>&nbsp;{{ item.price }}<br><span class="text-danger">UGX:</span>&nbsp;{{ item.price }}/=</b></small>
+                  </div-->
+                  <p class="text-muted text-center">
+
+                  <span>By: Mr. {{item.teacher.user_profile.firstname}} {{item.teacher.user_profile.lastname}}</span>
+                  </p>
+                  <a href="{{ item.get_absolute_url }}" class="btn btn-outline-primary icon-btn btn-sm mt-2 " style="border-radius: 19px;">
+                    <i class="fas fa-award rounded-circle text-dark bg-white p-1">
+                    </i>&nbsp;&nbsp;Learn More
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+  </div>
+
+  </a>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="text-center mt-4">{% trans "Sign Up" %}</h1>
+
+                      <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+                      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+                        <!--{{ form|crispy }}-->
+                        <div class="row pl-1 pr-1">
+                          <div class="form-group col-md-6">
+                              {{ form.username |as_crispy_field}}
+                          </div>
+                          <div class="form-group col-md-6">
+                               {{ form.email |as_crispy_field}}
+                          </div>
+                          <div class="form-group col-md-6">
+                              {{ form.firstname |as_crispy_field}}
+                          </div>
+                          <div class="form-group col-md-6">
+                               {{ form.lastname |as_crispy_field}}
+                          </div>
+                          <div class="form-group col-md-6">
+                              {{ form.gender |as_crispy_field}}
+                          </div>
+                          <div class="form-group col-md-6">
+                              {{ form.date_of_birth |as_crispy_field}}
+                          </div>
+                          <div class="form-group col-md-6">
+                              {{ form.location |as_crispy_field}}
+                          </div>
+                          <div class="form-group col-md-6">
+                              {{ form.telephone |as_crispy_field}}
+                          </div>
+                          <div class="form-group col-md-6">
+                              {{ form.password1 |as_crispy_field}}
+                          </div>
+                          <div class="form-group col-md-6">
+                              {{ form.password2 |as_crispy_field}}
+                          </div>
+                        </div>
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <button class="btn btn-primary mt-3 pl-4 pr-4"type="submit">{% trans "Sign Up" %}</button>
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

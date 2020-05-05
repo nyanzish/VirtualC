@@ -1,0 +1,112 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item text-dark" aria-current="page"><a href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item text-dark" aria-current="page"><a href="{% url 'e_learning:teacher_homepage' %}">Subject To Reply To</a>
+    </li>
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_alerts' %}">notifications</a>
+    </li>
+  </ol>
+</nav>
+<div class="pl-3 pr-3 bg-white">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card shadow mt-3 mb-5">
+          <div class="card-body">
+            <div class="row mb-5 justify-content-center">
+                <div class="col-md-10">
+                    <h4 class="text-dark" style="font-family: Times;">{{ comments.count }} comments</h4>
+                    {% for comment in comments %}
+                    <div class="comments">
+                      <div class="row border-left-primary" style="border-radius: 30px; background-color: #f6f6f9 !important;">
+                      <div class="col-md-9 comment_body">
+                          <a href="{{ the_user_url }}"><img class="img-profile rounded-circle ml-2 mt-2" width="33" height="33" src="{{ user.userprofile.image.url}}">
+                          &nbsp;&nbsp;<strong class="list-group-item-heading"><a href=" ">{{ comment.name }}</a></strong>
+                          </a>
+                          <h6 class="text-dark ml-4 pt-2 pb-1" style="font-size: 15px;">{{ comment.body | linebreaks }}</h6>
+                      </div>
+                      <div class="col-md-3 comment_create">
+                          <p class="ml-5 comment_created"><small>{{ comment.created_on }}</small></p>
+                      </div>
+                      </div>
+                      {% if comment.replies.all%}
+                        <h6 class="ml-5" style="font-family: Times;">Replies</h6>
+                        {% for replay in comment.replies.all %}
+                        <div class="row border-left-danger ml-5" style="border-radius: 30px; background-color: #f6f6f9 !important;">
+                          <div class="col-md-9">
+                              <a href="{{ the_user_url }}"><img class="img-profile rounded-circle ml-2 mt-2" width="33" height="33" src="{{ user.userprofile.image.url}}">
+                              &nbsp;&nbsp;<strong class="list-group-item-heading"><a href=" ">{{ replay.name }}</a></strong>
+                              </a>
+                              <h6 class="text-dark ml-4 pt-2 pb-1" style="font-size: 15px;">{{ replay.body | linebreaks }}</h6>
+                          </div>
+                          <div class="col-md-3">
+                              <div class="reply-body ">
+                                  <ul class="list-inline">
+                                      <li class="ml-5"><small>{{ replay.created_on }}</small></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                          <!--<p class="info ml-2"><span class="text-capitalize">{{ replay.name }}</span><br><small> <span class=" text-muted font-weight-normal">
+                            {{ replay.created_on }}</span></small>{{ replay.body }}</p>
+                          <p class="ml-5 text-primary">{{ replay.body }}</p>-->
+                      {% endfor %}
+                      {% else %}
+                    {% endif %}
+                    <div class="text-right pt-2">
+                      <button class="btn btn-outline-default text-primary btn-sm shower mr-4 border-0" data-target="#demo" aria-controls="demo"><i class="fas fa-reply-all"></i>&nbsp;&nbsp;Reply
+                      </button>
+                      <button class="btn btn-outline-default btn-sm hidder border-0" data-target="#demo" aria-controls="demo"><i class="fas fa-close"></i>&nbsp;&nbsp;Close
+                      </button>
+                    </div>
+                    <div class="collapse" id="demo">
+                    <h6 class="text-dark" style="font-family: Times;">Reply</h6>
+                    <form method="post">
+                      {{ comment_form.name.as_hidden }}
+                      {{ comment_form.email.as_hidden }}
+                      {{ comment_form.body |as_crispy_field}}
+                      <!--<textarea class="form-control" rows="3" placeholder="Reply"></textarea>-->
+                      {% csrf_token %}
+
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <div class="text-right">
+                      <input class="btn btn-primary mt-1 btn-sm" type="submit" value="Reply">
+                    </div>
+                    </form>
+                   </div>
+                </div>
+                {% endfor %}
+                {% if new_comment %}
+                <div class="alert alert-success" role="alert">
+                  Your comment is awaiting moderation
+                </div>
+                {% else %}
+                <h4 class="text-dark" style="font-family: Times; font-size: 20px;">Leave a comment</h4>
+                <form method="post">
+                  {{ comment_form.name.as_hidden }}
+                  {{ comment_form.email.as_hidden }}
+                  {{ comment_form.body |as_crispy_field}}
+                  <!--<textarea class="form-control" rows="5" placeholder="Enter Your Comment"></textarea>-->
+                  {% csrf_token %}
+                  <div class="text-left mt-2">
+                    <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+                  </div>
+                </form>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

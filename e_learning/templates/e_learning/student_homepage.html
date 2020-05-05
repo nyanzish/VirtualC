@@ -1,0 +1,94 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{% url 'e_learning:home_view' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item" ><a href="#" class="text-dark"></a></li>
+    </ol>
+ </nav>
+ <div class="container-fluid">
+ 	<div class="row">
+ 		<div class="col-md-6">
+ 			<form action="{% url 'e_learning:search' %}">
+ 				<div class="input-group shadow-sm">
+				   <input type="text" class="form-control border-right-0 border" required="required" placeholder="Search for........." name="q" >
+				   <div class="input-group-append">
+				     <a class="btn btn-outline-primary border-left-0 border-right-0 border" href="{% url 'e_learning:search' %}" type="button">
+				       <i class="fa fa-search"></i>
+				      </a>
+				    </div>
+				  </div>
+ 			</form>
+ 		</div>
+ 		<div class="col-md-6">
+ 		</div>
+ 	</div>
+ </div>
+<div class="container-fluid mt-3">
+	<div class="card shadow-sm mb-5 pb-4">
+		<h6 class="pt-4 pl-4 pb-1" style="font-size: 18px; font-family: Times;"><i class="fas fa-book-open fa-1x ml-2">&nbsp;&nbsp;On-going Subjects</i></h6>
+		<div class="row p-3">
+			{% if overview %}
+			{% for item in overview %}
+			<div class="col-md-3 p-3">
+				<div class="card shadow w-100 h-100" style="width: 18rem;">
+				    <a href="{{ item.get_absolute_url }}">
+				        <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">
+				    </a>
+				  <div class="card-body text-center">
+				    <h6 class="card-title text-primary"><b>{{ item.subject }}</b>
+				    </h6>
+				    <h6 class="text-center"><b>{{ item.class_n }}</b></h6>
+				    <p class="text-muted text-center">
+				    <span style="font-size: 14px;">Duration: {{ item.duration }}</span>
+			    	</p><hr>
+			    	<!--div class="h5 mb-0 font-weight-bold text-gray-800"><small><b>
+			    		<span class="text-danger">USD:</span>&nbsp;{{ item.price }}<br><span class="text-danger">UGX:</span>&nbsp;{{ item.price }}/=</b></small>
+			    	</div-->
+			    	<p class="text-muted text-center">
+
+				    <span>By: Mr. {{item.teacher.user_profile.firstname}} {{item.teacher.user_profile.lastname}}</span>
+			    	</p>
+				    <a href="{{ item.get_absolute_url }}" class="btn btn-outline-primary icon-btn btn-sm mt-2 " style="border-radius: 19px;">
+                      <i class="fas fa-award rounded-circle text-dark bg-white p-1">
+                      </i>&nbsp;&nbsp;Learn More
+                    </a>
+				  </div>
+				</div>
+			</div>
+			{% endfor %}
+
+			{% if is_paginated %}
+            <nav aria-label="...">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+                      </li>
+                      {% endif %}
+                      <li class="page-item active">
+                        <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}<span class="sr-only">(current)</span></a>
+                      </li>
+                      {% if page_obj.has_next%}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </nav>
+            {% endif %}
+
+			{% else %}
+				<div class="col-md-12">
+					<h1 class="text-center mt-4 text-muted" style="font-family: Times;">No Such Results found for<br>"{{query_string}}"</h1>
+					<h6 class="text-center pt-4 pb-4"><a href="{% url 'e_learning:home_view' %}" class="text-primary">Back to Home</a></h6>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

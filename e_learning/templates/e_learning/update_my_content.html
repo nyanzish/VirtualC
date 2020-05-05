@@ -1,0 +1,35 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item" ><a href="{% url 'e_learning:my_uploaded_subjects' %}" class="text-dark">My Subjects</a></li>
+    <li class="breadcrumb-item active text-primary" aria-current="page"><a href="">Edit & Update</a>
+    </li>
+  </ol>
+</nav>
+<div class="container-fluid bg-white">
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<h1 class="h3 mb-0 text-gray-800 mb-2">Edit & Update Subject Content</h1>
+<!--a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a-->
+</div>
+
+<!-- Content Row -->
+<div class="row">
+  <div class="col-md-12">
+    hhh
+  </div>
+</div>
+</div>
+<!-- /.container-fluid -->
+
+  
+
+{% endblock %}

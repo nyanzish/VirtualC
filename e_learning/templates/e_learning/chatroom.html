@@ -1,0 +1,41 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{% url 'e_learning:chatroom' %}">Chat Room</a>
+    </ol>
+ </nav>
+ <div class="container-fluid bg-white">
+  <div class="row justify-content-center mt-5 mb-5">
+    <div class="col-md-10">
+    <div class="card shadow-sm">
+    <div class="card-body m-4">
+    {% if check_my_subjects %}	
+    <h4 class="text-dark mt-3" style="font-family: Times;">{{ comments.count }} comments</h4>
+    <h4 class="text-dark" style="font-family: Times; font-size: 20px;">Leave a comment</h4>
+    <form method="post">
+      {{ comment_form.name.as_hidden }}
+      {{ comment_form.email.as_hidden }}
+      {{ comment_form.body |as_crispy_field}}
+      {% csrf_token %}
+      <div class="text-left mt-2 mb-4">
+        <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+      </div>
+    </form>
+    {% else %}
+    <h1 class="text-center mt-4 text-muted" style="font-family: Times;">!Ooops</h1>
+     <h3 class="text-center mt-3 text-muted" style="font-family: Times;">You haven't subscribed to any <br> subject yet.....<br>please subscribe and get started! </h3>
+     <h6 class="text-center pt-4 pb-4">click<span><a href="{% url 'e_learning:home_view' %}" class="text-primary">&nbsp;here&nbsp;</a></span>to get started</h6>
+    {% endif %}
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+{% load tz %}
+{% load i18n %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+{% load poll_extras %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{% url 'e_learning:dialogs' %}">Chatroom</a>
+    </li>
+  </ol>
+</nav>
+<div class="container bg-white pt-3 pb-3">
+    <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-11">
+                {% if chats.count == 0 %}
+                <div class="panel panel-body text-center p-4">
+                    <h4 class="text-dark" style="font-family: Times;">{% trans "There is not a single dialogue <br>started yet !" %}</h4>
+                    <p class="text-dark pt-4">Click&nbsp;<a href="{% url 'e_learning:choose' %}">here</a>&nbsp;inorder to start a chat</p>
+                </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-9">
+                        <h5 class="text-dark p-2" style="font-family: Times;: ">Available Chats</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'e_learning:choose' %}" style="border-radius: 18px;"><i class="fas fa-comments text-dark"></i>&nbsp;Start New Chat</a>
+                    </div>
+                </div>
+                {% for chat in chats %}
+                    {% if chat.message_set.count != 0 %}
+                        {% with last_message=chat.message_set.last %}
+                            {% get_companion user chat as companion %}
+                            <a class="{% if companion == last_message.author and not last_message.is_readed %}unreaded{% endif %}" href="{{ chat.get_absolute_url }}">
+                            <div class="row mt-2" style="border-radius: 20px; background-color: #f6f6f9; !important;">
+                                <div class="col-md-10">
+                                <div class="reply-body">
+                                    <ul class="list-inline">
+                                        <li class="drop-left-padding">
+                                            <!--strong class="list-group-item-heading">{{ companion.username }} Created this chat</strong>-->
+                                            <strong class="list-group-item-heading">Chat about <span class="text-capitalize">{{chat.chat_title}}</span></strong>
+                                        </li>
+                                        <li class="pull-right text-muted"><small>{{ last_message.pub_date }}</small></li>
+                                    </ul>
+                                    {% if companion != last_message.author %}
+                                        <div>
+                                            <img class="img-profile rounded-circle mr-2" src="{{ last_message.author.userprofile.image.url }}" width="33" height="33">
+
+                                            <div class="attached-reply-body {% if not last_message.is_readed %}unreaded{% endif %}">{{ last_message.message|truncatechars_html:"200"|safe|striptags }}</div>
+                                        </div>
+                                    {% else %}
+                                        <div>{{ last_message.message|truncatechars_html:"200"|safe|striptags }}</div>
+                                    {% endif %}
+                                </div>
+                                 </div>
+                                </div>
+                            </a>
+                        {% endwith %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

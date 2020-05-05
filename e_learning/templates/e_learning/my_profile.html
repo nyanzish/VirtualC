@@ -1,0 +1,86 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:my_profile' %}" >My Profile</a></li>
+    </ol>
+ </nav>
+<div class="container pb-3">
+    <div class="card shadow mb-5 pb-3 h-100">
+        <div class="card-body">
+            <div class="row mt-3">
+                <div class="col-md-5">
+                    <div class="card mb-4 h-100">
+                    <div class="card-body">
+                    <div class="text-center ml-1">
+                    <img class="img-thumbnail img-fluid" src="{{user.userprofile.image.url}}" style="height:200px;width: 200px;">
+                    </div>
+                    <hr>
+                    <div class="mt-4 ml-5">
+                        <p class="text-muted"><i class="fas fa-address-book"></i> Name:&nbsp;&nbsp;<span class="text-primary text-capitalize">{{ content.firstname}} {{content.lastname}}</span></p>
+                        <p class="text-muted pt-1"><i class="fa fa-envelope"></i> Email:&nbsp;&nbsp;<span class="text-primary">{{ content.email}}</span>
+                        </p>
+                        <p class="text-muted pt-1"><i class="fa fa-phone"></i> Phone number:&nbsp;&nbsp;<span class="text-primary">{{ content.telephone}}</span>
+                        </p>
+                        <p class="text-muted pt-1"><i class="fa fa-user"></i> Account:&nbsp;&nbsp;<span class="text-primary text-capitalize ml-2">{{ content.role}}</span>
+                        </p>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                <div class="card h-100 mb-4">
+                <div class="card-body">
+                <div>
+                	<h4 class="text-center">Profile Settings</h4>
+                </div>
+                <hr>
+                <h6 class="text-primary text-center pb-3 pt-2"><i class="fa fa-user"></i>&nbsp;Personal Information</h6>
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <form action="#" method="POST" enctype = "multipart/form-data" accept-charset="utf-8">
+                      {% csrf_token %}
+                      <div class="row">
+                    <div class="form-inline col-md-12 mt-2">
+                      <label>First Name:</label>
+                      <input type="text" class="form-control ml-2 w-50 text-capitalize" name="first_name" value="{{ content.firstname}}">
+                    </div>
+                    <div class="form-inline col-md-12 mt-4">
+                      <label>Last Name:</label>
+                      <input type="text" class="form-control ml-2 w-50 text-capitalize" name="last_name" value="{{ content.lastname}}">
+                    </div>
+                    <div class="form-inline col-md-12 mt-4">
+                      <label>Location:</label>
+                      <input type="text" class="form-control ml-4 w-50 text-capitalize" name="location" value="{{ content.location}}">
+                    </div>
+                    <div class="form-inline col-md-12 mt-4">
+                      <label>Telephone:</label>
+                      <input type="text" class="form-control ml-3 w-50 text-capitalize" name="contact" value="{{ content.telephone}}">
+                    </div>
+                    <div class="form-inline col-md-12 mt-4">
+                      <label>Browse profile pic:&nbsp;&nbsp;</label>
+                      <input type="file" name='myfile'>
+                    </div>
+
+                    <div class="col-md-12 pt-4 text-center">
+                     <button class="text-white text-center btn btn-primary styled-button p-2" style="width: 150px;">
+                    <i class="fa fa-save"></i>&nbsp;Update Details
+                   </button>
+                  </div>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item" ><a class="text-dark" href="{% url 'e_learning:my_uploaded_subjects' %}" >My Subjects</a></li>
+    <li class="breadcrumb-item" ><a class="text-dark" href="" >Edit My Subject</a></li>
+    <li class="breadcrumb-item active " ><a  href="" >Update Content</a></li>
+  </ol>
+</nav>
+<div class="container-fluid bg-white">
+
+<h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Upload New Content</h1>
+
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.media}}
+  <select class="form-control" id="cars" name="topic">
+        <option value="{{edit_uploaded.topic}}">{{edit_uploaded.topic}}</option>
+      </select>
+      {{ form.overview.as_hidden }}
+    {{ form.class_level.as_hidden }}
+    {{ form.subject.as_hidden }}
+    {{ form.teacher.as_hidden}}
+  {{ form.content |as_crispy_field }}
+  {{ form.attached_file |as_crispy_field }}
+  {{ form.videos |as_crispy_field }}
+  
+  <div class="text-center">
+    <input type="submit" value="Upload Content" class="btn btn-primary mb-4 w-25" name="register" style="border-radius: 17px;" />
+  </div>
+</form>
+</div>
+<!-- /.container-fluid -->
+
+{% endblock %}

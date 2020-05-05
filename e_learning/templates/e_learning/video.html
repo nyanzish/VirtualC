@@ -1,0 +1,30 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item" ><a class="text-dark" href="{% url 'e_learning:upload_content' %}" >Upload content</a>
+    </li>
+    <li class="breadcrumb-item" ><a class="text-dark" href="{% url 'e_learning:view_new_uploaded_content' %}" >view uploaded content</a>
+    </li>
+    <li class="breadcrumb-item active text-primary" ><a href="" >watch video</a>
+    </li>
+  </ol>
+</nav>
+<div class="container-fluid bg-white mb-2">
+
+<div class="embed-responsive embed-responsive-16by9 hoverable">
+  <video class="embed-responsive-item" controls>
+    <source src="{{ object.videos.url }}" type="video/mp4">
+  </video>
+</div>
+
+</div>
+
+{% endblock %}

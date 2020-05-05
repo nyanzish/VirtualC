@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary" ><a href=" " >Subject</a></li>
+    </ol>
+ </nav>
+<div class="container-fluid mb-3">
+<div class="card shadow-sm mb-5 pb-4 mt-3">
+    <h6 class="text-dark pt-4 pl-4 pb-1" style="font-size: 18px;"><i class="fas fa-book-open fa-1x ml-2">&nbsp;&nbsp;On-going Subjects</i></h6>
+    {% if subject_details  %}
+    <div class="row p-3">
+        {% for item in subject_details %}
+        <div class="col-md-3 p-3">
+    		<div class="card shadow w-100 h-100" style="width: 18rem;">
+    		  <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">
+    		  <div class="card-body text-center">
+    		    <h6 class="card-title text-primary"><b>{{ item.subject }}</b>
+    		    </h6>
+    		    <h6 class="text-center"><b>{{ item.class_n }}</b></h6>
+    		    <p class="text-muted text-center">
+    		    <span style="font-size: 14px;">Duration: {{ item.duration }}</span>
+    	    	</p><hr>
+    	    	<!--div class="h5 mb-0 font-weight-bold text-gray-800"><small><b>
+    	    		<span class="text-danger">USD:</span>&nbsp;{{ item.price }}<br><span class="text-danger">UGX:</span>&nbsp;{{ item.price }}/=</b></small>
+    	    	</div-->
+    	    	<p class="text-muted text-center">
+
+    		    <span>By: Mr. {{item.teacher.user_profile.firstname}} {{item.teacher.user_profile.lastname}}</span>
+    	    	</p>
+    		    <a href="{{ item.get_absolute_url }}" class="btn btn-outline-primary icon-btn btn-sm mt-2 " style="border-radius: 19px;">
+                  <i class="fas fa-award rounded-circle text-dark bg-white p-1">
+                  </i>&nbsp;&nbsp;Learn More
+                </a>
+    		  </div>
+    		</div>
+			</div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <h1 class="text-center mt-4 text-muted">!Ooops</h1>
+         <h3 class="text-center mt-3  text-muted">This subject content has not <br> been uploaded yet...<br><span class="h5">kindly choose another subject</span></h3>
+         <h6 class="text-center pt-3 pb-4"><span><a href="{% url 'e_learning:home_view' %}" class="text-primary">&nbsp;Back to home&nbsp;</a></span></h6>
+        {% endif %}
+</div>
+</div>
+
+
+{% endblock %}

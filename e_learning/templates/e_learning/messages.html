@@ -1,0 +1,20 @@
+{% load poll_extras %}
+{% url 'e_learning:profile' message_item.author.username as the_user_url%}
+{% load tz %}
+<div class="{% if not message_item.is_readed %}unreaded{% endif %} p-2">
+    <div class="row border-left-primary" style="border-radius: 20px; background-color: #f6f6f9; !important;">
+        <div class="col-md-9">
+            <a href="{{ the_user_url }}"><img class="img-profile rounded-circle ml-2 mt-2" width="33" height="33" src="{{ message_item.author.userprofile.image.url }}">
+            &nbsp;&nbsp;<strong class="list-group-item-heading"><a href="{{ the_user_url }}"><i class="fas fa-circle text-success" style="font-size: 8px;"></i>&nbsp;{{ message_item.author.username }}</a></strong>
+            </a>
+            <h6 class="text-dark ml-4 pt-3">{{ message_item.message|safe }}</h6>
+        </div>
+        <div class="col-md-3">
+            <div class="reply-body ">
+                <ul class="list-inline">
+                    <li class="ml-5"><small>{{ message_item.pub_date }}</small></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

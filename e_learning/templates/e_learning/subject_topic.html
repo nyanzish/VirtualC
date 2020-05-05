@@ -1,0 +1,39 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<div class="container mt-4 mb-5">
+      <div> <h3 class="">Topics</h3></div>
+      <div class="card h-50">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="text-center mt-3 mb-3"><h3>Topics by</h3></div>
+            <div class="text-center mt-2">Topic 1</div>
+          </div>
+          <div class="col-md-8">
+            <div class="text-center mt-3 mb-3" ><h3>Content</h3></div>
+            <div class="mt-2">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active w-50" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Notes
+                  </a>
+                  <a class="nav-item nav-link w-50" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Videos
+                  </a>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active pb-3" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <p>notes by lecturer</p>
+                </div>
+                <div class="tab-pane fade pb-3" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <p>videos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

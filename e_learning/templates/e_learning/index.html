@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block head_title %}Start-Learning{% endblock %}
+{% block content %}
+<section id="carousel">
+    <div class="carousel slide" data-ride="carousel" id="carousel-1">
+    <div class="carousel-inner" role="listbox">
+        <div class="carousel-item">
+            <div class="jumbotron pulse animated hero-nature carousel-hero">
+                <h1 class="hero-title">College, Secondary <br>School Education</h1>
+                <p class="hero-subtitle">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+                <p><a class="btn btn-primary hero-button plat text-white" role="button" href="{% url 'e_learning:contact_us'%}" style="border-radius: 18px;">Contact Us</a></p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="jumbotron pulse animated hero-photography carousel-hero">
+                <h1 class="hero-title">College, Secondary <br>School Education</h1>
+                <p class="hero-subtitle">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+                <p><a class="btn btn-primary hero-button plat text-white" role="button" href="{% url 'e_learning:contact_us'%} style="border-radius: 18px;">Contact Us</a></p>
+            </div>
+        </div>
+        <div class="carousel-item active">
+            <div class="jumbotron pulse animated hero-technology carousel-hero">
+                <h1 class="hero-title">College, Secondary <br>School Education</h1>
+                <p class="hero-subtitle">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+                <p><a class="btn btn-primary hero-button plat text-white" role="button" href="{% url 'e_learning:contact_us'%}" style="border-radius: 18px;">Contact Us</a></p>
+                <section></section>
+            </div>
+        </div>
+    </div>
+    <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><i class="fa fa-chevron-left"></i><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next"><i class="fa fa-chevron-right"></i><span class="sr-only">Next</span></a></div>
+    <ol
+        class="carousel-indicators">
+        <li data-target="#carousel-1" data-slide-to="0"></li>
+        <li data-target="#carousel-1" data-slide-to="1"></li>
+        <li data-target="#carousel-1" data-slide-to="2" class="active"></li>
+        </ol>
+    </div>
+</section>
+<div class="container mb-3 mt-2">
+	<div class="row mt-4 justify-content-center">
+		<div class="col-md-9">
+			<h3 class="text-center">Welcome to Virtual<span class="text-primary">-Class</span><br>e-learning platform</h3>
+			<h5 class= "pt-4 text-center">
+          Virtual<span class="text-primary">-Class</span> is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
+        </h5>
+		</div>
+	</div>
+</div>
+<div class="container-fluid mb-5">
+	<div class="card shadow mt-5 pb-4">
+		<h4 class="text-center pt-3">What We offer?</h4>
+		<div class="row p-3">
+		{% for content in lista_all %}
+        <div class="col-md-3 p-3">
+            <div class="card shadow w-100 h-100" style="width: 18rem;">
+              <img class="card-img-top" src="{{content.0}}" alt="Card image cap" style="height: 200px;">
+              <div class="card-body text-center">
+              <h5 class="card-text text-center text-capitalize text-primary">{{ content.1}} ({{content.2}})</h5>
+              </div>
+              <div class="text-center">
+                  <hr>
+                  <form id="{{ forloop.counter }}" action="{% url 'e_learning:subject_get'%}" method="POST" accept-charset="utf-8">
+
+                    {% csrf_token%}
+                    <input type="hidden" value="{{content.3}}" name="get_subject">
+
+                  </form>
+                  <a onclick="document.getElementById('{{forloop.counter}}').submit();" class="btn btn-outline-primary hero-button plat btn-sm mt-1 mb-4" style="border-radius: 19px !important;">
+                      <i class="fas fa-award rounded-circle text-dark bg-white p-1">
+                      </i>&nbsp;&nbsp;Learn More
+                  </a>
+              </div>
+            </div>
+        </div>
+		{% endfor %}
+</div>
+<div class="row justify-content-center">
+		<div class="col-md-4"></div>
+		<div class="col-md-6">
+
+			{% if lista_all.has_other_pages %}
+
+					<ul class="pagination">
+						{% if lista_all.has_previous %}
+						<li class="page-item">
+						<a class="page-link" href="?page={{ lista_all.previous_page_number }}" tabindex="-1">Previous</a>
+						</li>
+						{% endif %}
+
+						<li class="page-item active">
+						<a class="page-link" href="?page={{ lista_all.number }}">{{ lista_all.number }}<span class="sr-only">(current)</span></a>
+						</li>
+
+						{% if lista_all.has_next%}
+						<li class="page-item">
+						<a class="page-link" href="?page={{ lista_all.next_page_number }}">Next</a>
+						</li>
+						{% endif %}
+					</ul>
+
+			{% endif %}
+
+		</div>
+	</div>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -633,6 +633,7 @@ def apply_to_teach(request):
         schools_taught = request.POST.get('schools_taught')
         current_school = request.POST.get('current_school')
         level_of_teaching = request.POST.get('level_of_teaching')
+        teacher_registration_id = request.POST.get('teacher_registration_id')
         subject_one = request.POST.get('subject_one')
         subject_two = request.POST.get('subject_two')
         Brief_Self_description = request.POST.get('Brief_Self_description')
@@ -642,14 +643,25 @@ def apply_to_teach(request):
             schools_taught=schools_taught,
             current_school=current_school,
             level_of_teaching=level_of_teaching,
+            teacher_registration_id=teacher_registration_id,
             subject_one=subject_one,
             subject_two=subject_two,
             Brief_Self_description =Brief_Self_description
 
         )
         apply_data.save()
+        email=request.user.userprofile.email
+        name = request.user
+        message =f"""
+        I want to become a teacher:
+        Firstname: {request.user.userprofile.firstname}
+        Lastname : {request.user.userprofile.lastname}
+        TeacherID: {teacher_registration_id} 
+        """
 
-        messages.info(request, "Your application has succefully submitted for review")
+        messages.info(request, "Your application has been successfully submitted for review, an e-mail will be sent to verify your account")
+        email = EmailMessage(subject= f'{request.user.userprofile.firstname} {request.user.userprofile.lastname} --- Applying to teach',body=message,to=['admin@virtualclass.ug'],headers={'Message-ID': name },reply_to=[email])
+        email.send()
         return redirect('e_learning:home_view')
 
 
@@ -659,26 +671,28 @@ def apply_to_teach(request):
 
 @login_required
 def subject_topic(request):
-	return render(request,'subject_topic.html')
+	return render(request,'e_library.html')
+
+@login_required
+def e_lib(request):
+	return render(request,'e_library.html')
 
 def subscription_approval(request,slug):
-    overview=Subscription.objects.filter(subject_overview=slug)
+    overview2=PaymentRecords.objects.get(subject_overview__exact=slug,student__exact=request.user)
+    overview=Subscription.objects.get(subject_overview__exact=slug,student__exact=request.user)
     #print(overview.active)
     #####################3check if payment is successful#############3
-    for subscription_state in overview:
-        if subscription_state.active==True:
-            messages.info(request, "You have already subscribed to this subject")
-            return redirect('e_learning:my_subjects')
-        else:
-            subscription_state.active=True
-            subscription_state.save()
-            print(subscription_state.active,'ggggggggg')
+    overview2.active=True
+    overview2.save()
+    overview.active=True
+    overview.save()
+    # print(overview.active,'ggggggggg')
 
-            context ={
-                    'overview':subscription_state
-            }
-            messages.info(request, "You have subscribed to this subject")
-            return redirect('e_learning:my_subjects')
+    # context ={
+    #         'overview':overview
+    # }
+    messages.info(request, "You have subscribed to this subject")
+    return redirect('e_learning:my_subjects')
 
 @login_required
 def subject_overview(request,slug):
@@ -1777,12 +1791,16 @@ def contact_us(request):
         email = request.POST.get('email')
         message = request.POST.get('message')
         try:
-            email = EmailMessage(subject= f'Inquiry from {name} whose email is { email}',body=message,to=['capstoneprojects2020@gmail.com'],headers={'Message-ID': name,'Contact':phone_no })
+            # admin@virtualclass.ug
+            email = EmailMessage(subject= f'Inquiry from {name}',body=message,to=['admin@virtualclass.ug'],headers={'Message-ID': name,'Contact':phone_no },reply_to=[email])
             email.send()
+            
             # send_mail(name, phone_no, email,message, ['capstoneprojects2020@gmail.com'])
         except BadHeaderError:
             return HttpResponse('Invalid header found.')
         # return redirect('success')
+        messages.info(request, " We have received your inquiry, we shall get back to you as soon as possible.")
+        return redirect('e_learning:contact_us')
     return render(request,'contact_us.html')
 
 def team(request):

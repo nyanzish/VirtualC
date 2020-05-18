@@ -25,7 +25,7 @@ SECRET_KEY = 'je)%51vc&+par^d51&xcbwb$xxc7+pr$n$^o0-0xr3eph&%5q='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nyanzi15.pythonanywhere.com']
+ALLOWED_HOSTS = ['69.163.224.206','virtualclass.ug','www.virtualclass.ug']
 
 
 # Application definition
@@ -147,13 +147,22 @@ LOGIN_REDIRECT_URL = '/home_view'
 SIGNUP_REDIRECT_URL ='/accounts/login/'
 
 #email conf
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER  = 'capstoneprojects2020@gmail.com'
+# EMAIL_HOST_PASSWORD = 'Capstone@2020'
+# EMAIL_PORT = 587
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_SSL = False
+
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER  = 'capstoneprojects2020@gmail.com'
-EMAIL_HOST_PASSWORD = 'Capstone@2020'
+EMAIL_HOST = 'smtp.dreamhost.com'
+EMAIL_HOST_USER  = 'admin@virtualclass.ug'
+EMAIL_HOST_PASSWORD = 'V!rtua1W0rlD'
 EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL='admin@virtualclass.ug'
 
 
 
@@ -162,7 +171,7 @@ EMAIL_USE_SSL = False
 ACCOUNT_EMAIL_REQUIRED =True
 ACCOUNT_UNIQUE_EMAIL =True
 ACCOUNT_AUTHENTICATION_METHOD ='username_email'
-ACCOUNT_EMAIL_SUBJECT_PREFIX ='[virtualClass.com]'
+ACCOUNT_EMAIL_SUBJECT_PREFIX ='virtualClass.ug'
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL ='/accounts/login/'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 

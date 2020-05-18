@@ -54,6 +54,7 @@ from .views import(
 	subscription_approval,
 	teacher_to_alerts,
 	teacher_comment_topics,
+    e_lib,
 	)
 
 app_name = "e_learning"
@@ -123,6 +124,7 @@ urlpatterns = [
 	path('teacher_to_alerts/',teacher_to_alerts, name='teacher_to_alerts'),
 	path('teacher_comment_topics/',teacher_comment_topics, name='teacher_comment_topics'),
 	path('teacher_comment_topics/<slug>/',teacher_comment_topics, name='teacher_comment_topics'),
+    path('e_lib/',e_lib, name='e_lib'),
 
 ]
 

@@ -69,6 +69,9 @@
       <li class="nav-item">
         <a class="nav-link mt-1 pt-2 mr-2 text-dark-400" href="{% url 'e_learning:my_subjects' %}">My Subjects</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400" href="{% url 'e_learning:e_lib' %}">E-Library</a>
+      </li>
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img class="img-profile rounded-circle mr-2" src="{{ user.userprofile.image.url}}" width="33" height="33">
@@ -135,7 +138,7 @@
 <!--start footer-->
     <div>
 
-      <footer class="page-footer sticky-footer font-small indigo bg-light p-2 mt-3">
+<footer class="page-footer sticky-footer font-small indigo bg-light p-2 mt-3">
 
   <!-- Footer Links -->
   <div class="container text-center text-md-left">
@@ -144,12 +147,12 @@
     <div class="row">
 
       <!-- Grid column -->
-      <div class="col-md-3 text-left">
+      <div class="col-md-4 text-left">
 
         <!-- Links -->
         <h6 class="mt-3 pb-2 pt-4" style="color: #555353 !important;font-family: Times;"><img src="{% static 'e_learning/image/logo.PNG' %}" width="20" height="20" class="d-inline-block align-top" alt="">&nbsp;VIRTUAL<span class="text-primary">-CLASS</span></h6>
         <p class="text-dark pb-3" style="font-size: 14px">
-          laca sa del papel je ma pele coma bele mansio tu un due trois qatre cent six sept oct nun elf fu su alfa fa lu twi ri ri tur to yi laca sa del papel je ma pele coma bele mansio tu un due trois qatre cent six sept oct nun elf fu su al
+           Virtual<span class="text-primary">-Class</span> is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
         </p>
       </div>
       <!-- Grid column -->
@@ -172,10 +175,10 @@
       <!-- Grid column -->
 
       <!-- Grid column -->
-      <div class="col-md-2 text-left">
+      <!--div class="col-md-2 text-left">
 
         <!-- Links -->
-        <h6 class="mt-3 pb-2 pt-4" style="color: #555353 !important;font-family: Times;">PARTNERS</h6>
+        <!--h6 class="mt-3 pb-2 pt-4" style="color: #555353 !important;font-family: Times;">PARTNERS</h6>
 
           <ul class="list-unstyled pb-3">
           <li>
@@ -190,7 +193,7 @@
           </li>
         </ul>
 
-      </div>
+      </div-->
       <!-- Grid column -->
       <div class="col-md-3 text-left">
 
@@ -199,29 +202,33 @@
 
         <ul class="list-unstyled pb-3">
           <li>
-            <a class="text-dark" href="{% url 'e_learning:frequently_asked_questions' %}" style="font-size: 14px;">FAQ&nbsp;(Frequently Asked Questions)</a>
+            <a class="text-dark" href="{% url 'e_learning:frequently_asked_questions' %}" style="font-size: 14px;">F.A.Qs&nbsp;(Frequently Asked Questions)</a>
           </li>
           <li>
+            <a class="text-dark" href="{% url 'e_learning:terms_and_conditions' %}" style="font-size: 14px;">Terms & Conditions</a>
+          </li>
+          <li>
+            <a class="text-dark" href="{% url 'e_learning:contact_us' %}" style="font-size: 14px;">Contact_us</a>
           </li>
         </ul>
 
       </div>
 
       <!-- Grid column -->
-      <div class="col-md-2 text-left">
+      <div class="col-md-3 text-left">
 
         <!-- Links -->
         <h6 class="mt-3 pb-2 pt-4" style="color: #555353 !important;font-family: Times;">CONTACT</h6>
 
         <ul class="list-unstyled pb-3">
-          <li>
+          <!--li>
             <a class="text-muted" style="font-size: 14px;"><i class="fas fa-map-marker-alt fa_map pb-3"></i>&nbsp;&nbsp;Arua, Kampala(U)</a>
+          </li-->
+          <li>
+            <a class="text-muted"  style="font-size: 14px;"><i class="fas fa-envelope pb-3"></i>&nbsp;&nbsp;admin@virtualclass.ug</a>
           </li>
           <li>
-            <a class="text-muted"  style="font-size: 14px;"><i class="fas fa-envelope pb-3"></i>&nbsp;&nbsp;info@gmail.com</a>
-          </li>
-          <li>
-            <a class="text-muted"style="font-size: 14px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;(+256) 7520 23621</a>
+            <a class="text-muted"style="font-size: 14px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;+256(0) 7520 23621&nbsp <br><span class='ml-4'>+256(0) 777081799</span></a>
           </li>
           <li>
           </li>

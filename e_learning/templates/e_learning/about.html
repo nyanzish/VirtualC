@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block head_title %}Virtual-Class{% endblock %}
+{% block head_title %}Virtual-Class|About{% endblock %}
 {% block content %}
 <nav aria-label="breadcrumb" class="mt-2">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
@@ -13,32 +13,38 @@
 <div class="container-fluid mb-3 mt-4">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-md-11">
+        <div class="card pl-5 pr-5 pb-5 pt-4 shadow-sm">
 		<h3 class="text-center welcome_about ml-5 mb-4">Welcome to Virtual<span class="text-primary">-Class</span><br>e-learning platform</h3>
 		<div class="row mb-5">
 			<div class="col-md-4 pt-4">
-                <img src="{% static 'e_learning/image/about.jpg' %}" width="350" height="340" class="d-inline-block" alt="">
+                <img class="img-thumbnail" src="{% static 'e_learning/image/about.jpg' %}" width="350" height="340" class="d-inline-block" alt="">
 			</div>
-			<div class="col-md-8">
-				<h5 class= "pt-4">
+			<div class="col-md-8 pl-4">
+				<p class= "pt-4" style="font-size:17px;">
 					Virtual<span class="text-primary">-Class</span> is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
-				</h5>
-				<h5 class="pt-3">
+				</p>
+				<p class="pt-3" style="font-size:17px;">
 					Lessons are to be extended to all students inform of videos, notes and pdf files that will help students learn at their own comfort as well be able to interact with teachers in case of inquiries on particularly subject topics….
-				</h5>
-				<h5 class="pt-3">
-					Virtual Class is organized in particularly two sections:<br>
-				</h5>
-				<h5 class="pt-2">
-					<b>Students:</b>
-					<br>
-					These are learners who are willing to gain knowledge.<br>
-				</h5>
-				<h5 class="pt-2">
-					<b>Teachers:</b>
-					<br>
-					These will be responsible for sharing their knowledge basing on their different fields of expertise ranging right from ordinary to advanced level subjects.
-				</h5>
+				</p>
 			</div>
+		</div>
+        <div class="row">
+            <diV class="col-md-12">
+            <p class="" style="font-size:19px;">
+                Virtual Class is organized in particularly two sections:
+            </p>
+            <p class="pt-2" style="font-size:17px;">
+                <b>Students:</b>
+                <br>
+                These are learners who are willing to gain knowledge.<br>
+            </p>
+            <p class="pt-2" style="font-size:17px;">
+                <b>Teachers:</b>
+                <br>
+                These will be responsible for sharing their knowledge basing on their different fields of expertise ranging right from ordinary to advanced level subjects.
+            </p>
+        </div>
+        </div>
 		</div>
 	   </div>
 	</div>

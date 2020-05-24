@@ -1,25 +1,44 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block head_title %}E-Library{% endblock %}
+{% block head_title %}Virtual-Class{% endblock %}
 {% block content %}
 <nav aria-label="breadcrumb" class="mt-2">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
       <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">Home</a>
       </li>
-      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:contact_us' %}" >E-Library</a></li>
+      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:e_lib' %}" >E-Library</a></li>
     </ol>
  </nav>
-<div class="container mb-4">
-	<div class="card shadow-sm mb-3 pb-4 h-100 p-2 mt-3 mb-3">
-        <div class="row p-2">
-        	<div class="col-md-12">
-                <div class="text-center">
-                    <img src="{% static 'e_learning/image/coming.PNG' %}" width="45%" height="45%" class="d-inline-block" alt="">
+<div class="container-fluid pl-5 pr-5 pb-4">
+    <h2 class="text-center pb-1 text-primary" style="font-size: 20px;">BOOKS</h2>
+    <div class="row justify-content-center pt-1">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="card shadow-sm mb-3 pb-3 h-100 pl-2 pr-2 pt-2">
+        {% if recommend_subjects %}
+        <div class="row">
+                {% for my_recommends in recommend_subjects %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-primary text-uppercase text-center pb-2" style="font-size: 18px;">{{my_recommends.subject_name}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                        <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:<br>{{my_recommends.recommended_by}}</h1>
                 </div>
+           {% endfor %}
+        </div>
+        {% else %}
+        <div class="row pr-2 pl-2 pb-2">
+        	<div class="col-md-12">
+        		<h1 class="text-center mt-2 text-muted" style="font-family: Times;">Ooops</h1>
+		         <h3 class="text-center mt-3 text-muted" style="font-family: Times;">No Book Has Been Recommended To <br>Students Yet!</h3>
         	</div>
         </div>
-		</div>
-	</div>
+        {% endif %}
+        </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

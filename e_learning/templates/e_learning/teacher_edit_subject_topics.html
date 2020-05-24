@@ -1,8 +1,9 @@
 {% extends 'teacher_base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
-{% block head_title %}Start-Learning{% endblock %}
+{% block head_title %}Virtual-Class{% endblock %}
 {% block content %}
 <!-- Begin Page Content -->
 <nav aria-label="breadcrumb">
@@ -22,6 +23,22 @@
       <h6 class="m-0 font-weight-bold text-primary">Edit My Subject</h6>
     </div>
     <div class="card-body">
+        <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Overview Content</h1>
+        <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.subject.as_hidden }}
+          {{ form.class_n.as_hidden }}
+          {{ form.teacher.as_hidden }}
+          {{ form.over_view |as_crispy_field }}
+          {{ form.video |as_crispy_field }}
+          {{ form.image |as_crispy_field }}
+          {{ form.duration |as_crispy_field }}
+          {{ form.price |as_crispy_field }}
+          
+          <div class="text-center">
+            <input type="submit" value="Update Content" class="btn btn-primary mb-4 w-25" name="register" style="border-radius: 17px;" />
+          </div>
+        </form>
       <h4 class="text-center mt-2"><b>{{subject_name}}</b></h4>
       <div class="table-responsive">
         <table class="table table-bordered mt-0" id="dataTable" width="100%" cellspacing="0">

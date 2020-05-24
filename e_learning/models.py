@@ -120,6 +120,16 @@ class Subjects(models.Model):
         return reverse("e_learning:push", args=[str(self.pk)
         ])
 
+class Recommend_Subjects_Table(models.Model):
+    subject_name = models.CharField(max_length=30)
+    class_level = models.CharField(max_length=30)
+    book_title = models.CharField(max_length=30)
+    book_cover_image = models.ImageField()
+    attach_book = models.FileField()
+    recommended_by = models.CharField(max_length=30)
+    date_of_record = models.DateTimeField(default=timezone.now)
+
+
 class Teacher_apply(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     schools_taught = models.CharField( max_length=30)
@@ -143,8 +153,8 @@ class Subjects_overview(models.Model):
     teacher =models.ForeignKey(Teacher_apply ,on_delete=models.CASCADE)
     over_view = models.TextField()
     image = models.ImageField()
-    video = models.FileField()
-    duration = models.DurationField(help_text=('[DD] [HH:[MM:]]ss[.uuuuuu] format'))
+    video = models.FileField(null=True, blank=True,default='comingsoon_overview.mp4')
+    duration = models.DurationField(help_text=('[DD] [HH:[MM:]]ss[.uuuuuu] format---- eg 30 00:00 to mean 30days'))
     date_of_record = models.DateTimeField(default=timezone.now)
     price = models.IntegerField(help_text=('UGX'))
 

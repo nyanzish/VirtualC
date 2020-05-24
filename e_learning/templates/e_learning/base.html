@@ -51,6 +51,40 @@
 
 </head>
 <body id="page-top">
+
+<style>
+
+.img-holder {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+}
+.img-holders {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  padding: 1px;
+  border: 1px solid #ddd;
+}
+.change-color:hover
+{
+color:black !important;
+display: block;
+transform: scale(1.05)!important;
+transition: all 0.1s ease-in-out 0.1s !important;
+}
+.change-colors:hover
+{
+color:white !important;
+transform: scale(1.05)!important;
+transition: all 0.1s ease-in-out 0.1s !important;
+}
+
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white topbar sticky-top shadow pt-3 pb-3">
 <a class="navbar-brand font-weight-normal display-1 mr-5" href="{% url 'e_learning:index' %}">
 <img src="{% static 'e_learning/image/logo.PNG' %}" width="43" height="43" class="d-inline-block" alt="">Virtual<span style="color: #428bca;">-Class</span>
@@ -63,19 +97,19 @@
     {% if user.is_authenticated %}
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2" href="{% url 'e_learning:home_view' %}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2 change-color" href="{% url 'e_learning:home_view' %}">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2" href="{% url 'e_learning:about' %}">About<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2 change-color" href="{% url 'e_learning:about' %}">About<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400" href="{% url 'e_learning:my_subjects' %}">My Subjects</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400 change-color" href="{% url 'e_learning:my_subjects' %}">My Subjects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400" href="{% url 'e_learning:e_lib' %}">E-Library</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400 change-color" href="{% url 'e_learning:e_lib' %}">E-Library</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link change-color" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img class="img-profile rounded-circle mr-2" src="{{ user.userprofile.image.url}}" width="33" height="33">
           <span class="mr-2 d-lg-inline text-gray-600 small">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
         </a>
@@ -111,22 +145,22 @@
     {% else %}
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link text-muted mr-3" href="{% url 'e_learning:index' %}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:index' %}">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-muted mr-3" href="{% url 'e_learning:about' %}">About</a>
+        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:about' %}">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-muted mr-3" href="{% url 'e_learning:contact_us' %}">Contact&nbsp;Us</a>
+        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:contact_us' %}">Contact&nbsp;Us</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-muted mr-3" href="{% url 'e_learning:e_lib' %}">E-Library</a>
+        <a class="nav-link text-muted mr-3 change-color" href="#">E-Library</a>
       </li>
       <li class="nav-item">
-         <a href="{% url 'account_login' %}" class="nav-link mr-3 text-muted">Sign in<span class="sr-only">(current)</span></a>
+         <a href="{% url 'account_login' %}" class="nav-link mr-3 text-muted change-color">Sign in<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-      <a class="nav-link text-white btn btn-primary btn-sm mr-2 h-100 p-2 edit_sign_up" href="{% url 'account_signup' %}" >Sign Up Free</a>
+      <a class="nav-link text-white btn btn-primary btn-sm mr-2 h-100 p-2 edit_sign_up change-colors" href="{% url 'account_signup' %}" >Sign Up Free</a>
     </li>
   </ul>
   {% endif %}

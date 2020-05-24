@@ -1,7 +1,7 @@
 {% extends 'student_base.html' %}
 
 {% load static %}
-{% block head_title %}Student Homepage{% endblock %}
+{% block head_title %}Virtual-Class|Homepage{% endblock %}
 {% block content %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
@@ -51,7 +51,7 @@
 			    	</div-->
 			    	<p class="text-muted text-center">
 
-				    <span>By: Mr. {{item.teacher.user_profile.firstname}} {{item.teacher.user_profile.lastname}}</span>
+				    <span>By: Mr(s). {{item.teacher.user_profile.firstname}} {{item.teacher.user_profile.lastname}}</span>
 			    	</p>
 				    <a href="{{ item.get_absolute_url }}" class="btn btn-outline-primary icon-btn btn-sm mt-2 " style="border-radius: 19px;">
                       <i class="fas fa-award rounded-circle text-dark bg-white p-1">

@@ -29,6 +29,7 @@ from .models import(
     Comment,
     Chat,
     Message,
+    Recommend_Subjects_Table
 )
 
 
@@ -76,6 +77,7 @@ admin.site.register(French)
 admin.site.register(German)
 admin.site.register(Chinese)
 admin.site.register(Luganda)
+admin.site.register(Recommend_Subjects_Table)
 admin.site.register(GeneralPaper)
 admin.site.register(Chat,ChatAdmin)
 admin.site.register(Message,MessageAdmin)

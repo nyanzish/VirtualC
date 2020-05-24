@@ -1,0 +1,117 @@
+{% extends 'teacher_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item " aria-current="page"><a class="text-dark" href="">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:e_books' %}">E-Books</a></li>
+  </ol>
+</nav>
+<div class="container-fluid bg-white pb-3">
+<!-- Page Heading -->
+<div class="row pt-3 pb-2">
+<div class="col-md-6 col-lg-6 col-sm-12">
+    <h2 class="text-left text-muted" style="font-size: 20px;">My Recommended Books</h2>
+</div>
+<div class="col-md-6 col-lg-6 pb-2 text-right">
+    <a type="button" class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#exampleModalCenter">
+    <i class="fa fa-plus"></i> Add New Book
+    </a>
+</div>
+</div>
+<div class="row justify-content-center pt-2">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="row">
+            
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">{{subject_one}}</h1>
+                </div>
+                {% for my_subject_one in recommend_one %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_subject_one.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;">{{my_subject_one.class_level}}</h1>
+                        <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_subject_one.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_subject_one.attach_book.url}}">{{my_subject_one.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_subject_one.recommended_by}}</h1>
+                </div>
+           {% endfor %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">{{subject_two}}</h1>
+                </div>
+                {% for my_subject_two in recommend_two %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_subject_two.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_subject_two.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_subject_two.attach_book.url}}">{{my_subject_two.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_subject_two.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-center text-primary modal-title" style="font-size: 20px;" id="exampleModalLongTitle">Recommended New Book</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action = "{% url 'e_learning:recommend_book'%}" method ="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Subject Name:</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="subject_name">
+            <option>{{subject_one}}</option>
+            <option>{{subject_two}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Book Title:</label>
+            <input type="text" class="form-control" placeholder="book-title" name="book_title">
+        </div>
+        <div class="form-group mt-4">
+            <label for="exampleFormControlSelect1">Level of Education:</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="class_level">
+            <option>O-Level</option>
+            <option>A-Level</option>
+            <option>Both O and A Level</option>
+            </select>
+        </div>
+        <div class="form-group mt-4">
+            <label><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>&nbsp;Choose Book Cover:&nbsp;&nbsp;</label>
+            <input type="file" name='book_cover_image' accept="image/*">
+        </div>
+        <div class="form-group mt-4 pt-2">
+            <label><i class="fas fa-paperclip" aria-hidden="true"></i></i>&nbsp;Attach Recommended Book:&nbsp;&nbsp;</label>
+            <input type="file" name='attach_book'>
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="form-control" name="recommended_by" value="{{user.userprofile.firstname}} {{user.userprofile.lastname}}">
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Upload Now</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- /.container-fluid -->
+
+  
+
+{% endblock %}

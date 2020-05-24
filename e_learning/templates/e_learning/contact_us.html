@@ -24,11 +24,13 @@
  </nav>
 <div class="container mb-5 mt-2">
 	<div class="row mt-4 justify-content-center">
-		<div class="col-md-10">
-		  <div class="card">
-		  	<div class="card-body p-5 shadow">
-			<h3 class="text-center text-muted pb-2">Get in touch</h3>
-			<p class="text-center text-muted pb-4">Let's talk about your problem</p>
+		<div class="col-md-12">
+         <div class="row">
+        <div class="col-md-9 col-lg-9 col-sm-12">
+		  <div class="card mt-1">
+		  	<div class="card-body p-4 shadow-sm">
+			<h3 class="text-center text-primary pb-2">Get in touch</h3>
+			<p class="text-center text-dark pb-4">Let's talk about your problem</p>
 			<form action = "{% url 'e_learning:contact_us'%}" method ="POST">
 			    {% csrf_token %}
 				<div class="row">
@@ -68,13 +70,31 @@
 	                      <textarea class="form-control" rows="6" name ="message"></textarea>
 	                    </div>
 					</div>
-					<div class="col-md-12 text-right pt-2">
+					<div class="col-md-12 text-center pt-2">
 				    	<button type="submit" class="btn btn-primary">SUBMIT</button>
 		    		</div>
 				</div>
 			</form>
 		     </div>
 		   </div>
+         </div>
+         <div class="col-md-3 col-lg-3 col-sm-12">
+             <div class="card mt-1 shadow-sm">
+                <div class="card-body">
+                    <h1 style="font-size: 20px;" class="text-bold text-center text-primary pt-1">For More Inquiries</h1>
+                    <hr>
+                     <h1 style="font-size: 18px;" class="text-bold text-left pt-1">Send an email</h1>
+                    <p class="text-justify text-muted mt-2" style="font-size: 16px">
+                    <i class="fa fa-envelope"></i>&nbsp;admin@virtualclass.ug
+                    </p>
+                    <h1 style="font-size: 18px;" class="text-bold text-left pt-1">Call Us</h1>
+                    <p class="text-justify text-muted mt-2" style="font-size: 16px">
+                    <i class="fa fa-phone"></i>+256(0)752-023-621&nbsp;<br>&nbsp;+256(0)777-081-799
+                    </p>
+                </div>
+            </div>
+         </div>
+		</div>
 		</div>
 	</div>
 </div>

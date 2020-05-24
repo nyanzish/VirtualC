@@ -15,6 +15,8 @@ from django.views.generic import ListView, DetailView, View
 from django.http import FileResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import CommentForm
+import re
+import datetime
 from django.core.mail import send_mail,BadHeaderError,EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import (
@@ -47,6 +49,7 @@ from .models import (
     Comment,
     Chat,
     Message,
+    Recommend_Subjects_Table
 
 )
 
@@ -125,7 +128,7 @@ def subject_get(request):
     }
 
     return render(request,'particular_.html',context)
-
+IMAGE_FILE_TYPES2 = ['png', 'jpg', 'jpeg']
 @login_required
 def my_profile(request):
     content = UserProfile.objects.get(user= request.user)
@@ -142,6 +145,13 @@ def my_profile(request):
         #if 'image' in request.FILES:
         if request.FILES:
             content.image = request.FILES.get('myfile')
+            file_type = content.image.url.split('.')[-1]
+            file_type = file_type.lower()
+            if file_type not in IMAGE_FILE_TYPES2:
+                messages.warning(request, 'Please check the image you uploaded')
+                return render(request, 'error.html')
+            else:
+                content.save()
         content.save()
         messages.success(request, 'Profile details updated.')
     return render(request,'my_profile.html',context)
@@ -240,12 +250,14 @@ def upload_to(request):
             file_type = save_form.attached_file.url.split('.')[-1]
             file_type = file_type.lower()
             if file_type not in DOC_FILE_TYPES:
+                messages.warning(request, 'Please check the document you uploaded')
                 return render(request, 'error.html')
             save_form.video= request.FILES['videos']
 
             file_type2 = save_form.video.url.split('.')[-1]
             file_type2 = file_type2.lower()
             if file_type2 not in VID_FILE_TYPES:
+                messages.warning(request, 'Please check the video you uploaded')
                 return render(request, 'error.html')
             attached_file = request.FILES['attached_file']
             print(attached_file)
@@ -334,14 +346,19 @@ def overview(request):
                 file_type = save_form.image.url.split('.')[-1]
                 file_type = file_type.lower()
                 if file_type not in IMAGE_FILE_TYPES:
+                    messages.warning(request, 'Please check the image you uploaded')
                     return render(request, 'error.html')
                 # else:
                 #     print('image in')
-                save_form.video= request.FILES['video']
-                file_type2 = save_form.video.url.split('.')[-1]
-                file_type2 = file_type2.lower()
-                if file_type2 not in VID_FILE_TYPES:
-                    return render(request, 'error.html')
+                try:
+                    save_form.video= request.FILES['video']
+                    file_type2 = save_form.video.url.split('.')[-1]
+                    file_type2 = file_type2.lower()
+                    if file_type2 not in VID_FILE_TYPES:
+                        messages.warning(request, 'Please check the video you uploaded')
+                        return render(request, 'error.html')
+                except:
+                    pass
                 save_form.save()
                 print('done_saving')
                 messages.info(request, "Overview successfully added,now continue to the class")
@@ -390,14 +407,19 @@ def overview(request):
                     file_type = save_form.image.url.split('.')[-1]
                     file_type = file_type.lower()
                     if file_type not in IMAGE_FILE_TYPES:
+                        messages.warning(request, 'Please check the image you uploaded')
                         return render(request, 'error.html')
                     # else:
                     #     print('image in')
-                    save_form.video= request.FILES['video']
-                    file_type2 = save_form.video.url.split('.')[-1]
-                    file_type2 = file_type2.lower()
-                    if file_type2 not in VID_FILE_TYPES:
-                        return render(request, 'error.html')
+                    try:
+                        save_form.video= request.FILES['video']
+                        file_type2 = save_form.video.url.split('.')[-1]
+                        file_type2 = file_type2.lower()
+                        if file_type2 not in VID_FILE_TYPES:
+                            messages.warning(request, 'Please check the video you uploaded')
+                            return render(request, 'error.html')
+                    except:
+                        pass
                     save_form.save()
                     print('done_saving')
                     messages.info(request, "Overview successfully added,now continue to the class")
@@ -627,43 +649,46 @@ def apply_to_teach(request):
 
 
     if request.method=='POST':
-        form = Applyform(request.POST, request.FILES)
-        form.fields['user'].initial= request.user
-        form.fields['user_profile'].initial= request.user.userprofile
-        schools_taught = request.POST.get('schools_taught')
-        current_school = request.POST.get('current_school')
-        level_of_teaching = request.POST.get('level_of_teaching')
-        teacher_registration_id = request.POST.get('teacher_registration_id')
-        subject_one = request.POST.get('subject_one')
-        subject_two = request.POST.get('subject_two')
-        Brief_Self_description = request.POST.get('Brief_Self_description')
-        apply_data = Teacher_apply(
-            user=request.user,
-            user_profile=request.user.userprofile,
-            schools_taught=schools_taught,
-            current_school=current_school,
-            level_of_teaching=level_of_teaching,
-            teacher_registration_id=teacher_registration_id,
-            subject_one=subject_one,
-            subject_two=subject_two,
-            Brief_Self_description =Brief_Self_description
+        if request.user.userprofile.email != '':
+            form = Applyform(request.POST, request.FILES)
+            form.fields['user'].initial= request.user
+            form.fields['user_profile'].initial= request.user.userprofile
+            schools_taught = request.POST.get('schools_taught')
+            current_school = request.POST.get('current_school')
+            level_of_teaching = request.POST.get('level_of_teaching')
+            teacher_registration_id = request.POST.get('teacher_registration_id')
+            subject_one = request.POST.get('subject_one')
+            subject_two = request.POST.get('subject_two')
+            Brief_Self_description = request.POST.get('Brief_Self_description')
+            apply_data = Teacher_apply(
+                user=request.user,
+                user_profile=request.user.userprofile,
+                schools_taught=schools_taught,
+                current_school=current_school,
+                level_of_teaching=level_of_teaching,
+                teacher_registration_id=teacher_registration_id,
+                subject_one=subject_one,
+                subject_two=subject_two,
+                Brief_Self_description =Brief_Self_description
 
-        )
-        apply_data.save()
-        email=request.user.userprofile.email
-        name = request.user
-        message =f"""
-        I want to become a teacher:
-        Firstname: {request.user.userprofile.firstname}
-        Lastname : {request.user.userprofile.lastname}
-        TeacherID: {teacher_registration_id} 
-        """
+            )
+            apply_data.save()
+            email=request.user.userprofile.email
+            name = request.user
+            message =f"""
+            I want to become a teacher:
+            Firstname: {request.user.userprofile.firstname}
+            Lastname : {request.user.userprofile.lastname}
+            TeacherID: {teacher_registration_id} 
+            Email : {request.user.userprofile.email}
+            """
 
-        messages.info(request, "Your application has been successfully submitted for review, an e-mail will be sent to verify your account")
-        email = EmailMessage(subject= f'{request.user.userprofile.firstname} {request.user.userprofile.lastname} --- Applying to teach',body=message,to=['admin@virtualclass.ug'],headers={'Message-ID': name },reply_to=[email])
-        email.send()
-        return redirect('e_learning:home_view')
-
+            messages.info(request, "Your application has been successfully submitted for review, an e-mail will be sent to verify your account")
+            email = EmailMessage(subject= f'{request.user.userprofile.firstname} {request.user.userprofile.lastname} --- Applying to teach',body=message,to=['admin@virtualclass.ug'],headers={'Message-ID': name },reply_to=[email])
+            email.send()
+            return redirect('e_learning:home_view')
+        else:
+            messages.warning(request, "We've realised you did not provide your email.Please first provide your email in your user profile so that we can get back to you. ----> My Profile")
 
 
 
@@ -675,7 +700,14 @@ def subject_topic(request):
 
 @login_required
 def e_lib(request):
-	return render(request,'e_library.html')
+    all_subjects = Subjects.objects.all()
+    for subject_filter in all_subjects:
+        print(subject_filter.subject_name)
+        recommend_subjects = Recommend_Subjects_Table.objects.filter(subject_name = subject_filter.subject_name)
+    context={
+        'recommend_subjects':recommend_subjects,
+    }
+    return render(request,'e_library.html',context)
 
 def subscription_approval(request,slug):
     overview2=PaymentRecords.objects.get(subject_overview__exact=slug,student__exact=request.user)
@@ -1233,13 +1265,20 @@ def my_uploaded(request,slug):
     uploaded=Subjects_overview.objects.get(id=slug)
     print(slug)
     Subjects_overview.objects.get(id=slug).delete()
-    Upload_topics.objects.get(id=slug).delete()
+    try:
+        Upload_topics.objects.get(id=slug).delete()
+    except ObjectDoesNotExist :
+        pass
     #########Delete item from here##############
     messages.info(request, "Subject s deleted")
     return redirect('e_learning:my_uploaded_subjects')
 
+IMAGE_FILE_TYPES3 = ['png', 'jpg', 'jpeg']
+VID_FILE_TYPES = ['mp4']
 @login_required
 def edit_my_uploaded(request,slug):
+    p = re.compile('([^\W]+)')
+    form = Overviewform()
     subject=Teacher_apply.objects.filter(user=request.user.id)
     print(request.user)
     subject_one=subject[0].subject_one
@@ -1264,6 +1303,54 @@ def edit_my_uploaded(request,slug):
 
         no_of_chats = Chat.objects.filter(members= request.user.id)
         no_of_chats = no_of_chats.count()
+        form = Overviewform(initial={'over_view': uploaded.over_view,'image':uploaded.image,'video':uploaded.video,'duration':uploaded.duration,'price':uploaded.price,'subject':uploaded.subject,"class_n":uploaded.class_n,'teacher':uploaded.teacher})
+        if request.method=='POST':
+            if form.is_valid:
+                form = Overviewform(request.POST, request.FILES)
+                duration_update =request.POST.get('duration')
+                # uploaded.subject =request.POST.get('subject')
+                # uploaded.class_n =request.POST.get('class_n')
+                # uploaded.teacher =request.POST.get('teacher')
+                uploaded.over_view =request.POST.get('over_view')
+                uploaded.save()
+                try:
+                    splits=p.findall(f"{request.POST.get('duration')}")
+                    uploaded.duration =datetime.timedelta(days=int(splits[0]),hours=int(splits[1]),minutes=int(splits[2]),seconds=int(splits[3]))
+                    uploaded.save()
+                except:
+                    pass
+                uploaded.price =request.POST.get('price')
+                uploaded.save()
+                if request.FILES.get('image')==None:
+                    pass
+                else:
+                    uploaded.image = request.FILES.get('image')
+                    file_type = uploaded.image.url.split('.')[-1]
+                    file_type = file_type.lower()
+                    if file_type not in IMAGE_FILE_TYPES3:
+                        messages.warning(request, 'Please check the image you uploaded')
+                        return render(request, 'error.html')
+                    else:
+                        uploaded.save()
+
+                if request.FILES.get('video')== None:
+                    pass
+                else:
+                    uploaded.video= request.FILES.get('video')
+                    file_type = uploaded.video.url.split('.')[-1]
+                    file_type = file_type.lower()
+                    if file_type not in VID_FILE_TYPES:
+                        messages.warning(request, 'Please check the video you uploaded')
+                        return render(request, 'error.html')
+                    else:
+                        uploaded.save()
+                print('done_saving')
+                messages.info(request, "Topic successfully updated")
+                return redirect('e_learning:my_uploaded_subjects')
+            else:
+                messages.warning(request, "please fill all feilds")
+
+
 
         context={
                 'subject_two':subject_two,
@@ -1271,6 +1358,7 @@ def edit_my_uploaded(request,slug):
                 'counter':counter,
                 'no_of_chats':no_of_chats,
                 'no_of_students':no_of_students,
+                'form':form,
             }
         return render(request,'teacher_edit_subject_topics.html',context)
     else:
@@ -1292,13 +1380,62 @@ def edit_my_uploaded(request,slug):
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
-            print(counter,'999000000000')
+            #print(counter,'999000000000')
 
             retrieved_commented = retrieve_my_comments[:4]
-            print(retrieved_commented)
+            #print(retrieved_commented)
 
             for notification in retrieved_commented:
                 notifications = notification.body
+            form = Overviewform(initial={'over_view': uploaded.over_view,'image':uploaded.image,'video':uploaded.video,'duration':uploaded.duration,'price':uploaded.price,'subject':uploaded.subject,"class_n":uploaded.class_n,'teacher':uploaded.teacher})
+            if request.method=='POST':
+                if form.is_valid:
+                    form = Overviewform(request.POST, request.FILES)
+                    duration_update =request.POST.get('duration')
+                    # uploaded.subject =request.POST.get('subject')
+                    # uploaded.class_n =request.POST.get('class_n')
+                    # uploaded.teacher =request.POST.get('teacher')
+                    uploaded.over_view =request.POST.get('over_view')
+                    uploaded.save()
+                    
+                    try:
+                        splits=p.findall(f"{request.POST.get('duration')}")
+                        uploaded.duration =datetime.timedelta(days=int(splits[0]),hours=int(splits[1]),minutes=int(splits[2]),seconds=int(splits[3]))
+                        uploaded.save()
+                    except:
+                        pass
+                    
+                    uploaded.price =request.POST.get('price')
+                    uploaded.save()
+                    if request.FILES.get('image')==None:
+                        pass
+                    else:
+                        uploaded.image = request.FILES.get('image')
+                        file_type = uploaded.image.url.split('.')[-1]
+                        file_type = file_type.lower()
+                        if file_type not in IMAGE_FILE_TYPES3:
+                            messages.warning(request, 'Please check the image you uploaded')
+                            return render(request, 'error.html')
+                        else:
+                            uploaded.save()
+
+                    if request.FILES.get('video')== None:
+                        pass
+                    else:
+                        uploaded.video= request.FILES.get('video')
+                        file_type = uploaded.video.url.split('.')[-1]
+                        file_type = file_type.lower()
+                        if file_type not in VID_FILE_TYPES:
+                            messages.warning(request, 'Please check the video you uploaded')
+                            return render(request, 'error.html')
+                        else:
+                            uploaded.save()
+                    print('done_saving')
+                    messages.info(request, "Topic successfully updated")
+                    return redirect('e_learning:my_uploaded_subjects')
+                else:
+                    messages.warning(request, "please fill all feilds")
+            
 
             context={
                 'subject_two':subject_two,
@@ -1310,6 +1447,7 @@ def edit_my_uploaded(request,slug):
                 'no_of_chats':no_of_chats,
                 'edit_uploaded':edit_uploaded,
                 'subject_name':subject_name,
+                'form':form,
             }
             return render(request,'teacher_edit_subject_topics.html',context)
 
@@ -1348,8 +1486,24 @@ def edit_my_topic(request,slug):
         #print(class_level)
         # edit_uploaded.subject = request.POST.get('subject')
         # print(subject)
-        edit_uploaded.attached_file = request.FILES.get('attached_file')
-        edit_uploaded.videos= request.FILES.get('videos')
+        if request.FILES.get('attached_file')!=None:
+            edit_uploaded.attached_file = request.FILES.get('attached_file')
+            file_type = edit_uploaded.attached_file.url.split('.')[-1]
+            file_type = file_type.lower()
+            if file_type not in DOC_FILE_TYPES:
+                messages.warning(request, 'Please check the document you uploaded')
+                return render(request, 'error.html')
+            else:
+                edit_uploaded.save()
+        if request.FILES.get('videos')!=None:
+            edit_uploaded.videos= request.FILES.get('videos')
+            file_type = edit_uploaded.videos.url.split('.')[-1]
+            file_type = file_type.lower()
+            if file_type not in VID_FILE_TYPES:
+                messages.warning(request, 'Please check the video you uploaded')
+                return render(request, 'error.html')
+            else:
+                edit_uploaded.save()
         #attached_file = request.FILES['attached_file']
         # print(attached_file)
         # videos = request.FILES['videos']
@@ -1508,6 +1662,100 @@ def transaction_details(request):
                 'retrieved_commented':retrieved_commented,
             }
             return render(request,'transaction_details.html',context)
+
+@login_required
+def e_books(request):
+    subject=Teacher_apply.objects.filter(user=request.user.id)
+    print(request.user)
+    subject_one=subject[0].subject_one
+    subject_two=subject[0].subject_two
+
+    my_teacher_id=Teacher_apply.objects.get(user= request.user.id)
+    current_teacher = my_teacher_id.id
+    print(current_teacher,'kkkkkkkk')
+
+    list_of_students = []
+
+    retrieve_my_students = Subscription.objects.filter(teacher__exact=current_teacher)
+    no_of_students = retrieve_my_students.count()
+    for students_retrieved in retrieve_my_students:
+        my_student = students_retrieved.student
+        list_of_students.append(my_student)
+    print(list_of_students,'99999999999999999999')
+
+    if len(list_of_students) == 0:
+        counter = 0
+        no_of_students = 0
+
+        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = no_of_chats.count()
+
+        recommend_one = Recommend_Subjects_Table.objects.filter(subject_name__exact=subject_one)
+        recommend_two = Recommend_Subjects_Table.objects.filter(subject_name__exact=subject_two)
+
+        context={
+                'subject_two':subject_two,
+                'subject_one':subject_one,
+                'counter':counter,
+                'no_of_chats':no_of_chats,
+                'no_of_students':no_of_students,
+                'recommend_one':recommend_one,
+                'recommend_two':recommend_two
+            }
+        return render(request,'e_books.html',context)
+    else:
+        for my_studnts in list_of_students:
+            print(my_studnts)
+
+            retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
+            counter = retrieve_my_comments.count()
+            print(counter,'999000000000')
+
+            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = no_of_chats.count()
+
+            recommend_one = Recommend_Subjects_Table.objects.filter(subject_name__exact=subject_one)
+            recommend_two = Recommend_Subjects_Table.objects.filter(subject_name__exact=subject_two)
+
+            retrieved_commented = retrieve_my_comments[:4]
+            print(retrieved_commented)
+
+            for notification in retrieved_commented:
+                notifications = notification.body
+
+            context={
+                'subject_two':subject_two,
+                'subject_one':subject_one,
+                'counter':counter,
+                'no_of_students':no_of_students,
+                'no_of_chats':no_of_chats,
+                'retrieved_commented':retrieved_commented,
+                'recommend_one':recommend_one,
+                'recommend_two':recommend_two
+            }
+            return render(request,'e_books.html',context)
+
+IMAGE_FILE_TYPES4 = ['png', 'jpg', 'jpeg']
+@login_required
+def recommend_book(request):
+     if request.method == 'POST':
+        subject_name = request.POST.get('subject_name')
+        class_level = request.POST.get('class_level')
+        book_title = request.POST.get('book_title')
+        book_cover_image = request.FILES.get('book_cover_image')
+        attach_book = request.FILES.get('attach_book')
+        recommended_by = request.POST.get('recommended_by')
+        recommend_form = Recommend_Subjects_Table(
+                    subject_name=subject_name,
+                    class_level=class_level,
+                    book_title=book_title,
+                    book_cover_image=book_cover_image,
+                    attach_book=attach_book,
+                    recommended_by=recommended_by,
+                        )
+        recommend_form.save()
+        messages.info(request, "A New Book Has Been Recommended")
+        return redirect('e_learning:e_books')
 
 
 def FAQ(request):

@@ -49,9 +49,43 @@
 </head>
 <body id="page-top" >
 
+<style>
+
+.img-holder {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+}
+.img-holders {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  padding: 1px;
+  border: 1px solid #ddd;
+}
+.change-color:hover
+{
+color:black !important;
+display: block;
+transform: scale(1.05)!important;
+transition: all 0.1s ease-in-out 0.1s !important;
+}
+.change-colors:hover
+{
+color:black !important;
+transform: scale(1.05)!important;
+transition: all 0.1s ease-in-out 0.1s !important;
+}
+.dropdown:hover .on_click {color: black !important;}
+
+</style>
+
 <!--navbar start--->
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow pt-3 pb-3">
-  <a class="navbar-brand font-weight-normal display-1" href="#">
+  <a class="navbar-brand font-weight-normal display-1" href="/">
   <img src="{% static 'e_learning/image/logo.PNG' %}" width="43" height="43" class="d-inline-block" alt="">Virtual<span style="color: #428bca;">-Class</span>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,21 +95,21 @@
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2" href="{% url 'e_learning:home_view' %}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2 change-color" href="{% url 'e_learning:home_view' %}">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2" href="{% url 'e_learning:about' %}">About<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2 change-color" href="{% url 'e_learning:about' %}">About<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400" href="{% url 'e_learning:my_subjects' %}">My Subjects</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400 change-color" href="{% url 'e_learning:my_subjects' %}">My Subjects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400" href="{% url 'e_learning:e_lib' %}">E-Library</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400 change-color" href="#">E-Library</a>
       </li>
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img class="img-profile rounded-circle mr-2" src="{{ user.userprofile.image.url}}" width="33" height="33">
-          <span class="mr-2 d-lg-inline text-gray-600 small">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
+          <span class="mr-2 d-lg-inline text-gray-600 small  change-colors on_click">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
         </a>
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -209,6 +243,9 @@
           </li>
           <li>
             <a class="text-dark" href="{% url 'e_learning:contact_us' %}" style="font-size: 14px;">Contact_us</a>
+          </li>
+          <li>
+            <a class="text-dark" href="#" style="font-size: 14px;">E-Library</a>
           </li>
         </ul>
 

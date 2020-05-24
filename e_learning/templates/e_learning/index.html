@@ -8,23 +8,23 @@
     <div class="carousel-inner" role="listbox">
         <div class="carousel-item">
             <div class="jumbotron pulse animated hero-nature carousel-hero">
-                <h1 class="hero-title">College, Secondary <br>School Education</h1>
-                <p class="hero-subtitle">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-                <p><a class="btn btn-primary hero-button plat text-white" role="button" href="{% url 'e_learning:contact_us'%}" style="border-radius: 18px;">Contact Us</a></p>
+                <h1 class="hero-title" style="font-size: 30px;">College, Secondary <br>School Education </h1>
+                    <p class="hero-subtitle" style="font-size: 20px;">Learn at your own comfort and expand your knowledge base through online lesson</p>
+                    <a class="btn btn-primary pl-4 hero-button pr-4 plat donate" role="button" href="{% url 'e_learning:contact_us'%}"  target="_blank">Contact Us</a>
             </div>
         </div>
         <div class="carousel-item">
             <div class="jumbotron pulse animated hero-photography carousel-hero">
-                <h1 class="hero-title">College, Secondary <br>School Education</h1>
-                <p class="hero-subtitle">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-                <p><a class="btn btn-primary hero-button plat text-white" role="button" href="{% url 'e_learning:contact_us'%} style="border-radius: 18px;">Contact Us</a></p>
+                <h1 class="hero-title" style="font-size: 30px;">College, Secondary <br>School Education </h1>
+                    <p class="hero-subtitle" style="font-size: 20px;">Learn at your own comfort and expand your knowledge base through online lesson</p>
+                    <a class="btn btn-primary pl-4 pr-4 hero-button plat donate" role="button" href="{% url 'e_learning:contact_us'%}"  target="_blank">Contact Us</a>
             </div>
         </div>
         <div class="carousel-item active">
             <div class="jumbotron pulse animated hero-technology carousel-hero">
-                <h1 class="hero-title">College, Secondary <br>School Education</h1>
-                <p class="hero-subtitle">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-                <p><a class="btn btn-primary hero-button plat text-white" role="button" href="{% url 'e_learning:contact_us'%}" style="border-radius: 18px;">Contact Us</a></p>
+                <h1 class="hero-title" style="font-size: 30px;">College, Secondary <br>School Education </h1>
+                    <p class="hero-subtitle" style="font-size: 20px;">Learn at your own comfort and expand your knowledge base through online lesson</p>
+                    <a class="btn btn-primary pl-4 pr-4 hero-button plat donate" role="button" href="{% url 'e_learning:contact_us'%}"  target="_blank">Contact Us</a>
                 <section></section>
             </div>
         </div>
@@ -37,27 +37,36 @@
         <li data-target="#carousel-1" data-slide-to="2" class="active"></li>
         </ol>
     </div>
+    <div class="text-center" style="background-color:#fbfbfb;">
+  <p class="text-primary pt-3 pb-3 slider_foot" style="font-size: 20px !important;font-weight: 500;">
+    <span class="text-dark">
+      Virtual<span class="text-primary">-Class</span>
+    </span>
+     "Extending Education"
+  </p>
+</div>
 </section>
-<div class="container mb-3 mt-2">
-	<div class="row mt-4 justify-content-center">
-		<div class="col-md-9">
-			<h3 class="text-center">Welcome to Virtual<span class="text-primary">-Class</span><br>e-learning platform</h3>
-			<h5 class= "pt-4 text-center">
-          Virtual<span class="text-primary">-Class</span> is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
-        </h5>
+<div class="container mb-3 mt-1">
+	<div class="row justify-content-center">
+		<div class="col-md-12">
+			<h3 class="text-center"></h3>
+            <h1 style="font-size: 23px;" class="text-center text-bold text-dark">Welcome to Virtual<span class="text-primary">-Class</span><br>e-learning platform</h1>
+        <p style="font-size: 18px;" class="text-justify pt-2">
+            Virtual<span class="text-primary">-Class</span> is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
+            </p>
 		</div>
 	</div>
 </div>
 <div class="container-fluid mb-5">
-	<div class="card shadow mt-5 pb-4">
-		<h4 class="text-center pt-3">What We offer?</h4>
+	<div class="card shadow mt-3 pb-4">
+		<h1 style="font-size: 23px;" class="text-center text-bold text-dark  pt-3">What We Offer ?</h1>
 		<div class="row p-3">
 		{% for content in lista_all %}
         <div class="col-md-3 p-3">
             <div class="card shadow w-100 h-100" style="width: 18rem;">
               <img class="card-img-top" src="{{content.0}}" alt="Card image cap" style="height: 200px;">
               <div class="card-body text-center">
-              <h5 class="card-text text-center text-capitalize text-primary">{{ content.1}} ({{content.2}})</h5>
+              <h1 style="font-size: 18px;" class="card-text text-center text-capitalize text-primary pt-3">{{ content.1}} ({{content.2}})</h1>
               </div>
               <div class="text-center">
                   <hr>

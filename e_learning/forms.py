@@ -97,6 +97,9 @@ class Overviewform(forms.ModelForm):
         'video',
         'price'
         ,]
+        labels ={
+                'video':'Video [leave blank if you donot a video at the moment, but you can still upload later!]',
+        }
 
 class Applyform(forms.ModelForm):
     class Meta:

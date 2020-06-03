@@ -1,0 +1,110 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+{% load admin_urls %}
+{% block title %}{{ title }} | {{ site_title|default:_('VirtualClass site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ Approve |default:_('VirtualClass administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel='stylesheet' type='text/css' href="{% static 'e_learning/admin/css/forms.css' %}">
+<link rel="stylesheet" href="{% static 'e_learning/css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; {% trans 'Approve application' %}
+</div>
+{% endblock %}
+{% endif %}
+{% block content %}
+<div id="content-main">
+    {% if not applied %}
+    <h1> No new applicants</h1>
+    {% else %}
+    <h1> Applications from Teachers </h1>
+  
+        
+        <table class="table table-hover">
+            <thead>
+              <tr>
+               
+                    <th scope="col">FirstName</th>
+                    <th scope="col">LastName</th>
+                    <th scope="col">School taught</th>
+                    <th scope="col">Current School</th>
+                    <th scope="col">Level Taught</th>
+                    <th scope="col">Subjects taught</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date applied</th>
+                    <th scope="col">actions</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for applie in applied %}
+                    <tr>
+                   
+                    <td>{{ applie.user_profile.id}}</td>
+                    <td>{{ applie.user_profile.lastname}}</td>
+                    <td>{{ applie.schools_taught}}</td>
+                    <td>{{ applie.current_school}}</td>
+                    <td>{{ applie.level_of_teaching }}</td>
+                    <td>{{ applie.subject_one }} , {{ applie.subject_two }}</td>
+                    <td>{{ applie.Brief_Self_description }}</td>
+                    <td>{{ applie.date_of_record }}</td>
+                    <td><a class="btn btn-primary btn-sm" href="{{applie.get_absolute_urls}}">Accept</a> |
+                        <a class="btn btn-secondary  btn-sm" href="{{applie.get_absolute_urls}}" data-toggle="modal" data-target="#staticBackdrop">Decline</a>
+
+                    </td>
+
+
+                    </tr>
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel"                                   aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Reason for Decline</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                
+                            <form action="{% url 'e_learning:decline' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <textarea id="my-textarea" class="form-control" name="declines" rows="3"></textarea>
+                                    <input type="hidden" value="{{applie.user_profile.email}}" name ="starboy">
+                                </div>
+            
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning">Submit</button>
+            
+                            </form>
+            
+                            </div>
+                            
+                            
+                            
+                        </div>
+                        </div>
+                    </div>
+                {% endfor%}
+            </tbody>
+          </table>
+
+    {% endif %}
+  
+ 
+       
+</div>
+{% endblock %}
+

@@ -10,32 +10,371 @@
       <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:e_lib' %}" >E-Library</a></li>
     </ol>
  </nav>
-<div class="container-fluid pl-5 pr-5 pb-4">
-    <h2 class="text-center pb-1 text-primary" style="font-size: 20px;">BOOKS</h2>
-    <div class="row justify-content-center pt-1">
+<div class="container pb-4">
+    <h2 class="text-center pb-1 text-dark" style="font-size: 22px;"><b>BOOKS</b></h2>
+    <div class="row justify-content-center">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="card shadow-sm mb-3 pb-3 h-100 pl-2 pr-2 pt-2">
-        {% if recommend_subjects %}
         <div class="row">
-                {% for my_recommends in recommend_subjects %}
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Mathematics</h1>
+                </div>
+                {% if recommended_math_book %}
+                {% for my_recommends in recommended_math_book %}
                 <div class="col-md-2 col-lg-2">
-                <h1 class="text-primary text-uppercase text-center pb-2" style="font-size: 18px;">{{my_recommends.subject_name}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                        <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
                 <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
-                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:<br>{{my_recommends.recommended_by}}</h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
-           {% endfor %}
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Mathematics book has been recommended yet!</h1>
+            </div>
+           {% endif %}
         </div>
-        {% else %}
-        <div class="row pr-2 pl-2 pb-2">
-        	<div class="col-md-12">
-        		<h1 class="text-center mt-2 text-muted" style="font-family: Times;">Ooops</h1>
-		         <h3 class="text-center mt-3 text-muted" style="font-family: Times;">No Book Has Been Recommended To <br>Students Yet!</h3>
-        	</div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">English</h1>
+                </div>
+                {% if recommended_english_book %}
+                {% for my_recommends in recommended_english_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No English book has been recommended yet!</h1>
+            </div>
+           {% endif %}
         </div>
-        {% endif %}
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Biology</h1>
+                </div>
+                {% if recommended_biology_book %}
+                {% for my_recommends in recommended_biology_book %}
+               <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Biology book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Chemistry</h1>
+                </div>
+                {% if recommended_chemistry_book %}
+                {% for my_recommends in recommended_chemistry_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Chemistry book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Physics</h1>
+                </div>
+                {% if recommended_physics_book %}
+                {% for my_recommends in recommended_physics_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Physics book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Geography</h1>
+                </div>
+                {% if recommended_geography_book %}
+                {% for my_recommends in recommended_geography_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Geography book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">History</h1>
+                </div>
+                {% if recommended_history_book %}
+                {% for my_recommends in recommended_history_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No History book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Agriculture</h1>
+                </div>
+                {% if recommended_agric_book %}
+                {% for my_recommends in recommended_agric_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Agriculture book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Computer</h1>
+                </div>
+                {% if recommended_computer_book %}
+                {% for my_recommends in recommended_computer_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">Computer book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">French</h1>
+                </div>
+                {% if recommended_french_book %}
+                {% for my_recommends in recommended_french_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No French book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Art</h1>
+                </div>
+                {% if recommended_art_book %}
+                {% for my_recommends in recommended_art_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Art book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Lugbara Ti</h1>
+                </div>
+                {% if recommended_lugbara_book %}
+                {% for my_recommends in recommended_lugbara_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Lugbara Ti book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Luganda</h1>
+                </div>
+                {% if recommended_luganda_book %}
+                {% for my_recommends in recommended_luganda_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Luganda book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Chinese</h1>
+                </div>
+                {% if recommended_chinese_book %}
+                {% for my_recommends in recommended_chinese_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Chinese book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Islam</h1>
+                </div>
+                {% if recommended_Islam_book %}
+                {% for my_recommends in recommended_Islam_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Islam book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">Kiswahili</h1>
+                </div>
+                {% if recommended_kiswahili_book %}
+                {% for my_recommends in recommended_kiswahili_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No Kiswahili book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">German</h1>
+                </div>
+                {% if recommended_german_book %}
+                {% for my_recommends in recommended_german_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No German book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
+        <div class="row pt-5">
+                <div class="col-md-12 col-lg-12 pb-2">
+                    <h1 class="text-primary text-uppercase" style="font-size: 18px;">General Paper</h1>
+                </div>
+                {% if recommended_general_paper_book %}
+                {% for my_recommends in recommended_general_paper_book %}
+                <div class="col-md-2 col-lg-2">
+                <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
+                <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
+                </div>
+            {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No General Paper book has been recommended yet!</h1>
+            </div>
+           {% endif %}
+        </div>
         </div>
         </div>
     </div>

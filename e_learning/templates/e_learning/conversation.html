@@ -10,9 +10,9 @@
   <ol class="breadcrumb" style="background-color: #fdfdff !important;">
     <li class="breadcrumb-item text-dark" aria-current="page"><a href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
     </li>
-    <li class="breadcrumb-item text-dark" aria-current="page"><a href="{% url 'e_learning:teacher_homepage' %}">Subject To Reply To</a>
+    <li class="breadcrumb-item text-dark" aria-current="page"><a href="{% url 'e_learning:dialogs' %}">ChatRoom</a>
     </li>
-    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_alerts' %}">notifications</a>
+    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_alerts' %}">{{chat_title}}</a>
     </li>
   </ol>
 </nav>
@@ -23,7 +23,8 @@
           <div class="card-body">
             <div class="row mb-5 justify-content-center">
                 <div class="col-md-10">
-                    <h4 class="text-dark" style="font-family: Times;">{{ comments.count }} comments</h4>
+                    <h2 class="pt-2 text-center text-primary pb-2" style="color: #223f80 ;font-size: 20px;"><b>{{chat_title}}</b></h2>
+                    <h4 class="text-dark pb-2" style="font-family: Times;">{{ comments.count }} comments</h4>
                     {% for comment in comments %}
                     <div class="comments">
                       <div class="row border-left-primary" style="border-radius: 30px; background-color: #f6f6f9 !important;">
@@ -34,7 +35,7 @@
                           <h6 class="text-dark ml-4 pt-2 pb-1" style="font-size: 15px;">{{ comment.body | linebreaks }}</h6>
                       </div>
                       <div class="col-md-3 comment_create">
-                          <p class="ml-5 comment_created"><small>{{ comment.created_on }}</small></p>
+                          <p class="ml-2 comment_created"><small style="font-size: 12px;">{{ comment.created_on }}</small></p>
                       </div>
                       </div>
                       {% if comment.replies.all%}
@@ -50,7 +51,7 @@
                           <div class="col-md-3">
                               <div class="reply-body ">
                                   <ul class="list-inline">
-                                      <li class="ml-5"><small>{{ replay.created_on }}</small></li>
+                                      <li class="ml-2"><small style="font-size: 12px;">{{ replay.created_on }}</small></li>
                                   </ul>
                               </div>
                           </div>
@@ -70,10 +71,10 @@
                     <div class="collapse" id="demo">
                     <h6 class="text-dark" style="font-family: Times;">Reply</h6>
                     <form method="post">
-                      {{ comment_form.name.as_hidden }}
-                      {{ comment_form.user_image.as_hidden }}
-                      {{ comment_form.email.as_hidden }}
-                      {{ comment_form.body |as_crispy_field}}
+                            {{ comment_form.name.as_hidden }}
+                            {{ comment_form.user_image.as_hidden }}
+                            {{ comment_form.email.as_hidden }}
+                            {{ comment_form.body | as_crispy_field}}
                       <!--<textarea class="form-control" rows="3" placeholder="Reply"></textarea>-->
                       {% csrf_token %}
 
@@ -92,10 +93,10 @@
                 {% else %}
                 <h4 class="text-dark" style="font-family: Times; font-size: 20px;">Leave a comment</h4>
                 <form method="post">
-                      {{ comment_form.name.as_hidden }}
-                      {{ comment_form.user_image.as_hidden }}
-                      {{ comment_form.email.as_hidden }}
-                      {{ comment_form.body |as_crispy_field}}
+                  {{ comment_form.name.as_hidden }}
+                  {{ comment_form.user_image.as_hidden }}
+                  {{ comment_form.email.as_hidden }}
+                  {{ comment_form.body |as_crispy_field}}
                   <!--<textarea class="form-control" rows="5" placeholder="Enter Your Comment"></textarea>-->
                   {% csrf_token %}
                   <div class="text-left mt-2">

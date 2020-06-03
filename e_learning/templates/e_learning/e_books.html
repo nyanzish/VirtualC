@@ -14,9 +14,9 @@
 </nav>
 <div class="container-fluid bg-white pb-3">
 <!-- Page Heading -->
-<div class="row pt-3 pb-2">
+<div class="row pt-4 pb-2">
 <div class="col-md-6 col-lg-6 col-sm-12">
-    <h2 class="text-left text-muted" style="font-size: 20px;">My Recommended Books</h2>
+    <h2 class="text-left text-dark" style="font-size: 20px;"><b>My Recommended Books</b></h2>
 </div>
 <div class="col-md-6 col-lg-6 pb-2 text-right">
     <a type="button" class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#exampleModalCenter">
@@ -31,8 +31,9 @@
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">{{subject_one}}</h1>
                 </div>
+                {% if recommend_one %}
                 {% for my_subject_one in recommend_one %}
-                <div class="col-md-2 col-lg-2">
+                <div class="col-md-3 col-lg-3">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_subject_one.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 14px;">{{my_subject_one.class_level}}</h1>
                         <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_subject_one.book_cover_image.url}}"></div>
@@ -40,13 +41,19 @@
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_subject_one.recommended_by}}</h1>
                 </div>
            {% endfor %}
+           {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No {{subject_one}} book has been recommended yet!</h1>
+            </div>
+           {% endif %}
         </div>
         <div class="row pt-5">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">{{subject_two}}</h1>
                 </div>
+                {% if recommend_two %}
                 {% for my_subject_two in recommend_two %}
-                <div class="col-md-2 col-lg-2">
+                <div class="col-md-3 col-lg-3">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_subject_two.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
                     <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_subject_two.book_cover_image.url}}"></div>
@@ -54,6 +61,11 @@
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_subject_two.recommended_by}}</h1>
                 </div>
             {% endfor %}
+            {% else %}
+           <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 18px;">No {{subject_two}} book has been recommended yet!</h1>
+            </div>
+           {% endif %}
         </div>
     </div>
 </div>
@@ -94,8 +106,8 @@
             <input type="file" name='book_cover_image' accept="image/*">
         </div>
         <div class="form-group mt-4 pt-2">
-            <label><i class="fas fa-paperclip" aria-hidden="true"></i></i>&nbsp;Attach Recommended Book:&nbsp;&nbsp;</label>
-            <input type="file" name='attach_book'>
+            <label><i class="fas fa-paperclip" aria-hidden="true" ></i></i>&nbsp;Attach Recommended Book:&nbsp;&nbsp;</label>
+            <input type="file" name='attach_book' accept="application/pdf, application/vnd.ms-excel,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
         </div>
         <div class="form-group">
             <input type="hidden" class="form-control" name="recommended_by" value="{{user.userprofile.firstname}} {{user.userprofile.lastname}}">

@@ -37,7 +37,7 @@
                 </video>
               </div>
               <div class="mt-5">
-                <h6 class="mt-2" style="font-family: Times; color: #3e3838;">Reference Books(Download)</h6>
+                <h6 class="mt-2" style="font-family: Times; color: #3e3838;">Reference Books(Read and Download)</h6>
                 <a href="{{ open_content.attached_file.url}}" target="_blank">{{ open_content.attached_file }}</a>
               </div>
             </div>
@@ -50,7 +50,7 @@
                     <div class="comments">
                       <div class="row border-left-primary" style="border-radius: 30px; background-color: #f6f6f9 !important;">
                       <div class="col-md-9 comment_body">
-                          <a href="{{ the_user_url }}"><img class="img-profile rounded-circle ml-2 mt-2" width="33" height="33" src="{% static 'e_learning/image/logo.PNG' %}">
+                          <a href="{{ the_user_url }}"><img class="img-profile rounded-circle ml-2 mt-2" width="33" height="33" src="{{comment.user_image}}">
                           &nbsp;&nbsp;<strong class="list-group-item-heading"><a href=" ">{{ comment.name }}</a></strong>
                           </a>
                           <h6 class="text-dark ml-4 pt-2 pb-1" style="font-size: 15px;">{{ comment.body | linebreaks }}</h6>
@@ -64,7 +64,7 @@
                         {% for replay in comment.replies.all %}
                         <div class="row border-left-danger ml-5" style="border-radius: 30px; background-color: #f6f6f9 !important;">
                           <div class="col-md-9">
-                              <a href="{{ the_user_url }}"><img class="img-profile rounded-circle ml-2 mt-2" width="33" height="33" src="{% static 'e_learning/image/logo.PNG' %}">
+                              <a href="{{ the_user_url }}"><img class="img-profile rounded-circle ml-2 mt-2" width="33" height="33" src="{{replay.user_image}}">
                               &nbsp;&nbsp;<strong class="list-group-item-heading"><a href=" ">{{ replay.name }}</a></strong>
                               </a>
                               <h6 class="text-dark ml-4 pt-2 pb-1" style="font-size: 15px;">{{ replay.body | linebreaks }}</h6>
@@ -93,6 +93,7 @@
                     <h6 class="text-dark" style="font-family: Times;">Reply</h6>
                     <form method="post">
                       {{ comment_form.name.as_hidden }}
+                      {{ comment_form.user_image.as_hidden }}
                       {{ comment_form.email.as_hidden }}
                       {{ comment_form.body |as_crispy_field}}
                       <!--<textarea class="form-control" rows="3" placeholder="Reply"></textarea>-->
@@ -113,9 +114,10 @@
                 {% else %}
                 <h4 class="text-dark" style="font-family: Times; font-size: 20px;">Leave a comment</h4>
                 <form method="post">
-                  {{ comment_form.name.as_hidden }}
-                  {{ comment_form.email.as_hidden }}
-                  {{ comment_form.body |as_crispy_field}}
+                    {{ comment_form.name.as_hidden }}
+                    {{ comment_form.user_image.as_hidden }}
+                    {{ comment_form.email.as_hidden }}
+                    {{ comment_form.body |as_crispy_field}}
                   <!--<textarea class="form-control" rows="5" placeholder="Enter Your Comment"></textarea>-->
                   {% csrf_token %}
                   <div class="text-left mt-2">

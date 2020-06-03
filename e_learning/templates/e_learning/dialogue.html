@@ -6,6 +6,7 @@
 {% block head_title %}Virtual-Class{% endblock %}
 {% block content %}
 {% load poll_extras %}
+{% load crispy_forms_tags %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb" style="background-color: #fdfdff !important;">
     <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
@@ -21,53 +22,60 @@
                 <div class="col-md-11">
                 {% if chats.count == 0 %}
                 <div class="panel panel-body text-center p-4">
-                    <h4 class="text-dark" style="font-family: Times;">{% trans "There is not a single dialogue <br>started yet !" %}</h4>
+                    <h4 class="text-dark" style="font-family: Times;">"There is not a single dialogue <br>started yet !" </h4>
                     <p class="text-dark pt-4">Click&nbsp;<a href="{% url 'e_learning:choose' %}">here</a>&nbsp;inorder to start a chat</p>
                 </div>
-                {% endif %}
-                <div class="row">
-                    <div class="col-md-9">
-                        <h5 class="text-dark p-2" style="font-family: Times;: ">Available Chats</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <a class="btn btn-outline-primary btn-sm" href="{% url 'e_learning:choose' %}" style="border-radius: 18px;"><i class="fas fa-comments text-dark"></i>&nbsp;Start New Chat</a>
-                    </div>
                 </div>
-                {% for chat in chats %}
-                    {% if chat.message_set.count != 0 %}
-                        {% with last_message=chat.message_set.last %}
-                            {% get_companion user chat as companion %}
-                            <a class="{% if companion == last_message.author and not last_message.is_readed %}unreaded{% endif %}" href="{{ chat.get_absolute_url }}">
-                            <div class="row mt-2" style="border-radius: 20px; background-color: #f6f6f9; !important;">
-                                <div class="col-md-10">
-                                <div class="reply-body">
-                                    <ul class="list-inline">
-                                        <li class="drop-left-padding">
-                                            <!--strong class="list-group-item-heading">{{ companion.username }} Created this chat</strong>-->
-                                            <strong class="list-group-item-heading">Chat about <span class="text-capitalize">{{chat.chat_title}}</span></strong>
-                                        </li>
-                                        <li class="pull-right text-muted"><small>{{ last_message.pub_date }}</small></li>
-                                    </ul>
-                                    {% if companion != last_message.author %}
-                                        <div>
-                                            <img class="img-profile rounded-circle mr-2" src="{{ last_message.author.userprofile.image.url }}" width="33" height="33">
-
-                                            <div class="attached-reply-body {% if not last_message.is_readed %}unreaded{% endif %}">{{ last_message.message|truncatechars_html:"200"|safe|striptags }}</div>
-                                        </div>
-                                    {% else %}
-                                        <div>{{ last_message.message|truncatechars_html:"200"|safe|striptags }}</div>
-                                    {% endif %}
-                                </div>
-                                 </div>
-                                </div>
-                            </a>
-                        {% endwith %}
-                    {% endif %}
-                {% endfor %}
+                {% else%}
+                <div class="row justify-content-center">
+                <div class="col-md-9">
+                    <h5 class="text-dark p-2" style="font-family: Times; ">Available Chats</h5>
+                </div>
+                <div class="col-md-3">
+                    <a data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-sm btn-light bg-white text-center text-dark"><i class="fas fa-comments text-dark"></i>&nbsp;Start New Chat</a>
+                </div>
+                </div>
+                    {% for chat in chats %}
+                    <div class="row mt-4" style="border-radius: 30px; background-color: #ecebeb !important;">
+                    <div class="col-md-12 comment_body">
+                        <div class="container">
+                            <h2 class="pt-3 text-center text-primary pb-2" style="color: #223f80 ;font-size: 18px;"><b>{{chat.title}}</b></h2>
+                            <p class="text-center">
+                            <img class="img-profile rounded-circle ml-2 mt-2" width="39" height="39" src="{{chat.user_profile.userprofile.image.url}}">&nbsp;&nbsp;<span class="text-muted" style="font-size: 14px;">created by:</span><span class="text-capitalize text-dark" style="font-size: 14px;">&nbsp;&nbsp;{{chat.user_profile.userprofile.user.username}}</span><span class="ml-4 pl-4" style="font-size: 13px;"><i class="fa fa-calendar-alt"></i>&nbsp;&nbsp;{{chat.date_of_record}}&nbsp;&nbsp;&nbsp;<i class="fas fa-comment text-muted"></i>&nbsp;comments&nbsp;<span class="badge badge-danger" style="font-size: 12px !important;">5</span></span>
+                            </p>
+                            <div class="text-center pb-3"><a href="{{chat.get_chat_url}}" class="btn btn-light bg-white text-center">Join Chat</a></div>
+                        </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
             </div>
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="text-center text-primary modal-title" style="font-size: 20px;" id="exampleModalLongTitle">Start New Chat</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form  method ="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+              {{form |crispy}}
+          </div>
+          <div class="text-center">
+              <input type="submit" class="btn btn-primary" name ='register' value='Start Now' />
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

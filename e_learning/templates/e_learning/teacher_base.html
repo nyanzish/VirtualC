@@ -45,6 +45,12 @@
   padding: 1px;
   border: 1px solid #ddd;
 }
+.zooma:hover
+  {
+    color: blue !important;
+    transform: scale(1.02)!important;
+    transition: all 0.1s ease-in-out 0.1s !important;
+  }
 .change-color:hover
 {
 color:black !important;
@@ -59,6 +65,24 @@ transform: scale(1.05)!important;
 transition: all 0.1s ease-in-out 0.1s !important;
 }
 .dropdown:hover .on_click {color: black !important;}
+.glow {
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6;
+  }
+  
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px blue, 0 0 40px blue, 0 0 50px blue, 0 0 60px blue, 0 0 70px blue, 0 0 80px blue;
+  }
+}
 
 </style>
 
@@ -113,7 +137,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
     <span>My Students</span></a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="#">
+  <a class="nav-link" href="{% url 'e_learning:e_books' %}">
     <i class="fas fa-book fa-fw "></i>
     <span>E-Books</span></a>
 </li>
@@ -183,7 +207,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
         <a class="nav-link mt-1 pt-2 mr-1 text-dark-400 change-color" href="{% url 'e_learning:my_students' %}">My Students</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-1 text-dark-400 change-color" href="#">E-Books</a>
+        <a class="nav-link mt-1 pt-2 mr-1 text-dark-400 change-color" href="{% url 'e_learning:e_books' %}">E-Books</a>
       </li>
       <li class="nav-item">
         <a class="nav-link mt-1 pt-2 mr-1 text-dark-400 change-color" href="{% url 'e_learning:dialogs' %}">Chat&nbsp;room
@@ -238,10 +262,10 @@ transition: all 0.1s ease-in-out 0.1s !important;
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             My Profile
           </a>
-          <a class="dropdown-item" href="#">
+          <!-- <a class="dropdown-item" href="#">
             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
             Activity Log
-          </a>
+          </a> -->
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -382,7 +406,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
             <a class="text-dark" href="{% url 'e_learning:contact_us' %}" style="font-size: 14px;">Contact_us</a>
           </li>
           <li>
-            <a class="text-dark" href="#" style="font-size: 14px;">E-Library</a>
+            <a class="text-dark" href="{% url 'e_learning:e_lib' %}" style="font-size: 14px;">E-Library</a>
           </li>
         </ul>
 
@@ -423,7 +447,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
      <div class="row pb-4 pt-2">
       <div class="col-md-9 pl-5">
           <div class="footer-copyright py-3 mt-1 text-dark" style="font-size: 14px;">© 2020 Copyright:
-            <a href="https://mdbootstrap.com/" class="text-dark">&nbsp;Virtual<span class="text-primary">-Class</span>&copy;2020</a>
+            <a href=" " class="text-dark">&nbsp;Virtual<span class="text-primary">-Class</span>&copy;2020</a>
           </div>
       </div>
       <div class="col-md-3 pl-5 pt-2">

@@ -56,7 +56,11 @@ from .views import(
 	teacher_comment_topics,
     e_lib,
     e_books,
-    recommend_book
+    recommend_book,
+    ApprovalView,
+	AcceptView,
+    declined,
+    conversation,
 	)
 
 app_name = "e_learning"
@@ -128,7 +132,13 @@ urlpatterns = [
 	path('teacher_comment_topics/<slug>/',teacher_comment_topics, name='teacher_comment_topics'),
     path('e_lib/',e_lib, name='e_lib'),
     path('e_books/',e_books, name='e_books'),
-    path('recommend_book',recommend_book,name='recommend_book')
+    path('recommend_book',recommend_book,name='recommend_book'),
+    url(r'^admin/approve/$',ApprovalView.as_view(), name='approve'),
+	url(r'admin/approve/accept/(?P<user_id>\d+)/$',AcceptView.as_view(), name='accept'),
+    url(r'admin/approve/accept/$',AcceptView.as_view(), name='accept'),
+    path('admin/approve/decline',declined,name='decline'),
+    path('conversation/',conversation,name='conversation'),
+	path('conversation/<slug>/',conversation,name='conversation')
 
 ]
 

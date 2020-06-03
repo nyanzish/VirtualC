@@ -14,7 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, View
 from django.http import FileResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import CommentForm
+from .forms import CommentForm,ChatCommentForm,ChatRoomForm
 import re
 import datetime
 from django.core.mail import send_mail,BadHeaderError,EmailMessage
@@ -49,7 +49,8 @@ from .models import (
     Comment,
     Chat,
     Message,
-    Recommend_Subjects_Table
+    Recommend_Subjects_Table,
+    ChatRoom
 
 )
 
@@ -188,101 +189,243 @@ VID_FILE_TYPES = ['mp4']
 def upload_to(request):
 
     teacher_id=Teacher_apply.objects.get(user=request.user.id)
+    current_teacher = teacher_id.id
     #print(teacher_id.id)
     #print(class_id,subject_id,'88888888888888888')
-    try:
-        overview=Subjects_overview.objects.get(class_n__exact=class_id,subject__exact=subject_id,teacher=teacher_id)
-        print(overview)
+    list_of_students = []
 
-        subject=Teacher_apply.objects.filter(user=request.user.id)
-        subject_one=subject[0].subject_one
-        subject_two=subject[0].subject_two
-        #print(class_id,subject_id)
-        # sub_results=Subjects.objects.get(id=subject_id)
-        # subject_table=sub_results.subject_name
-        topics=eval(name()).objects.filter(class_n__exact=class_id,subject__exact=subject_id)
-        result= topics
-        #print(topics)
-        form = Uploadform(initial={'overview': overview.id,'teacher':teacher_id.id,'class_level':str(class_id),'subject':str(subject_id)})
-        context= {
-            'subject_two':subject_two,
-            'subject_one':subject_one,
-            'form':form,
-            'result':result
+    retrieve_my_students = Subscription.objects.filter(teacher__exact=current_teacher)
+    no_of_students = retrieve_my_students.count()
+    for students_retrieved in retrieve_my_students:
+        my_student = students_retrieved.student
+        list_of_students.append(my_student)
+    if len(list_of_students) == 0:
+        counter = 0
+        no_of_students = 0
+        no_of_chats = ChatRoom.objects.all()
+        no_of_chats = no_of_chats.count()
+        try:
+            overview=Subjects_overview.objects.get(class_n__exact=class_id,subject__exact=subject_id,teacher=teacher_id)
+            print(overview)
 
-
-        }
-        if request.method=='POST':
-            form = Uploadform(request.POST, request.FILES)
-
-            form.fields['overview'].initial=overview.id
-            form.fields['overview'].type='hidden'
-            form.fields['teacher'].initial=teacher_id
-            form.fields['teacher'].value=teacher_id
-            form.fields['teacher'].type='hidden'
-            form.fields['class_level'].initial=class_id
-            form.fields['class_level'].value=class_id
-            form.fields['class_level'].type='hidden'
-            form.fields['subject'].initial=subject_id
-            form.fields['class_level'].value=subject
-            form.fields['subject'].type='hidden'
-
-            topic = request.POST.get('topic')
-            print(topic)
-            save_form = form.save(commit=False)
-            #overview_value = form.cleaned_data.get('overview')
-            form.cleaned_data.get('overview')
-            form.cleaned_data.get('teacher')
-            form.cleaned_data.get('class_level')
-            form.cleaned_data.get('subject')
-            form.cleaned_data.get('topic')
-            form.cleaned_data.get('content')
-
-            teacher = request.POST.get('teacher')
-            print(teacher)
-            content =request.POST.get('content')
-            print(content)
-            class_level =request.POST.get('class_level')
-            print(class_level)
-            subject = request.POST.get('subject')
-            print(subject)
-            save_form.attached_file = request.FILES['attached_file']
-            file_type = save_form.attached_file.url.split('.')[-1]
-            file_type = file_type.lower()
-            if file_type not in DOC_FILE_TYPES:
-                messages.warning(request, 'Please check the document you uploaded')
-                return render(request, 'error.html')
-            save_form.video= request.FILES['videos']
-
-            file_type2 = save_form.video.url.split('.')[-1]
-            file_type2 = file_type2.lower()
-            if file_type2 not in VID_FILE_TYPES:
-                messages.warning(request, 'Please check the video you uploaded')
-                return render(request, 'error.html')
-            attached_file = request.FILES['attached_file']
-            print(attached_file)
-            videos = request.FILES['videos']
-            print(videos)
-            save_form.save()
-            # upload_topics=Upload_topics(
-            #     overview=overview,
-            #     teacher=teacher_id,
-            #     class_level=class_level,
-            #     subject=subject,
-            #     topic=topic,
-            #     content=content,
-            #     attached_file=attached_file,
-            #     videos= videos
-
-            # )
-            # upload_topics.save()
-            print('done_saving')
-            messages.info(request, "Topic successfully added")
+            subject=Teacher_apply.objects.filter(user=request.user.id)
+            subject_one=subject[0].subject_one
+            subject_two=subject[0].subject_two
+            #print(class_id,subject_id)
+            # sub_results=Subjects.objects.get(id=subject_id)
+            # subject_table=sub_results.subject_name
+            topics=eval(name()).objects.filter(class_n__exact=class_id,subject__exact=subject_id)
+            result= topics
+            #print(topics)
+            form = Uploadform(initial={'overview': overview.id,'teacher':teacher_id.id,'class_level':str(class_id),'subject':str(subject_id)})
+            context= {
+                'subject_two':subject_two,
+                'subject_one':subject_one,
+                'counter':counter,
+                'no_of_chats':no_of_chats,
+                'form':form,
+                'result':result
 
 
-        return render(request,'upload.html',context)
-    except NameError:
-        return redirect('e_learning:teacher_homepage')
+            }
+            
+            if request.method=='POST':
+                form = Uploadform(request.POST, request.FILES)
+
+                form.fields['overview'].initial=overview.id
+                form.fields['overview'].type='hidden'
+                form.fields['teacher'].initial=teacher_id
+                form.fields['teacher'].value=teacher_id
+                form.fields['teacher'].type='hidden'
+                form.fields['class_level'].initial=class_id
+                form.fields['class_level'].value=class_id
+                form.fields['class_level'].type='hidden'
+                form.fields['subject'].initial=subject_id
+                form.fields['class_level'].value=subject
+                form.fields['subject'].type='hidden'
+
+                topic = request.POST.get('topic')
+                print(topic)
+                save_form = form.save(commit=False)
+                #overview_value = form.cleaned_data.get('overview')
+                form.cleaned_data.get('overview')
+                form.cleaned_data.get('teacher')
+                form.cleaned_data.get('class_level')
+                form.cleaned_data.get('subject')
+                form.cleaned_data.get('topic')
+                form.cleaned_data.get('content')
+
+                teacher = request.POST.get('teacher')
+                print(teacher)
+                content =request.POST.get('content')
+                print(content)
+                class_level =request.POST.get('class_level')
+                print(class_level)
+                subject = request.POST.get('subject')
+                print(subject)
+                save_form.attached_file = request.FILES['attached_file']
+                file_type = save_form.attached_file.url.split('.')[-1]
+                file_type = file_type.lower()
+                if file_type not in DOC_FILE_TYPES:
+                    messages.warning(request, 'Please check the document you uploaded')
+                    return render(request, 'error.html')
+                save_form.video= request.FILES['videos']
+
+                file_type2 = save_form.video.url.split('.')[-1]
+                file_type2 = file_type2.lower()
+                if file_type2 not in VID_FILE_TYPES:
+                    messages.warning(request, 'Please check the video you uploaded')
+                    return render(request, 'error.html')
+                attached_file = request.FILES['attached_file']
+                print(attached_file)
+                videos = request.FILES['videos']
+                print(videos)
+                save_form.save()
+                # upload_topics=Upload_topics(
+                #     overview=overview,
+                #     teacher=teacher_id,
+                #     class_level=class_level,
+                #     subject=subject,
+                #     topic=topic,
+                #     content=content,
+                #     attached_file=attached_file,
+                #     videos= videos
+
+                # )
+                # upload_topics.save()
+                print('done_saving')
+                messages.info(request, "Topic successfully added")
+
+
+            return render(request,'upload.html',context)
+        except NameError:
+            return redirect('e_learning:teacher_homepage')
+    else:
+        try:
+            overview=Subjects_overview.objects.get(class_n__exact=class_id,subject__exact=subject_id,teacher=teacher_id)
+            print(overview)
+
+            subject=Teacher_apply.objects.filter(user=request.user.id)
+            subject_one=subject[0].subject_one
+            subject_two=subject[0].subject_two
+            #print(class_id,subject_id)
+            # sub_results=Subjects.objects.get(id=subject_id)
+            # subject_table=sub_results.subject_name
+            topics=eval(name()).objects.filter(class_n__exact=class_id,subject__exact=subject_id)
+            result= topics
+            #print(topics)
+            form = Uploadform(initial={'overview': overview.id,'teacher':teacher_id.id,'class_level':str(class_id),'subject':str(subject_id)})
+            # context= {
+            #     'subject_two':subject_two,
+            #     'subject_one':subject_one,
+            #     'form':form,
+            #     'result':result
+
+
+            # }
+            counter_list=[]
+            for my_studnts in list_of_students:
+                print(my_studnts)
+                
+                teacher_students=Subscription.objects.filter(teacher=current_teacher)
+                for my_studnt in teacher_students:
+                    print(my_studnt,my_studnt.student.id)
+
+                retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
+                counter = retrieve_my_comments.count()
+                counter_list.append(counter)
+                print(counter,'999000000000')
+
+                no_of_chats = ChatRoom.objects.all()
+                no_of_chats = no_of_chats.count()
+
+                retrieved_commented = retrieve_my_comments[:4]
+                print(retrieved_commented)
+
+                for notification in retrieved_commented:
+                    notifications = notification.body
+            counter_list_no = sum(counter_list)
+            context={
+                'subject_two':subject_two,
+                'subject_one':subject_one,
+                'counter':counter_list_no,
+                'no_of_students':no_of_students,
+                'no_of_chats':no_of_chats,
+                'retrieved_commented':retrieved_commented,
+                'form':form,
+                'result':result
+            }
+            if request.method=='POST':
+                form = Uploadform(request.POST, request.FILES)
+
+                form.fields['overview'].initial=overview.id
+                form.fields['overview'].type='hidden'
+                form.fields['teacher'].initial=teacher_id
+                form.fields['teacher'].value=teacher_id
+                form.fields['teacher'].type='hidden'
+                form.fields['class_level'].initial=class_id
+                form.fields['class_level'].value=class_id
+                form.fields['class_level'].type='hidden'
+                form.fields['subject'].initial=subject_id
+                form.fields['class_level'].value=subject
+                form.fields['subject'].type='hidden'
+
+                topic = request.POST.get('topic')
+                print(topic)
+                save_form = form.save(commit=False)
+                #overview_value = form.cleaned_data.get('overview')
+                form.cleaned_data.get('overview')
+                form.cleaned_data.get('teacher')
+                form.cleaned_data.get('class_level')
+                form.cleaned_data.get('subject')
+                form.cleaned_data.get('topic')
+                form.cleaned_data.get('content')
+
+                teacher = request.POST.get('teacher')
+                print(teacher)
+                content =request.POST.get('content')
+                print(content)
+                class_level =request.POST.get('class_level')
+                print(class_level)
+                subject = request.POST.get('subject')
+                print(subject)
+                save_form.attached_file = request.FILES['attached_file']
+                file_type = save_form.attached_file.url.split('.')[-1]
+                file_type = file_type.lower()
+                if file_type not in DOC_FILE_TYPES:
+                    messages.warning(request, 'Please check the document you uploaded')
+                    return render(request, 'error.html')
+                save_form.video= request.FILES['videos']
+
+                file_type2 = save_form.video.url.split('.')[-1]
+                file_type2 = file_type2.lower()
+                if file_type2 not in VID_FILE_TYPES:
+                    messages.warning(request, 'Please check the video you uploaded')
+                    return render(request, 'error.html')
+                attached_file = request.FILES['attached_file']
+                print(attached_file)
+                videos = request.FILES['videos']
+                print(videos)
+                save_form.save()
+                # upload_topics=Upload_topics(
+                #     overview=overview,
+                #     teacher=teacher_id,
+                #     class_level=class_level,
+                #     subject=subject,
+                #     topic=topic,
+                #     content=content,
+                #     attached_file=attached_file,
+                #     videos= videos
+
+                # )
+                # upload_topics.save()
+                print('done_saving')
+                messages.info(request, "Topic successfully added")
+
+
+            return render(request,'upload.html',context)
+        except NameError:
+            return redirect('e_learning:teacher_homepage')
 
 VID_FILE_TYPES = ['mp4']
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
@@ -316,11 +459,14 @@ def overview(request):
         if len(list_of_students) == 0:
             counter = 0
             no_of_students = 0
+            no_of_chats = ChatRoom.objects.all()
+            no_of_chats = no_of_chats.count()
 
             context={
                      'subject_two':subject_two,
                     'subject_one':subject_one,
                     'counter':counter,
+                    'no_of_chats':no_of_chats,
                     'no_of_students':no_of_students,
                     'form':form
 
@@ -365,28 +511,38 @@ def overview(request):
                 return redirect('e_learning:teacher_homepage')
             return render(request,'overview.html',context)
         else:
+            counter_list=[]
             for my_studnts in list_of_students:
                 print(my_studnts)
+                
+                teacher_students=Subscription.objects.filter(teacher=current_teacher)
+                for my_studnt in teacher_students:
+                    print(my_studnt,my_studnt.student.id)
 
                 retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
                 counter = retrieve_my_comments.count()
+                counter_list.append(counter)
                 print(counter,'999000000000')
+
+                no_of_chats = ChatRoom.objects.all()
+                no_of_chats = no_of_chats.count()
 
                 retrieved_commented = retrieve_my_comments[:4]
                 print(retrieved_commented)
 
                 for notification in retrieved_commented:
                     notifications = notification.body
-
-                context={
-                    'subject_two':subject_two,
-                    'subject_one':subject_one,
-                    'counter':counter,
-                    'no_of_students':no_of_students,
-                    'retrieved_commented':retrieved_commented,
-                     'form':form
-                }
-                if request.method=='POST':
+            counter_list_no = sum(counter_list)
+            context={
+                'subject_two':subject_two,
+                'subject_one':subject_one,
+                'counter':counter_list_no,
+                'no_of_students':no_of_students,
+                'no_of_chats':no_of_chats,
+                'retrieved_commented':retrieved_commented,
+                'form':form
+            }
+            if request.method=='POST':
                     form = Overviewform(request.POST, request.FILES)
 
                     form.fields['subject'].initial=subject_object.id
@@ -424,10 +580,11 @@ def overview(request):
                     print('done_saving')
                     messages.info(request, "Overview successfully added,now continue to the class")
                     return redirect('e_learning:teacher_homepage')
-
-                return render(request,'overview.html',context)
+            return render(request,'overview.html',context)
     except NameError:
         return redirect('e_learning:teacher_homepage')
+            ########################
+
 
 @login_required
 def upload_content(request):
@@ -520,7 +677,7 @@ def get_document(request,id):
 
 
 
-class HomeView(LoginRequiredMixin,ListView):
+class HomeView(ListView):
     model = Subjects_overview
     paginate_by = 12
     template_name = 'student_homepage.html'
@@ -628,7 +785,7 @@ def open_content(request,slug):
             #return render(reverse('e_learning:open_content',kwargs={'slug':open_content.id}))
     else:
 
-        comment_form = CommentForm(initial={'name': request.user,'email':request.user.userprofile.email})
+        comment_form = CommentForm(initial={'name': request.user,'user_image':request.user.userprofile.image.url,'email':request.user.userprofile.email})
 
     return render(request, template_name, {'post': post,
                                            'comments': comments,
@@ -684,7 +841,7 @@ def apply_to_teach(request):
             """
 
             messages.info(request, "Your application has been successfully submitted for review, an e-mail will be sent to verify your account")
-            email = EmailMessage(subject= f'{request.user.userprofile.firstname} {request.user.userprofile.lastname} --- Applying to teach',body=message,to=['admin@virtualclass.ug'],headers={'Message-ID': name },reply_to=[email])
+            email = EmailMessage(subject= f'{request.user.userprofile.firstname} {request.user.userprofile.lastname} --- Applying to teach',body=message,to=['admin@virtualclass.ug'],                   headers={'Message-ID': name },reply_to=[email])
             email.send()
             return redirect('e_learning:home_view')
         else:
@@ -700,13 +857,46 @@ def subject_topic(request):
 
 @login_required
 def e_lib(request):
-    all_subjects = Subjects.objects.all()
-    for subject_filter in all_subjects:
-        print(subject_filter.subject_name)
-        recommend_subjects = Recommend_Subjects_Table.objects.filter(subject_name = subject_filter.subject_name)
+    recommended_math_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Mathematics')
+    recommended_english_book = Recommend_Subjects_Table.objects.filter(subject_name = 'English')
+    recommended_physics_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Physics')
+    recommended_chemistry_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Chemistry')
+    recommended_biology_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Biology')
+    recommended_agric_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Agriculture')
+    recommended_geography_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Geography')
+    recommended_history_book = Recommend_Subjects_Table.objects.filter(subject_name = 'History')
+    recommended_computer_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Computer')
+    recommended_lugbara_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Lugbara Ti')
+    recommended_art_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Art')
+    recommended_french_book = Recommend_Subjects_Table.objects.filter(subject_name = 'French')
+    recommended_german_book = Recommend_Subjects_Table.objects.filter(subject_name = 'German')
+    recommended_kiswahili_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Kiswahili')
+    recommended_chinese_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Chinese')
+    recommended_general_paper_book = Recommend_Subjects_Table.objects.filter(subject_name = 'General paper')
+    recommended_luganda_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Luganda')
+    recommended_Islam_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Islam')
+
     context={
-        'recommend_subjects':recommend_subjects,
+            'recommended_math_book':recommended_math_book,
+            'recommended_english_book':recommended_english_book,
+            'recommended_physics_book':recommended_physics_book,
+            'recommended_chemistry_book':recommended_chemistry_book,
+            'recommended_biology_book':recommended_biology_book,
+            'recommended_agric_book':recommended_agric_book,
+            'recommended_geography_book':recommended_geography_book,
+            'recommended_history_book':recommended_history_book,
+            'recommended_computer_book':recommended_computer_book,
+            'recommended_lugbara_book':recommended_lugbara_book,
+            'recommended_art_book':recommended_art_book,
+            'recommended_french_book':recommended_french_book,
+            'recommended_german_book':recommended_german_book,
+            'recommended_kiswahili_book':recommended_kiswahili_book,
+            'recommended_chinese_book':recommended_chinese_book,
+            'recommended_general_paper_book':recommended_general_paper_book,
+            'recommended_luganda_book':recommended_luganda_book,
+            'recommended_Islam_book':recommended_Islam_book,
     }
+
     return render(request,'e_library.html',context)
 
 def subscription_approval(request,slug):
@@ -726,7 +916,7 @@ def subscription_approval(request,slug):
     messages.info(request, "You have subscribed to this subject")
     return redirect('e_learning:my_subjects')
 
-@login_required
+#@login_required
 def subject_overview(request,slug):
     overview=Subjects_overview.objects.get(id=slug)
     recomend=Subjects_overview.objects.filter(class_n=overview.class_n)
@@ -770,6 +960,8 @@ def subject_overview(request,slug):
 
             )
         payment.save()
+    except:
+        pass
 
     # if check.exist():
     #     pass
@@ -803,7 +995,7 @@ def teacher_homepage(request):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         context={
@@ -815,31 +1007,35 @@ def teacher_homepage(request):
             }
         return render(request,'teacher_homepage.html',context)
     else:
+        counter_list=[]
+        retrieved_commented_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
+            counter_list.append(counter)
             print(counter,'999000000000')
 
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
 
             retrieved_commented = retrieve_my_comments[:4]
+            retrieved_commented_list.append(retrieved_commented)
             print(retrieved_commented)
 
             for notification in retrieved_commented:
                 notifications = notification.body
-
-            context={
-                'subject_two':subject_two,
-                'subject_one':subject_one,
-                'counter':counter,
-                'no_of_students':no_of_students,
-                'no_of_chats':no_of_chats,
-                'retrieved_commented':retrieved_commented,
-            }
-            return render(request,'teacher_homepage.html',context)
+        counter_list_no = sum(counter_list)
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'counter':counter_list_no,
+            'no_of_students':no_of_students,
+            'no_of_chats':no_of_chats,
+            'retrieved_commented':retrieved_commented_list[0],
+        }
+        return render(request,'teacher_homepage.html',context)
 
 @login_required
 def teacher_alerts(request,slug):
@@ -866,7 +1062,7 @@ def teacher_alerts(request,slug):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         try:
@@ -915,7 +1111,7 @@ def teacher_alerts(request,slug):
                     return HttpResponseRedirect(post.get_teacher_alerts())
             else:
 
-                comment_form = CommentForm(initial={'name': request.user,'email':request.user.userprofile.email})
+                comment_form = CommentForm(initial={'name': request.user,'user_image':request.user.userprofile.image.url,'email':request.user.userprofile.email})
 
             return render(request, 'teacher_alerts.html', {
                                                    'subject_two':subject_two,
@@ -988,7 +1184,7 @@ def teacher_alerts(request,slug):
                         return HttpResponseRedirect(post.get_teacher_alerts())
                 else:
 
-                    comment_form = CommentForm(initial={'name': request.user,'email':request.user.userprofile.email})
+                    comment_form = CommentForm(initial={'name': request.user,'user_image':request.user.userprofile.image.url,'email':request.user.userprofile.email})
 
                 return render(request, 'teacher_alerts.html', {
                                                        'subject_two':subject_two,
@@ -1039,7 +1235,7 @@ def teacher_comment_topics(request,slug):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         context={
@@ -1054,16 +1250,19 @@ def teacher_comment_topics(request,slug):
             }
         return render(request,'teacher_comment_topics.html',context)
     else:
+        counter_list=[]
+        retrieved_commented_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
-
+            
             teacher_students=Subscription.objects.filter(teacher=current_teacher)
             for my_studnt in teacher_students:
                 print(my_studnt,my_studnt.student.id)
             # student_names = UserProfile.objects.filter(user = my_studnt.student.id)
             # for names in student_names:
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
+
 
             retrieve_my_students = Subscription.objects.filter(teacher__exact=current_teacher)
             print(retrieve_my_students)
@@ -1072,27 +1271,30 @@ def teacher_comment_topics(request,slug):
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
+            counter_list.append(counter)
             print(counter,'999000000000')
 
             retrieved_commented = retrieve_my_comments[:4]
+            retrieved_commented_list.append(retrieved_commented)
             print(retrieved_commented)
 
             for notification in retrieved_commented:
                 notifications = notification.body
+        counter_list_no = sum(counter_list)
 
-            context={
-                'subject_two':subject_two,
-                'subject_one':subject_one,
-                'counter':counter,
-                'no_of_chats':no_of_chats,
-                'no_of_students':no_of_students,
-                'retrieved_commented':retrieved_commented,
-                'teacher_students':teacher_students,
-                'topic_fields':topic_fields,
-                'materials_name':materials_name,
-                'materials_class':materials_class,
-            }
-            return render(request,'teacher_comment_topics.html',context)
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'counter':counter_list_no,
+            'no_of_chats':no_of_chats,
+            'no_of_students':no_of_students,
+            'retrieved_commented':retrieved_commented_list[0],
+            'teacher_students':teacher_students,
+            'topic_fields':topic_fields,
+            'materials_name':materials_name,
+            'materials_class':materials_class,
+        }
+        return render(request,'teacher_comment_topics.html',context)
 
 
 def teacher_to_alerts(request):
@@ -1119,7 +1321,7 @@ def teacher_to_alerts(request):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         teacher_uploaded_subjects=Subjects_overview.objects.filter(teacher=current_teacher)
@@ -1135,6 +1337,7 @@ def teacher_to_alerts(request):
             }
         return render(request,'teacher_to_alerts.html',context)
     else:
+        counter_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
 
@@ -1144,7 +1347,7 @@ def teacher_to_alerts(request):
             # student_names = UserProfile.objects.filter(user = my_studnt.student.id)
             # for names in student_names:
 
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
 
             teacher_uploaded_subjects=Subjects_overview.objects.filter(teacher=current_teacher)
@@ -1157,6 +1360,7 @@ def teacher_to_alerts(request):
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
+            counter_list.append(counter)
             print(counter,'999000000000')
 
             retrieved_commented = retrieve_my_comments[:4]
@@ -1164,18 +1368,19 @@ def teacher_to_alerts(request):
 
             for notification in retrieved_commented:
                 notifications = notification.body
+        counter_list_no = sum(counter_list)
 
-            context={
-                'subject_two':subject_two,
-                'subject_one':subject_one,
-                'counter':counter,
-                'no_of_students':no_of_students,
-                'no_of_chats':no_of_chats,
-                'retrieved_commented':retrieved_commented,
-                'teacher_students':teacher_students,
-                'teacher_uploaded_subjects':teacher_uploaded_subjects,
-            }
-            return render(request,'teacher_to_alerts.html',context)
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'counter':counter_list_no,
+            'no_of_students':no_of_students,
+            'no_of_chats':no_of_chats,
+            'retrieved_commented':retrieved_commented,
+            'teacher_students':teacher_students,
+            'teacher_uploaded_subjects':teacher_uploaded_subjects,
+        }
+        return render(request,'teacher_to_alerts.html',context)
 
 def about(request):
 	return render(request,'about.html')
@@ -1212,7 +1417,7 @@ def view_my_students(request):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         context={
@@ -1224,41 +1429,43 @@ def view_my_students(request):
             }
         return render(request,'view_my_students.html',context)
     else:
+        counter_list=[]
+        retrieved_commented_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
-
+            
             teacher_students=Subscription.objects.filter(teacher=current_teacher)
             for my_studnt in teacher_students:
                 print(my_studnt,my_studnt.student.id)
-            # student_names = UserProfile.objects.filter(user = my_studnt.student.id)
-            # for names in student_names:
-            no_of_chats = Chat.objects.filter(members= request.user.id)
-            no_of_chats = no_of_chats.count()
-            retrieve_my_students = Subscription.objects.filter(teacher__exact=current_teacher)
-            print(retrieve_my_students)
-            for students_retrieved in retrieve_my_students:
-                my_student = students_retrieved.student
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
+            counter_list.append(counter)
             print(counter,'999000000000')
 
+            no_of_chats = ChatRoom.objects.all()
+            no_of_chats = no_of_chats.count()
+    
+
             retrieved_commented = retrieve_my_comments[:4]
+            retrieved_commented_list.append(retrieved_commented)
             print(retrieved_commented)
 
             for notification in retrieved_commented:
                 notifications = notification.body
+        counter_list_no = sum(counter_list)
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'counter':counter_list_no,
+            'no_of_students':no_of_students,
+            'no_of_chats':no_of_chats,
+            'retrieved_commented':retrieved_commented_list[0],
+            'teacher_students':teacher_students
 
-            context={
-                'subject_two':subject_two,
-                'subject_one':subject_one,
-                'counter':counter,
-                'no_of_students':no_of_students,
-                'retrieved_commented':retrieved_commented,
-                'no_of_chats':no_of_chats,
-                'teacher_students':teacher_students,
-            }
-            return render(request,'view_my_students.html',context)
+        }
+        return render(request,'view_my_students.html',context)
+        #####################
 
 @login_required
 def my_uploaded(request,slug):
@@ -1301,7 +1508,7 @@ def edit_my_uploaded(request,slug):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
         form = Overviewform(initial={'over_view': uploaded.over_view,'image':uploaded.image,'video':uploaded.video,'duration':uploaded.duration,'price':uploaded.price,'subject':uploaded.subject,"class_n":uploaded.class_n,'teacher':uploaded.teacher})
         if request.method=='POST':
@@ -1545,7 +1752,7 @@ def teacher_uploaded_subjects(request):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         context={
@@ -1557,49 +1764,48 @@ def teacher_uploaded_subjects(request):
             }
         return render(request,'teacher_uploaded_subjects.html',context)
     else:
+        counter_list=[]
+        retrieved_commented_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
-
+            
             teacher_students=Subscription.objects.filter(teacher=current_teacher)
             for my_studnt in teacher_students:
                 print(my_studnt,my_studnt.student.id)
-            # student_names = UserProfile.objects.filter(user = my_studnt.student.id)
-            # for names in student_names:
 
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
+            counter = retrieve_my_comments.count()
+            counter_list.append(counter)
+            print(counter,'999000000000')
+
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
 
             teacher_uploaded_subject=Subjects_overview.objects.filter(teacher=current_teacher)
-            print(teacher_uploaded_subject)
-            for a in teacher_uploaded_subject:
-                print(a.subject.id)
-
             retrieve_my_students = Subscription.objects.filter(teacher__exact=current_teacher)
             print(retrieve_my_students)
             for students_retrieved in retrieve_my_students:
                 my_student = students_retrieved.student
 
-            retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
-            counter = retrieve_my_comments.count()
-            print(counter,'999000000000')
-
             retrieved_commented = retrieve_my_comments[:4]
+            retrieved_commented_list.append(retrieved_commented)
             print(retrieved_commented)
 
             for notification in retrieved_commented:
                 notifications = notification.body
-
-            context={
-                'subject_two':subject_two,
-                'subject_one':subject_one,
-                'counter':counter,
-                'no_of_students':no_of_students,
-                'no_of_chats':no_of_chats,
-                'retrieved_commented':retrieved_commented,
-                'teacher_students':teacher_students,
-                'teacher_uploaded_subject':teacher_uploaded_subject,
-            }
-            return render(request,'teacher_uploaded_subjects.html',context)
+        counter_list_no = sum(counter_list)
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'counter':counter_list_no,
+            'no_of_students':no_of_students,
+            'no_of_chats':no_of_chats,
+            'retrieved_commented':retrieved_commented_list[0],
+            'teacher_students':teacher_students,
+            'teacher_uploaded_subject':teacher_uploaded_subject,
+        }
+        return render(request,'teacher_uploaded_subjects.html',context)
+        
 
 @login_required
 def transaction_details(request):
@@ -1625,7 +1831,7 @@ def transaction_details(request):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         context={
@@ -1637,31 +1843,41 @@ def transaction_details(request):
             }
         return render(request,'transaction_details.html',context)
     else:
+        counter_list=[]
+        retrieved_commented_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
+            
+            teacher_students=Subscription.objects.filter(teacher=current_teacher)
+            for my_studnt in teacher_students:
+                print(my_studnt,my_studnt.student.id)
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
+            counter_list.append(counter)
             print(counter,'999000000000')
 
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
 
             retrieved_commented = retrieve_my_comments[:4]
+            retrieved_commented_list.append(retrieved_commented)
             print(retrieved_commented)
 
             for notification in retrieved_commented:
                 notifications = notification.body
+        counter_list_no = sum(counter_list)
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'counter':counter_list_no,
+            'no_of_students':no_of_students,
+            'no_of_chats':no_of_chats,
+            'retrieved_commented':retrieved_commented_list[0],
+        }
+        return render(request,'transaction_details.html',context)
+        ###################
 
-            context={
-                'subject_two':subject_two,
-                'subject_one':subject_one,
-                'counter':counter,
-                'no_of_students':no_of_students,
-                'no_of_chats':no_of_chats,
-                'retrieved_commented':retrieved_commented,
-            }
-            return render(request,'transaction_details.html',context)
 
 @login_required
 def e_books(request):
@@ -1687,7 +1903,7 @@ def e_books(request):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         recommend_one = Recommend_Subjects_Table.objects.filter(subject_name__exact=subject_one)
@@ -1704,16 +1920,21 @@ def e_books(request):
             }
         return render(request,'e_books.html',context)
     else:
+        counter_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
+            
+            teacher_students=Subscription.objects.filter(teacher=current_teacher)
+            for my_studnt in teacher_students:
+                print(my_studnt,my_studnt.student.id)
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
+            counter_list.append(counter)
             print(counter,'999000000000')
 
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
-
             recommend_one = Recommend_Subjects_Table.objects.filter(subject_name__exact=subject_one)
             recommend_two = Recommend_Subjects_Table.objects.filter(subject_name__exact=subject_two)
 
@@ -1722,18 +1943,20 @@ def e_books(request):
 
             for notification in retrieved_commented:
                 notifications = notification.body
+        counter_list_no = sum(counter_list)
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'counter':counter_list_no,
+            'no_of_students':no_of_students,
+            'no_of_chats':no_of_chats,
+            'retrieved_commented':retrieved_commented,
+            'recommend_one':recommend_one,
+            'recommend_two':recommend_two
+        }
+        return render(request,'e_books.html',context)
+        ################
 
-            context={
-                'subject_two':subject_two,
-                'subject_one':subject_one,
-                'counter':counter,
-                'no_of_students':no_of_students,
-                'no_of_chats':no_of_chats,
-                'retrieved_commented':retrieved_commented,
-                'recommend_one':recommend_one,
-                'recommend_two':recommend_two
-            }
-            return render(request,'e_books.html',context)
 
 IMAGE_FILE_TYPES4 = ['png', 'jpg', 'jpeg']
 @login_required
@@ -1872,7 +2095,7 @@ def classes(request):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         context={
@@ -1889,14 +2112,20 @@ def classes(request):
             }
         return render(request,'classes.html',context)
     else:
+        counter_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
+            
+            teacher_students=Subscription.objects.filter(teacher=current_teacher)
+            for my_studnt in teacher_students:
+                print(my_studnt,my_studnt.student.id)
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
+            counter_list.append(counter)
             print(counter,'999000000000')
 
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
 
             retrieved_commented = retrieve_my_comments[:4]
@@ -1904,21 +2133,54 @@ def classes(request):
 
             for notification in retrieved_commented:
                 notifications = notification.body
+        counter_list_no = sum(counter_list)
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'subject_id':subject_id,
+            'subject_o':subject_o,
+            'subject':subject,
+            'subjects':subjects,
+            'class_s':class_s,
+            'no_of_students':no_of_students,
+            'no_of_students':no_of_students,
+            'no_of_chats':no_of_chats,
+            'counter':counter_list_no,
+            'retrieved_commented':retrieved_commented,
 
-            context={
-                'subject_two':subject_two,
-                'subject':subject,
-                'subjects':subjects,
-                'counter':counter,
-                'retrieved_commented':retrieved_commented,
-                'subject_one':subject_one,
-                'no_of_chats':no_of_chats,
-                'subject_id':subject_id,
-                'subject_o':subject_o,
-                'class_s':class_s,
-                'no_of_students':no_of_students,
-            }
-            return render(request,'classes.html',context)
+        }
+        return render(request,'classes.html',context)
+        ################
+        # for my_studnts in list_of_students:
+        #     print(my_studnts)
+
+        #     retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
+        #     counter = retrieve_my_comments.count()
+        #     print(counter,'999000000000')
+
+        #     no_of_chats = Chat.objects.filter(members= request.user.id)
+        #     no_of_chats = no_of_chats.count()
+
+        #     retrieved_commented = retrieve_my_comments[:4]
+        #     print(retrieved_commented)
+
+        #     for notification in retrieved_commented:
+        #         notifications = notification.body
+
+        #     context={
+        #         'subject_two':subject_two,
+        #         'subject':subject,
+        #         'subjects':subjects,
+        #         'counter':counter,
+        #         'retrieved_commented':retrieved_commented,
+        #         'subject_one':subject_one,
+        #         'no_of_chats':no_of_chats,
+        #         'subject_id':subject_id,
+        #         'subject_o':subject_o,
+        #         'class_s':class_s,
+        #         'no_of_students':no_of_students,
+        #     }
+        #     return render(request,'classes.html',context)
 
 @login_required
 def classes_base(request):
@@ -1984,7 +2246,7 @@ def classes2(request):
         counter = 0
         no_of_students = 0
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
         context={
@@ -1999,34 +2261,43 @@ def classes2(request):
             }
         return render(request,'classes.html',context)
     else:
+        counter_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
+            
+            teacher_students=Subscription.objects.filter(teacher=current_teacher)
+            for my_studnt in teacher_students:
+                print(my_studnt,my_studnt.student.id)
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
+            counter_list.append(counter)
             print(counter,'999000000000')
 
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
+
             retrieved_commented = retrieve_my_comments[:4]
             print(retrieved_commented)
 
             for notification in retrieved_commented:
                 notifications = notification.body
+        counter_list_no = sum(counter_list)
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'subject_id':subject_id,
+            'subject_o':subject_o,
+            'subject':subject,
+            'class_s':class_s,
+            'no_of_students':no_of_students,
+            'no_of_students':no_of_students,
+            'no_of_chats':no_of_chats,
+            'counter':counter_list_no,
+            'retrieved_commented':retrieved_commented,
 
-            context={
-                'subject_two':subject_two,
-                'subject_one':subject_one,
-                'counter':counter,
-                'retrieved_commented':retrieved_commented,
-                'subject_id':subject_id,
-                'no_of_chats':no_of_chats,
-                'subject_o':subject_o,
-                'class_s':class_s,
-                'no_of_students':no_of_students,
-                'retrieved_commented':retrieved_commented,
-            }
-            return render(request,'classes.html',context)
+        }
+        return render(request,'classes.html',context)
 
 
 def terms_and_conditions(request):
@@ -2165,7 +2436,7 @@ def post_detail(request):
             return redirect('e_learning:post_detail')
     else:
 
-        comment_form = CommentForm(initial={'name': request.user,'email':request.user.userprofile.email})
+        comment_form = CommentForm(initial={'name': request.user,'user_image':request.user.userprofile.image.url,'email':request.user.userprofile.email})
 
     return render(request, template_name, {'post': post,
                                           'comments': comments,
@@ -2276,7 +2547,7 @@ def post_detail(request):
             return redirect('e_learning:post_detail')
     else:
 
-        comment_form = CommentForm(initial={'name': request.user,'email':request.user.userprofile.email})
+        comment_form = CommentForm(initial={'name': request.user,'user_image':request.user.userprofile.image.url,'email':request.user.userprofile.email})
 
     return render(request, template_name, {'post': post,
                                            'comments': comments,
@@ -2312,7 +2583,7 @@ def choose(request):
         individuals = UserProfile.objects.all()
         print(individuals)
 
-        no_of_chats = Chat.objects.filter(members= request.user.id)
+        no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
 
 
@@ -2436,73 +2707,60 @@ def choose(request):
 
 class DialogsView(View):
     def get(self, request):
+        form = ChatRoomForm()
         subject=Teacher_apply.objects.filter(user=request.user.id)
         print(request.user)
         subject_one=subject[0].subject_one
         subject_two=subject[0].subject_two
 
+        #chats
+        no_of_chats = ChatRoom.objects.all()
+        no_of_chats = no_of_chats.count()
+        chats = ChatRoom.objects.all().order_by('-id')
+        #comments
+        list_of_students = []
         my_teacher_id=Teacher_apply.objects.get(user= request.user.id)
         current_teacher = my_teacher_id.id
-        print(current_teacher,'kkkkkkkk')
-
-        list_of_students = []
-
         retrieve_my_students = Subscription.objects.filter(teacher__exact=current_teacher)
         no_of_students = retrieve_my_students.count()
         for students_retrieved in retrieve_my_students:
             my_student = students_retrieved.student
             list_of_students.append(my_student)
-        print(list_of_students,'99999999999999999999')
 
-        if len(list_of_students) == 0:
-            counter = 0
-            no_of_students = 0
+        context={
+                'subject_two':subject_two,
+                'subject_one':subject_one,
+                'user_profile': request.user,
+                'no_of_chats':no_of_chats,
+                'chats':chats,
+                'form': form
 
-            no_of_chats = Chat.objects.filter(members= request.user.id)
-            no_of_chats = no_of_chats.count()
-            chats = Chat.objects.filter(members__in=[request.user.id])
-            print(chats)
+            }
 
-            context={
-                    'subject_two':subject_two,
-                    'subject_one':subject_one,
-                    'counter':counter,
-                    'no_of_students':no_of_students,
-                    'user_profile': request.user,
-                    'no_of_chats':no_of_chats,
-                    'chats': chats,
-                }
-            return render(request,'dialogue.html',context)
-        else:
-            for my_studnts in list_of_students:
-                print(my_studnts)
-
-                no_of_chats = Chat.objects.filter(members= request.user.id)
-                no_of_chats = no_of_chats.count()
-                chats = Chat.objects.filter(members__in=[request.user.id])
-
-                retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
-                counter = retrieve_my_comments.count()
-                print(counter,'999000000000')
-
-                retrieved_commented = retrieve_my_comments[:4]
-                print(retrieved_commented)
-
-                for notification in retrieved_commented:
-                    notifications = notification.body
-
-                context={
-                    'subject_two':subject_two,
-                    'subject_one':subject_one,
-                    'counter':counter,
-                    'no_of_students':no_of_students,
-                    'retrieved_commented':retrieved_commented,
-                    'user_profile': request.user,
-                    'no_of_chats':no_of_chats,
-                    'chats': chats,
-                    }
-                return render(request, 'dialogue.html',context)
-
+        counter_list=[]
+        retrieved_commented_list=[]
+        for my_studnts in list_of_students:
+            print (my_studnts,'uu')
+            retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
+            counter = retrieve_my_comments.count()
+            counter_list.append(counter)
+            print(counter)
+            retrieved_commented = retrieve_my_comments[:4]
+            retrieved_commented_list.append(retrieved_commented)
+            context['retrieved_commented'] = retrieved_commented_list[0]
+        print (counter_list,sum(counter_list))
+        counter_list_no = sum(counter_list)
+        context['counter'] = counter_list_no
+        ##################
+        return render(request, 'dialogue.html',context)
+    def post(self, request):
+        form = ChatRoomForm(request.POST, request.FILES)
+        user_obj=User.objects.get(id=request.user.id)
+        save_data = form.save(commit=False)
+        # assign parent_obj to replay comment
+        save_data.user_profile = user_obj
+        save_data.save()
+        return redirect(reverse('e_learning:dialogs'))
 
 
 class MessagesView(View):
@@ -2528,7 +2786,7 @@ class MessagesView(View):
         if len(list_of_students) == 0:
             counter = 0
             no_of_students = 0
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
 
             try:
@@ -2701,3 +2959,228 @@ class CreateDialogView(View):
                     'chat_id': chat.id
                     }
                 return redirect(reverse('e_learning:messages'))
+
+class ApprovalView(View):
+    def get(self, request):
+
+        applied = Teacher_apply.objects.filter(user_profile__role="User")
+       
+        context={
+            'applied' :  applied       
+        }
+        return render(request,'admin/approve.html',context)
+
+class AcceptView(View):
+    def get(self,request, user_id):
+        got = Teacher_apply.objects.get(id=user_id)
+        accepts = UserProfile.objects.get(id= got.user_profile.id)
+        accepts.role = "Teacher"
+        accepts.save()
+        print(accepts)
+        try:
+            eemail = EmailMessage(subject= 'Request accepted',body= f'Hello {accepts.user.username}, Your account has been approved. You can now upload your content in the selected subjects',to=[accepts.email],
+            reply_to=['admin@virtualclass.ug'],headers={'Message-ID': 'Teacher'})
+            eemail.send()
+            
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        return redirect(reverse('e_learning:approve'))
+
+def declined(request):
+    if request.method == 'POST':
+        name = request.POST.get('declines')
+        email = request.POST.get('starboy')
+        try:
+            eemail = EmailMessage(subject= 'Request declined',body=name,to=[email],reply_to=['admin@virtualclass.ug'],headers={'Message-ID': 'Try applying again' })
+            eemail.send()
+            
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        
+    return redirect('e_learning:approve')
+
+
+def conversation(request,slug):
+    #subjects
+    chat_title = ChatRoom.objects.get(id = slug)
+    subject=Teacher_apply.objects.filter(user=request.user.id)
+    subject_one=subject[0].subject_one
+    subject_two=subject[0].subject_two
+
+    list_of_students = []
+    my_teacher_id=Teacher_apply.objects.get(user= request.user.id)
+    current_teacher = my_teacher_id.id
+
+    retrieve_my_students = Subscription.objects.filter(teacher__exact=current_teacher)
+    no_of_students = retrieve_my_students.count()
+    for students_retrieved in retrieve_my_students:
+        my_student = students_retrieved.student
+        list_of_students.append(my_student)
+    if len(list_of_students) == 0:
+        counter = 0
+        no_of_students = 0
+        
+        #chats
+        no_of_chats = ChatRoom.objects.all()
+        no_of_chats = no_of_chats.count()
+        #comments
+        list_of_students = []
+        my_teacher_id=Teacher_apply.objects.get(user= request.user.id)
+        current_teacher = my_teacher_id.id
+        retrieve_my_students = Subscription.objects.filter(teacher__exact=current_teacher)
+        no_of_students = retrieve_my_students.count()
+        for students_retrieved in retrieve_my_students:
+            my_student = students_retrieved.student
+            list_of_students.append(my_student)
+        
+        #form
+        comment_form = ChatCommentForm()
+        comment_form = ChatCommentForm(initial={
+            'name': request.user,
+            'user_image':request.user.userprofile.image.url,
+            'email':request.user.userprofile.email})
+        open_content=ChatRoom.objects.get(id=slug)
+        post = get_object_or_404(ChatRoom, id=slug)
+        print(post)
+        comments = post.comments.filter(active=True, parent__isnull=True)
+        new_comment = None
+        
+        counter_list=[]
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'no_of_chats':no_of_chats,
+            'comment_form':comment_form,
+            'comments':comments,
+            'counter':counter,
+            'chat_title':chat_title
+                        
+                        }
+        
+        for my_studnts in list_of_students:
+            print (my_studnts,'uu')
+            retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
+            counter = retrieve_my_comments.count()
+            counter_list.append(counter)
+            print(counter)
+            retrieved_commented = retrieve_my_comments[:4]
+            context['retrieved_commented'] = retrieved_commented
+            print (counter_list,sum(counter_list))
+            counter_list_no = sum(counter_list)
+            context['counter'] = counter_list_no
+
+
+        # Comment posted
+        if request.method == 'POST':
+            comment_form = ChatCommentForm(data=request.POST)
+            if comment_form.is_valid():
+                parent_obj = None
+                # get parent comment id from hidden input
+                try:
+                    # id integer e.g. 15
+                    parent_id = int(request.POST.get('parent_id'))
+                except:
+                    parent_id = None
+                # if parent_id has been submitted get parent_obj id
+                if parent_id:
+                    parent_obj = ChatComment.objects.get(id=parent_id)
+                    # if parent object exist
+                    if parent_obj:
+                        # create replay comment object
+                        replay_comment = comment_form.save(commit=False)
+                        # assign parent_obj to replay comment
+                        replay_comment.parent = parent_obj
+
+                # Create Comment object but don't save to database yet
+                new_comment = comment_form.save(commit=False)
+                # Assign the current post to the comment
+                new_comment.topic = post
+                # Save the comment to the database
+                new_comment.save()
+                print('saved')
+                return HttpResponseRedirect(post.get_chat_url())
+        return render(request, 'conversation.html',context)
+
+    ######################
+    else:
+
+        #chats
+        no_of_chats = ChatRoom.objects.all()
+        no_of_chats = no_of_chats.count()
+        #comments
+        list_of_students = []
+        my_teacher_id=Teacher_apply.objects.get(user= request.user.id)
+        current_teacher = my_teacher_id.id
+        retrieve_my_students = Subscription.objects.filter(teacher__exact=current_teacher)
+        no_of_students = retrieve_my_students.count()
+        for students_retrieved in retrieve_my_students:
+            my_student = students_retrieved.student
+            list_of_students.append(my_student)
+        
+        #form
+        comment_form = ChatCommentForm()
+        comment_form = ChatCommentForm(initial={
+            'name': request.user,
+            'user_image':request.user.userprofile.image.url,
+            'email':request.user.userprofile.email})
+        open_content=ChatRoom.objects.get(id=slug)
+        post = get_object_or_404(ChatRoom, id=slug)
+        print(post)
+        comments = post.comments.filter(active=True, parent__isnull=True)
+        new_comment = None
+        
+        counter_list=[]
+        context={
+            'subject_two':subject_two,
+            'subject_one':subject_one,
+            'no_of_chats':no_of_chats,
+            'comment_form':comment_form,
+            'comments':comments,
+            'chat_title':chat_title
+                        
+                        }
+        for my_studnts in list_of_students:
+            print (my_studnts,'uu')
+            retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
+            counter = retrieve_my_comments.count()
+            counter_list.append(counter)
+            print(counter)
+            retrieved_commented = retrieve_my_comments[:4]
+            context['retrieved_commented'] = retrieved_commented
+            print (counter_list,sum(counter_list))
+            counter_list_no = sum(counter_list)
+            context['counter'] = counter_list_no
+
+
+        # Comment posted
+        if request.method == 'POST':
+            comment_form = ChatCommentForm(data=request.POST)
+            if comment_form.is_valid():
+                parent_obj = None
+                # get parent comment id from hidden input
+                try:
+                    # id integer e.g. 15
+                    parent_id = int(request.POST.get('parent_id'))
+                except:
+                    parent_id = None
+                # if parent_id has been submitted get parent_obj id
+                if parent_id:
+                    parent_obj = ChatComment.objects.get(id=parent_id)
+                    # if parent object exist
+                    if parent_obj:
+                        # create replay comment object
+                        replay_comment = comment_form.save(commit=False)
+                        # assign parent_obj to replay comment
+                        replay_comment.parent = parent_obj
+
+                # Create Comment object but don't save to database yet
+                new_comment = comment_form.save(commit=False)
+                # Assign the current post to the comment
+                new_comment.topic = post
+                # Save the comment to the database
+                new_comment.save()
+                print('saved')
+                return HttpResponseRedirect(post.get_chat_url())
+        
+        return render(request, 'conversation.html',context)
+

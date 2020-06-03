@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from phonenumber_field.formfields import PhoneNumberField
-from .models import Teacher_apply,Upload_topics,Subjects_overview,Comment,Message,Chat,UserProfile
+from .models import ChatRoom,Teacher_apply,Upload_topics,Subjects_overview,Comment,ChatComment,Message,Chat,UserProfile
 
 # class Contentform(forms.ModelForm):
 #     class Meta:
@@ -119,7 +119,18 @@ class Applyform(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('name', 'email', 'body')
+        fields = ('name', 'email', 'body','user_image')
+        labels ={
+                'body':' ',
+        }
+
+        widgets = {
+            'body': forms.Textarea(attrs={'rows':4})}
+
+class ChatCommentForm(forms.ModelForm):
+    class Meta:
+        model = ChatComment
+        fields = ('name', 'email', 'body','user_image')
         labels ={
                 'body':' ',
         }
@@ -149,4 +160,10 @@ class ChatForm(forms.ModelForm):
         #      'members': forms.ModelMultipleChoiceField(attrs={'rows':4})
         #      }
 
-
+class ChatRoomForm(forms.ModelForm):
+    class Meta:
+        model = ChatRoom
+        fields = ['title']
+        labels = {
+                'title':'Topic of discussion',
+        }

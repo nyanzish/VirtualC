@@ -24,59 +24,65 @@
                     <h5 class="text-center" style="font-family: Times;">
                         Click class to upload content
                     </h5>
+                    <div class="container-fluid">
+                    <div class="row justify-content-center">
+                    <div class="col-md-3">
                     <ul class="pt-3">
     
-                        <li class='mb-3' >
+                        <li class='mb-3 zooma' >
                             <form id="form1" action="{% url 'e_learning:upload' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <input type="hidden" name='subject_id' value="{{subject_id}}">
                                 <input type="hidden" name="class_id" value="1">
                                 <!--<input type="submit" value="S1" class="btn btn-primary mb-4" name="register" style="border-radius: 17px;" />-->
-                                <a type="submit" onclick="document.getElementById('form1').submit();" class="S1" >S.1 (Senior one)</a>
+                                <a type="submit" onclick="document.getElementById('form1').submit();" class="S1" >S.1 <span class="call-text">(Senior one)</span></a>
                             </form>
                         </li>
-                        <li>
+                        <li class="zooma">
                             <form id="form2" action="{% url 'e_learning:upload' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <input type="hidden" name='subject_id' value="{{subject_id}}">
                                 <input type="hidden" name="class_id" value="2">
                             </form>
-                            <a type="submit" onclick="document.getElementById('form2').submit();" >S.2 (Senior two)</a>
+                            <a type="submit" onclick="document.getElementById('form2').submit();" >S.2 <span class="call-text">(Senior two)</span></a>
                         </li>
-                        <li class='mt-3' >
+                        <li class='mt-3 zooma' >
                             <form id="form3" action="{% url 'e_learning:upload' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <input type="hidden" name='subject_id' value="{{subject_id}}">
                                 <input type="hidden" name="class_id" value="3">
                             </form>
-                            <a type="submit" onclick="document.getElementById('form3').submit();" >S.3 (Senior three)</a>
+                            <a type="submit" onclick="document.getElementById('form3').submit();" >S.3 <span class="call-text">(Senior three)</span></a>
                         </li>
-                        <li class='mt-3' >
+                        <li class='mt-3 zooma' >
                             <form id="form4" action="{% url 'e_learning:upload' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <input type="hidden" name='subject_id' value="{{subject_id}}">
                                 <input type="hidden" name="class_id" value="4">
                             </form>
-                            <a type="submit" onclick="document.getElementById('form4').submit();" >S.4 (Senior four)</a>
+                            <a type="submit" onclick="document.getElementById('form4').submit();" >S.4 <span class="call-text">(Senior four)</span></a>
                         </li>
-                        <li class='mt-3'>
+                        <li class='mt-3 zooma'>
                             <form id="form5" action="{% url 'e_learning:upload' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <input type="hidden" name='subject_id' value="{{subject_id}}">
                                 <input type="hidden" name="class_id" value="5">
                             </form>
-                            <a type="submit" onclick="document.getElementById('form5').submit();" >S.5 (Senior five)</a>
+                            <a type="submit" onclick="document.getElementById('form5').submit();" >S.5 <span class="call-text">(Senior five)</span></a>
                         </li>
-                        <li class='mt-3'>
+                        <li class='mt-3 zooma'>
                             <form id="form6" action="{% url 'e_learning:upload' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <input type="hidden" name='subject_id' value="{{subject_id}}">
                                 <input type="hidden" name="class_id" value="6">
                             </form>
-                            <a type="submit" onclick="document.getElementById('form6').submit();" >S.6 (Senior six)</a>
+                            <a type="submit" onclick="document.getElementById('form6').submit();" >S.6 <span class="call-text">(Senior six)</span></a>
                             
                         </li>
                     </ul>
+                    </div>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>

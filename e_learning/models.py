@@ -145,6 +145,9 @@ class Teacher_apply(models.Model):
     def __str__(self):
         return "%s - %s" % (self.user, self.current_school)
         #return self.current_school
+    def get_absolute_urls(self):
+        return reverse("e_learning:accept", args=[str(self.pk)
+        ])
 
 class Subjects_overview(models.Model):
     #duration
@@ -245,6 +248,7 @@ class Upload_topics(models.Model):
         ])
 
 class Comment(models.Model):
+    user_image = models.CharField(default='default.png',max_length=800)
     topic = models.ForeignKey(Upload_topics,on_delete=models.CASCADE,related_name='comments')
     name = models.CharField(max_length=80)
     email = models.EmailField()
@@ -300,7 +304,41 @@ class Chat(models.Model):
     # def get_absolute_url(self):
     #     return 'users:messages', (), {'chat_id': self.pk }
 
+class ChatRoom(models.Model):
+    title= models.CharField(max_length=800)
+    user_profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    date_of_record = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return self.title
 
+    def get_chat_url(self):
+        return reverse("e_learning:conversation", args=[str(self.pk)])
+
+class ChatComment(models.Model):
+    user_image = models.CharField(default='default.png',max_length=800)
+    topic = models.ForeignKey(ChatRoom,on_delete=models.CASCADE,related_name='comments')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+    parent = models.ForeignKey('self', null=True, blank=True,on_delete=models.CASCADE, related_name='replies')
+
+    class Meta:
+        ordering = ['-created_on']
+
+    def __str__(self):
+        return 'ChatComment {} by {}'.format(self.body, self.name)
+
+    def children(self):
+        return ChatComment.objects.get(parent=self)
+    @property
+    def is_parent(self):
+        if self.parent is not None:
+            return False
+        return True
+        
 class Message(models.Model):
     chat = models.ForeignKey(Chat, verbose_name=_("Chat"),on_delete=models.CASCADE)
     author = models.ForeignKey(User, verbose_name=_("User") ,on_delete=models.CASCADE)

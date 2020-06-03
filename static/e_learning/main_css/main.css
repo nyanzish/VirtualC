@@ -13,6 +13,9 @@ i.fab {
   .fa_map{
     margin-left: 2px !important;
   }
+  .paginator{
+      margin-left: 70px;
+  }
 }
 .asteriskField {
     display: none;
@@ -52,6 +55,28 @@ i.fab {
   .subject_durationx{
     font-size: 16px !important;
   }
+  .paginator{
+      margin-left: 70px;
+  }
+  .call-text{
+    color: white !important;
+    font-size: 0px !important;
+  }
+  .glow{
+    font-size: 20px !important;
+  }
+  .videoz
+  {
+    top: 0px !important;
+    left: 0px !important;
+    z-index: 0 !important;
+  }
+  .subject_content{
+    margin-top: 180px !important;
+  }
+  .preview_video{
+    padding-top: 0px !important;
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -87,6 +112,28 @@ i.fab {
   }
   .subject_durationx{
     font-size: 16px !important;
+  }
+  .paginator{
+      margin-left: 70px;
+  }
+  .call-text{
+    color: white !important;
+    font-size: 0px !important;
+  }
+  .glow{
+    font-size: 20px !important;
+  }
+  .videoz
+  {
+    top: 0px !important;
+    left: 0px !important;
+    z-index: 0 !important;
+  }
+  .subject_content{
+    margin-top: 180px !important;
+  }
+  .preview_video{
+    padding-top: 0px !important;
   }
 }
 
@@ -124,6 +171,25 @@ i.fab {
   .subject_durationx{
     font-size: 16px !important;
   }
+  .paginator{
+      margin-left: 70px;
+  }
+  .call-text{
+    color: white !important;
+    font-size: 0px !important;
+  }
+  .glow{
+    font-size: 20px !important;
+  }
+  .videoz
+  {
+    top: 0px !important;
+    left: 0px !important;
+    z-index: 0 !important;
+  }
+  .subject_content{
+    margin-top: 0px !important;
+  }
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px){
@@ -160,5 +226,27 @@ i.fab {
   }
   .subject_durationx{
     font-size: 14px !important;
+  }
+  .paginator{
+      margin-left: 70px;
+  }
+  .call-text{
+    color: white !important;
+    font-size: 0px !important;
+  }
+  .glow{
+    font-size: 20px !important;
+  }
+  .videoz
+  {
+    top: 0px !important;
+    left: 0px !important;
+    z-index: 0 !important;
+  }
+  .subject_content{
+    margin-top: 180px !important;
+  }
+  .preview_video{
+    padding-top: 0px !important;
   }
 }

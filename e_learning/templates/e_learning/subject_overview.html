@@ -3,6 +3,15 @@
 {% load static %}
 {% block head_title %}Virtual-Class{% endblock %}
 {% block content %}
+<style>
+  .videoz
+  {
+    position:absolute;
+    top: 50px;
+    left: 25px;
+    z-index: 7;
+  }
+</style>
 <nav aria-label="breadcrumb" class="mt-2">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
       <li class="breadcrumb-item" aria-current="page"><a href="{% url 'e_learning:home_view' %}" class="text-dark">Home</a>
@@ -10,89 +19,91 @@
       <li class="breadcrumb-item active text-primary" ><a href="{{ overview.get_absolute_url }}">{{overview.subject}}</a></li>
     </ol>
  </nav>
- <hr>
-<div class="container-fluid mt-2 mb-2">
-  <div class="row justify-content-center">
-    <div class="col-md-12">
-      <div class="card shadow-0 border-0">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="row">
-                  <div class="col-md-4">
-                    <img class="img-fluid img-thumbnail overview_image" src="{{overview.image.url}}" class="card-img-top"alt="..." style="height:170px">
-                  </div>
-                  <div class="col-md-8 mt-4 overview_details">
-                    <h4 class="text-dark subject_namex" style="font-family: Times;font-size: 20px !important;">Subject:&nbsp;{{overview.subject}}</h4>
-                    <h6 class="text-dark subject_classx" style="font-family: Times;font-size: 18px !important;">Class:&nbsp;{{overview.class_n}}
-                    </h6>
-                    <h6 class="text-dark subject_durationx" style="font-family: Times;font-size: 18px !important;">Duration:&nbsp;{{overview.duration}}</h6>
-                  </div>
-              </div>
-              <hr>
-              <h5 class="text-center text-dark overview_header" style="font-family: Times;">Overview</h5>
-              <p class="text-dark overview_body">{{overview.over_view}}</p>
+<div class="container-fluid">
+<div class="row justify-content-center" style="background-color: #3073bb !important;">
+  <div class="col-md-12">
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 pt-5 pb-5 overview_details">
+        <h4 class="text-white text-center subject_namex" style="font-family: Times;font-size: 25px !important;"><b>{{overview.subject}}</b></h4>
+        <h6 class="text-white subject_classx" style="font-family: Times;font-size: 16px !important;">
+          Class:&nbsp;{{overview.class_n}}<span class="ml-3">Duration:&nbsp;{{overview.duration}}</span>
+        </h6>
+        <h4 class="text-white overview_body" style="font-family: Times;font-size: 18px !important;">{{overview.over_view}} </h4>
+        <h6 class="text-white subject_durationx" style="font-family: Times;font-size: 16px !important;">Created By:&nbsp;{{overview.teacher.user_profile.firstname}} {{overview.teacher.user_profile.lastname}}</h6>
+      </div>
+      <div class="col-md-5 pr-2">
+        <h5 class="pb-2 pt-4 text-white text-center preview_video" style="font-family: Times;"><i class="fa fa-video-camera" ></i>&nbsp;(Preview Video)</h5>
+        <div class="container">
+        <div class="card videoz w-100 mt-2">
+          <div class="card-body">
+            <div class="embed-responsive embed-responsive-16by9 hoverable">
+              <video class="embed-responsive-item" controls>
+                <source src="{{ overview.video.url }}" type="video/mp4">
+              </video>
             </div>
-            <div class="col-md-6">
-              <h5 class="pb-2 ml-4 pt-2" style="font-family: Times;"><i class="fa fa-video-camera" ></i>&nbsp;(Preview Video)</h5>
-              <div class="embed-responsive embed-responsive-16by9 hoverable">
-                <video class="embed-responsive-item" controls>
-                  <source src="{{ overview.video.url }}" type="video/mp4">
-                </video>
-              </div>
-          </div>
-          </div>
-          <hr>
-          <div class="row pt-2">
-            <div class="col-md-12 text-center">
-              <!--div class="h5 mb-0 text-gray-800 pb-4 pt-3 mt-5">
-                <span class="text-danger">USD:</span>&nbsp;${{ overview.price }}<br><span class="text-danger">UGX:</span>&nbsp;{{ overview.price }}/=
-              </div>-->
-              <div class="pt-3 pb-3">
-                <a href="{% url 'e_learning:subscription_approval' slug %}" class="btn btn-outline-primary mt-2" style="border-radius: 19px;">
-                    <span class="btn-fa fas fa-award rounded-circle text-dark bg-white p-1">
-                    </span>&nbsp;&nbsp;Subscribe Now
+            <div class="pt-3 pb-1 text-center">
+                <a href="{% url 'e_learning:my_subjects' %}" class="btn btn-primary mt-2">
+                    Subscribe Now
                 </a>
-              </div>
             </div>
           </div>
-          <h5 class="text-center pt-3 pb-2"><u>Teacher Details</u></h5>
-          <div class="row mt-3 mb-3">
-            <div class="col-md-2 text-center">
-              <div class="pt-2 pb-2 mr-3">
-                <img class="img-thumbnail" src="{{overview.teacher.user_profile.image.url}}" style="height:120px;width: 120px;">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="mt-3">
-                <h6 class="text-muted pt-2"><i class="fas fa-address-book" style="font-size: 12px !important;"></i>&nbsp;Name: <span style="font-size: 13px !important;"><b>&nbsp;Mr(s).{{overview.teacher.user_profile.firstname}} {{overview.teacher.user_profile.lastname}}</b></span>
-                </h6>
-                <h6 class="text-muted"><br><i class="fas fa-school" style="font-size: 12px !important;"></i>&nbsp;Current School:<b>&nbsp;<span style="font-size: 13px !important;">{{overview.teacher.current_school}}</span></b>
-                </h6>
-              </div>
-            </div>
-            <div class="col-md-7">
-              <h6 class="text-muted pt-3"><i class="far fa-address-card" style="font-size: 14px !important;"></i>&nbsp;<b>Bio</b></h6>
-              <p class="text-muted" style="font-size: 15px !important;">
-                {{overview.teacher.Brief_Self_description}}
-              </p>
-            </div>
-          </div><hr>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+<div class="container-fluid mt-4 pb-2">
+  <div class="row">
+    <div class="col-md-6">
+       <h3 class="text-left pt-1 subject_content" style="font-size: 22px;color: black;">Subject Content</h3>
+      <div class="card">
+        <div class="card-body">
+          <h1 style="font-size: 22px;" class="text-dark text-left">topics</h1>
+        </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row justify-content-center ">
-    <div class="col-md-11">
-      <h5 class="text-center">Other Subjects Recommeded for you:</h5>
+<div class="container-fluid mt-2 pb-5">
+  <h5 class="text-center pt-3 pb-2"><u>Teacher Details</u></h5>
+    <div class="row mt-3 mb-3">
+    <div class="col-md-2 text-center">
+        <div class="pt-2 pb-2 text-center">
+        <img class="img-thumbnail" src="{{overview.teacher.user_profile.image.url}}" style="height:120px;width: 120px;">
+        </div>
     </div>
-  </div>
-<div class="row p-3">
+    <div class="col-md-3">
+        <div class="mt-3">
+        <h6 class="text-muted"><i class="fas fa-address-book" style="font-size: 10px !important;"></i>&nbsp;Name
+        </h6>
+        <p class="text-muted" style="font-size: 12px !important;">
+        Mr(s).{{overview.teacher.user_profile.firstname}} {{overview.teacher.user_profile.lastname}}
+        </p>
+        <h6 class="text-muted"><i class="fas fa-school" style="font-size: 10px !important;"></i>&nbsp;Currently Teaching</h6>
+        <p class="text-muted" style="font-size: 13px !important;">
+        {{overview.teacher.current_school}}
+        </p>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <h6 class="text-muted pt-3"><i class="far fa-address-card" style="font-size: 14px !important;"></i>&nbsp;<b>Bio</b></h6>
+        <p class="text-muted" style="font-size: 15px !important;">
+        {{overview.teacher.Brief_Self_description}}
+        </p>
+    </div>
+    </div>
+
+<h5 class="text-left ml-3 pt-2" style="font-size:22px !important;color:black !important;"><b>More Subjects for you:</b></h5>
+<div class="row pl-3 pr-3 pb-2">
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
       <div class="carousel-item active">
         {% if recomended <= 2 %}
-        <div class="row p-3">
+        <div class="row pl-3 pr-3 pt-1 pb-3">
             {% for item in recomend %}
             <div class="col-md-6 col-lg-6 col-xlg-3 p-3">
               <div class="card shadow w-100 h-100" style="width: 18rem;">
@@ -146,17 +157,15 @@
         </div>
         {% endif %}
       </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
       <span class="carousel-control-prev-icon text-dark" aria-hidden="true"></span>
       <span class="sr-only text-dark">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-  </a>
-</div>    
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+  </div>
+  </div>
 </div>
-</div>
-
 {% endblock %}

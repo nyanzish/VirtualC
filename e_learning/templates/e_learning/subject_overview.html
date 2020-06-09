@@ -12,11 +12,11 @@
     z-index: 7;
   }
 </style>
-<nav aria-label="breadcrumb" class="mt-2">
+<nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
-      <li class="breadcrumb-item" aria-current="page"><a href="{% url 'e_learning:home_view' %}" class="text-dark">Home</a>
+      <li class="breadcrumb-item" aria-current="page"><a href="{% url 'e_learning:home_view' %}" class="text-dark">HOME</a>
       </li>
-      <li class="breadcrumb-item active text-primary" ><a href="{{ overview.get_absolute_url }}">{{overview.subject}}</a></li>
+      <li class="breadcrumb-item active text-primary text-uppercase" ><a href="{{ overview.get_absolute_url }}">{{overview.subject}}</a></li>
     </ol>
  </nav>
 <div class="container-fluid">
@@ -24,13 +24,13 @@
   <div class="col-md-12">
     <div class="container-fluid">
     <div class="row">
-      <div class="col-md-6 pt-5 pb-5 overview_details">
+      <div class="col-md-6 pt-5 pb-4 overview_details">
         <h4 class="text-white text-center subject_namex" style="font-family: Times;font-size: 25px !important;"><b>{{overview.subject}}</b></h4>
         <h6 class="text-white subject_classx" style="font-family: Times;font-size: 16px !important;">
           Class:&nbsp;{{overview.class_n}}<span class="ml-3">Duration:&nbsp;{{overview.duration}}</span>
         </h6>
-        <h4 class="text-white overview_body" style="font-family: Times;font-size: 18px !important;">{{overview.over_view}} </h4>
-        <h6 class="text-white subject_durationx" style="font-family: Times;font-size: 16px !important;">Created By:&nbsp;{{overview.teacher.user_profile.firstname}} {{overview.teacher.user_profile.lastname}}</h6>
+        <h4 class="text-white overview_body mt-3" style="font-family: Times;font-size: 18px !important;">What You will Learn<br><span style="font-size:15px !important;">{{overview.over_view}}</span></h4>
+        <h6 class="text-white subject_durationx mt-4" style="font-family: Times;font-size: 16px !important;"><img class="rounded-circle" src="{{overview.teacher.user_profile.image.url}}" alt=" " style="height:40px;width: 40px;">&nbsp;<span style="font-size:14px !important;">Created By:&nbsp;{{overview.teacher.user_profile.firstname}} {{overview.teacher.user_profile.lastname}}</span></h6>
       </div>
       <div class="col-md-5 pr-2">
         <h5 class="pb-2 pt-4 text-white text-center preview_video" style="font-family: Times;"><i class="fa fa-video-camera" ></i>&nbsp;(Preview Video)</h5>
@@ -43,7 +43,7 @@
               </video>
             </div>
             <div class="pt-3 pb-1 text-center">
-                <a href="{% url 'e_learning:my_subjects' %}" class="btn btn-primary mt-2">
+                <a href="{% url 'e_learning:subscription_approval' slug %}" class="btn btn-primary mt-2">
                     Subscribe Now
                 </a>
             </div>
@@ -62,13 +62,24 @@
        <h3 class="text-left pt-1 subject_content" style="font-size: 22px;color: black;">Subject Content</h3>
       <div class="card">
         <div class="card-body">
-          <h1 style="font-size: 22px;" class="text-dark text-left">topics</h1>
+          <p style="font-size: 18px;color:black;" class="text-center">Topics</p><hr>
+          {% if topic_list %}
+          {% for topic in topic_list %}
+            <ul>
+                <li>
+                     <p>{{topic.topic}}</p>
+                </li>
+            </ul>
+          {% endfor %}
+          {% else %}
+          <p>Haven't Uploaded Any Content Yet</p>
+          {% endif %}
         </div>
         </div>
       </div>
     </div>
   </div>
-<div class="container-fluid mt-2 pb-5">
+<div class="container-fluid mt-3 pb-5">
   <h5 class="text-center pt-3 pb-2"><u>Teacher Details</u></h5>
     <div class="row mt-3 mb-3">
     <div class="col-md-2 text-center">
@@ -78,12 +89,12 @@
     </div>
     <div class="col-md-3">
         <div class="mt-3">
-        <h6 class="text-muted"><i class="fas fa-address-book" style="font-size: 10px !important;"></i>&nbsp;Name
+        <h6 class="text-muted" style="font-size: 14px;"><i class="fas fa-address-book" style="font-size: 10px !important;"></i>&nbsp;Name
         </h6>
-        <p class="text-muted" style="font-size: 12px !important;">
+        <p class="text-muted" style="font-size: 14px !important;">
         Mr(s).{{overview.teacher.user_profile.firstname}} {{overview.teacher.user_profile.lastname}}
         </p>
-        <h6 class="text-muted"><i class="fas fa-school" style="font-size: 10px !important;"></i>&nbsp;Currently Teaching</h6>
+        <h6 class="text-muted" style="font-size: 14px"><i class="fas fa-school" style="font-size: 10px !important;"></i>&nbsp;Currently Teaching</h6>
         <p class="text-muted" style="font-size: 13px !important;">
         {{overview.teacher.current_school}}
         </p>
@@ -97,17 +108,45 @@
     </div>
     </div>
 
-<h5 class="text-left ml-3 pt-2" style="font-size:22px !important;color:black !important;"><b>More Subjects for you:</b></h5>
+<h5 class="text-left ml-3 pt-2" style="font-size:20px !important;color:black !important;">More Subjects for you:</h5>
 <div class="row pl-3 pr-3 pb-2">
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
       <div class="carousel-item active">
-        {% if recomended <= 2 %}
+        {% if recomended == 1 %}
+        <div class="row">
+            {% for item in recomend %}
+            <div class="col-md-9 col-lg-9 p-3">
+              <div class="card shadow w-100 h-100" style="width: 18rem;">
+                <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">
+                <div class="card-body text-center">
+                  <h6 class="card-title text-primary"><b>{{ item.subject }}</b>
+                  </h6>
+                  <h6 class="text-center"><b>{{ item.class_n }}</b></h6>
+                  <p class="text-muted text-center">
+                  <span style="font-size: 14px;">Duration: {{ item.duration }}</span>
+                  </p><hr>
+                  <p class="text-muted text-center">
+        
+                  <span>By: Mr(s). {{item.teacher.user_profile.firstname}} {{item.teacher.user_profile.lastname}}</span>
+                  </p>
+                  <a href="{{ item.get_absolute_url }}" class="btn btn-outline-primary icon-btn btn-sm mt-2 " style="border-radius: 19px;">
+                    <i class="fas fa-award rounded-circle text-dark bg-white p-1">
+                    </i>&nbsp;&nbsp;Learn More
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% elif recomended <= 2%}
         <div class="row pl-3 pr-3 pt-1 pb-3">
             {% for item in recomend %}
             <div class="col-md-6 col-lg-6 col-xlg-3 p-3">
               <div class="card shadow w-100 h-100" style="width: 18rem;">
+                  <a href="{{ item.get_absolute_url }}">
                 <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">
+                </a>
                 <div class="card-body text-center">
                   <h6 class="card-title text-primary"><b>{{ item.subject }}</b>
                   </h6>
@@ -133,7 +172,9 @@
             {% for item in recomend %}
             <div class="col-md-3 p-3">
               <div class="card shadow w-100 h-100" style="width: 18rem;">
+                <a href="{{ item.get_absolute_url }}" >
                 <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">
+                </a>
                 <div class="card-body text-center">
                   <h6 class="card-title text-primary"><b>{{ item.subject }}</b>
                   </h6>
@@ -167,5 +208,6 @@
     </a>
   </div>
   </div>
+</div>
 </div>
 {% endblock %}

@@ -3,19 +3,37 @@
 {% load static %}
 {% block head_title %}Virtual-Class{% endblock %}
 {% block content %}
-<nav aria-label="breadcrumb" class="mt-2">
+<nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
-      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">Home</a>
+      <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">Home</a>
       </li>
-      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:e_lib' %}" >E-Library</a></li>
+      <li class="breadcrumb-item active text-primary text-uppercase" ><a href="{% url 'e_learning:e_lib' %}" >E-Library</a></li>
     </ol>
  </nav>
-<div class="container pb-4">
+ <div class="container-fluid">
+ 	<div class="row justify-content-center">
+ 		<div class="col-md-6">
+ 			<form action="{% url 'e_learning:search_book' %}" method="GET" enctype="multipart-form-data">
+ 				<div class="input-group shadow-sm">
+				   <input type="text" class="form-control border-right-0 border pt-2 pb-2" required="required" placeholder="Search by book title or subject" name="dd" >
+				   <div class="input-group-append">
+                    <input class="btn btn-primary text-white border-left-0 border-right-0 border" value= "Search"   type="submit"
+				      />
+				    </div>
+				  </div>
+ 			</form>
+ 		</div>
+ 		<!-- <div class="col-md-6">
+ 		</div> -->
+ 	</div>
+ </div>
+
+<div class="container-fluid pb-4 pt-4">
     <h2 class="text-center pb-1 text-dark" style="font-size: 22px;"><b>BOOKS</b></h2>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center pl-4 pr-4">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="card shadow-sm mb-3 pb-3 h-100 pl-2 pr-2 pt-2">
-        <div class="row">
+        <div class="row pl-3 pr-3 pt-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Mathematics</h1>
                 </div>
@@ -24,8 +42,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -35,7 +53,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">English</h1>
                 </div>
@@ -44,8 +62,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -55,7 +73,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Biology</h1>
                 </div>
@@ -64,8 +82,8 @@
                <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -75,7 +93,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Chemistry</h1>
                 </div>
@@ -84,8 +102,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -95,7 +113,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Physics</h1>
                 </div>
@@ -104,8 +122,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -115,7 +133,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Geography</h1>
                 </div>
@@ -124,8 +142,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -135,7 +153,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">History</h1>
                 </div>
@@ -144,8 +162,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -155,7 +173,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Agriculture</h1>
                 </div>
@@ -164,8 +182,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -175,7 +193,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Computer</h1>
                 </div>
@@ -184,8 +202,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -195,7 +213,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">French</h1>
                 </div>
@@ -204,8 +222,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -215,7 +233,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Art</h1>
                 </div>
@@ -224,8 +242,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -235,7 +253,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Lugbara Ti</h1>
                 </div>
@@ -244,8 +262,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -255,7 +273,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Luganda</h1>
                 </div>
@@ -264,8 +282,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -275,7 +293,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Chinese</h1>
                 </div>
@@ -284,8 +302,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -295,7 +313,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Islam</h1>
                 </div>
@@ -304,8 +322,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -315,7 +333,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">Kiswahili</h1>
                 </div>
@@ -324,8 +342,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -335,7 +353,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">German</h1>
                 </div>
@@ -344,8 +362,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}
@@ -355,7 +373,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 pl-3 pr-3 pb-3">
                 <div class="col-md-12 col-lg-12 pb-2">
                     <h1 class="text-primary text-uppercase" style="font-size: 18px;">General Paper</h1>
                 </div>
@@ -364,8 +382,8 @@
                 <div class="col-md-2 col-lg-2">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_recommends.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{my_recommends.class_level}}</h1>
-                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></div>
-                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <div class="text-center"><a href="{{my_recommends.attach_book.url}}" target="_blank"><img class="img-holders  img-fluid mb-3" src="{{my_recommends.book_cover_image.url}}"></a></div>
+                <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_recommends.attach_book.url}}" target="_blank">{{my_recommends.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_recommends.recommended_by}}</h1>
                 </div>
             {% endfor %}

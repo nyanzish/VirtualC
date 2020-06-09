@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block head_title %}Start-Learning{% endblock %}
+{% block head_title %}Virtual-Class{% endblock %}
 {% block content %}
 <nav aria-label="breadcrumb" class="mt-2">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
-      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">Home</a>
+      <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">Home</a>
       </li>
-      <li class="breadcrumb-item active text-primary" ><a href=" " >Subject</a></li>
+      <li class="breadcrumb-item active text-primary text-uppercase" ><a href=" " >Subject</a></li>
     </ol>
  </nav>
 <div class="container-fluid mb-3">
-<div class="card shadow-sm mb-5 pb-4 mt-3">
-    <h6 class="text-dark pt-4 pl-4 pb-1" style="font-size: 18px;"><i class="fas fa-book-open fa-1x ml-2">&nbsp;&nbsp;On-going Subjects</i></h6>
+<div class="mb-5 pb-4 mt-3">
+    <h6 class="text-muted pt-4 pl-4 pb-1" style="font-size: 18px;"><i class="fa fa-th fa-1x ml-2">&nbsp;&nbsp;On-going Subjects</i></h6>
     {% if subject_details  %}
     <div class="row p-3">
         {% for item in subject_details %}

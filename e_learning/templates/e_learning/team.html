@@ -3,73 +3,372 @@
 {% load static %}
 {% block head_title %}Virtual-Class{% endblock %}
 {% block content %}
-<nav aria-label="breadcrumb" class="mt-2">
+<style type="text/css">
+.card {
+  margin: 10px 10px;
+}
+
+/* Flip Cards CSS */
+.card-container {
+  display: grid;
+  perspective: 700px;
+}
+
+.card-flip {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  grid-template-areas: "frontAndBack";
+  transform-style: preserve-3d;
+  transition: all 0.7s ease;
+}
+
+.card-flip div {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.front {
+  grid-area: frontAndBack;
+}
+
+.back {
+  grid-area: frontAndBack;
+  transform: rotateY(-180deg);
+}
+
+.card-container:hover .card-flip {
+  transform: rotateY(180deg);
+}
+
+</style>
+<nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
-      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">Home</a>
+      <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">Home</a>
       </li>
-      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:team' %}" >Team</a></li>
+      <li class="breadcrumb-item active text-primary text-uppercase" ><a href="{% url 'e_learning:team' %}" >Our Team</a></li>
     </ol>
  </nav>
-<div class="container mb-5">
-	<h5 class="text-primary text-center mt-2 pb-2">Development Team</h5><hr>
-	<div class="row pb-5">
-            <div class="col-lg-3 col-md-3">
-                <div class="mx-auto testimonial-item mb-5 mb-lg-0">
-                    <div class="text-center"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/nyanzi.jpg' %}"></div>
-                    <h5 class="text-center" style="font-size: 15px;"><b>Nyanzi Shafik</b></h5>
-                    <p class="text-center mb-0" style="font-size: 15px;">Software Engineer</p>
-                    <p class="text-center mb-0" style="font-size: 15px;">nyanzishafik5@gmail.com</p>
-                    <div class="text-center pt-2">
-			        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
-			        <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
-			        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
-			        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
-			      </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="mx-auto testimonial-item mb-5 mb-lg-0">
-                    <div class="text-center"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/felix.jpg' %}"></div>
-                    <h5 class="text-center" style="font-size: 15px;"><b>Egaru Felix</b></h5>
-                    <p class="text-center mb-0" style="font-size: 15px;">Software Engineer</p>
-                    <p class="text-center mb-0" style="font-size: 15px;">egarufelix@gmail.com</p>
-                    <div class="text-center pt-2">
-			        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
-			        <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
-			        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
-			        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
-			      </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="mx-auto testimonial-item mb-5 mb-lg-0">
-                    <div class="text-center"><img class="img-holder img-fluid mb-3" src="{% static 'e_learning/image/emma.jpg' %}"></div>
-                    <h5 class="text-center" style="font-size: 15px;"><b>Kiguli Emmanuel</b></h5>
-                    <p class="text-center mb-0" style="font-size: 15px;">Software Developer</p>
-                    <p class="text-center mb-0" style="font-size: 15px;">emmaclints1@gmail.com</p>
-                    <div class="text-center pt-2">
-			        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
-			        <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
-			        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
-			        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
-			      </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="mx-auto testimonial-item mb-5 mb-lg-0">
-                    <div class="text-center"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/laban.jpg' %}"></div>
-                    <h5 class="text-center" style="font-size: 15px;"><b>Amazo Laban</b></h5>
-                    <p class="text-center mb-0" style="font-size: 15px;">Developer</p>
-                    <p class="text-center mb-0" style="font-size: 15px;">amazolaban@gmail.com</p>
-                    <div class="text-center pt-2">
-			        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
-			        <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
-			        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
-			        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
-			      </div>
-                </div>
-            </div>
+<div class="container-fluid mb-5">
+<h5 class="text-primary text-center text-uppercase mt-2 pb-2">Meet Our Team</h5><hr>
+<h1 class="text-muted text-center pt-2 pb-2" style="font-size:18px !important;font-family:sans-serif !important;">LEAD</h1>
+  <div class="row justify-content-center">
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/default.png' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Name</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Occupation</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">email</p>
+          </div>
         </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/default.png' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Name</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Occupation</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">email</p>
+          </div>
+        </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+  </div>
+  <h1 class="text-muted text-center pt-5 pb-2" style="font-size:18px !important;font-family:sans-serif !important;">HEADS OF DEPARTMENTS</h1>
+  <div class="row">
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/default.png' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Name</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Occupation</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">email</p>
+          </div>
+        </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/default.png' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Name</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Occupation</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">email</p>
+          </div>
+        </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/default.png' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Name</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Occupation</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">email</p>
+          </div>
+        </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/default.png' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Name</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Occupation</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">email</p>
+          </div>
+        </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+  </div>
+  <h1 class="text-muted text-center pt-5 pb-2" style="font-size:18px !important;font-family:sans-serif !important;">TECHNICAL STUFF</h1>
+  <div class="row">
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/nyanzi.jpg' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Nyanzi Shafik</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Software Engineer</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">nyanzishafik5@gmail.com</p>
+          </div>
+        </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/felix.jpg' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Egaru Felix</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Software Engineer</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">egarufelix@gmail.com</p>
+          </div>
+        </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/emma.jpg' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Kiguli Emmanuel</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Software Engineer</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">emmaclints1@gmail.com</p>
+          </div>
+        </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+    <!-- Card 1 -->
+    <div class="col-md-3 card-container">
+      <div class="card-flip">
+        <!-- Card 1 Front -->
+        <div class="card front">
+          <div class="text-center pt-3"><img class="img-holder  img-fluid mb-3" src="{% static 'e_learning/image/laban.jpg' %}"></div>
+          <div class="card-block pb-3">
+            <h5 class="text-center text-muted" style="font-size: 15px;font-family:sans-serif !important;"><b>Amazo Laban</b></h5>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">Software Engineer</p>
+            <p class="text-center mb-0 text-muted" style="font-size: 15px;font-family:sans-serif !important;">amazolaban@gmail.com</p>
+          </div>
+        </div>
+        <!-- End Card 1 Front -->
+
+        <!-- Card 1 Back -->
+        <div class="card back">
+          <div class="card-block">
+            <h4 class="card-title pt-3 text-center text-primary">ABOUT ME</h4>
+            <p class="text-muted p-2">With supporting text below as a natural lead-in to additional content.</p>
+            <div class="text-center pt-3">
+            <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 1 Back -->
+      </div>
+    </div>
+    <!-- End Card 1 -->
+  </div>
 </div>
 
 {% endblock %}

@@ -120,6 +120,10 @@ class Subjects(models.Model):
         return reverse("e_learning:push", args=[str(self.pk)
         ])
 
+    def get_start_discussion_url(self):
+        return reverse("e_learning:start_discussion", args=[str(self.pk)
+        ])
+
 class Recommend_Subjects_Table(models.Model):
     subject_name = models.CharField(max_length=30)
     class_level = models.CharField(max_length=30)
@@ -339,6 +343,32 @@ class ChatComment(models.Model):
             return False
         return True
         
+
+class StudentChatComment(models.Model):
+    user_image = models.CharField(default='default.png',max_length=800)
+    topic = models.ForeignKey(Subjects,on_delete=models.CASCADE,related_name='comments')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+    parent = models.ForeignKey('self', null=True, blank=True,on_delete=models.CASCADE, related_name='replies')
+
+    class Meta:
+        ordering = ['-created_on']
+
+    def __str__(self):
+        return 'StudentChatComment {} by {}'.format(self.body, self.name)
+
+    def children(self):
+        return StudentChatComment.objects.get(parent=self)
+    @property
+    def is_parent(self):
+        if self.parent is not None:
+            return False
+        return True
+
+
 class Message(models.Model):
     chat = models.ForeignKey(Chat, verbose_name=_("Chat"),on_delete=models.CASCADE)
     author = models.ForeignKey(User, verbose_name=_("User") ,on_delete=models.CASCADE)

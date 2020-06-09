@@ -1,0 +1,41 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% load poll_extras %}
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary text-uppercase" ><a href="{% url 'e_learning:group_discussion' %}" >Group Discussion</a></li>
+    </ol>
+ </nav>
+<div class="container-fluid pl-4 pr-4 pb-5">
+    <h6 class="text-dark text-center" style="font-family:sans-serif !important;font-size:22px !important;">Group Discussion</h6>
+    <p class="text-muted text-center" style="font-family:sans-serif !">You can now instantly join different subject discussion groups to make inquiries, ask questions and share your views as well as learn from your counterparts in the various subject areas by clicking the <b>Join Chat</b> button.</p>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="container-fluid pl-4 pr-4 pb-2">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        {% for subject in subject_discussion %}
+                        <div class="row mt-3" style="border-radius: 30px; background-color: #ecebeb !important;">
+                        <div class="col-md-12 comment_body">
+                        <div class="container">
+                            <h2 class="pt-3 text-center text-primary pb-2" style="color: #223f80 ;font-size: 18px;"><b>{{subject.subject_name}}</b></h2>
+                            <p class="text-center">
+                            <i class="fas fa-comment text-muted"></i>&nbsp;comments&nbsp;<span class="badge badge-danger" style="font-size: 12px !important;">{{both_dict|get_item:subject.subject_name}}</span></span></p>
+                            <div class="text-center pb-3"><a href="{{subject.get_start_discussion_url}}" class="btn btn-light bg-white text-center">Join Chat</a></div>
+                        </div>
+                        </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

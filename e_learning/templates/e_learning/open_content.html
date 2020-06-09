@@ -23,8 +23,7 @@
                 <h5 class="text-center text-primary" style="font-family: Times;"><b>{{class_object}}</b></h5><hr>
                 <h5 class="mt-2 mb-3 text-center" style="font-family: Times;">Topic:<span class="text-primary text-capitalize" style="font-family: Times;" >&nbsp;{{open_content.topic}}</span></h5>
                 <div class="card">
-                  <div class="card-body" style="height:480px;
-                  overflow-y: scroll; font-family: Times; color: #3e3838;  font-size: 20px;">
+                  <div class="card-body" style="height:480px;overflow-y: scroll; font-family: Times; color: #3e3838;  font-size: 20px;">
                     {{open_content.content | safe}}
                   </div>
                 </div>
@@ -37,17 +36,35 @@
                 </video>
               </div>
               <div class="mt-5">
-                <h6 class="mt-2" style="font-family: Times; color: #3e3838;">Reference Books(Read and Download)</h6>
+                <h6 class="mt-2" style="font-family: Times; color: #3e3838;">Reference Books(Download)</h6>
                 <a href="{{ open_content.attached_file.url}}" target="_blank">{{ open_content.attached_file }}</a>
               </div>
             </div>
             </div>
             <hr>
-            <div class="row mt-5 mb-5">
+            <div class="row mt-5 mb-5 pl-5">
                 <div class="col-md-10">
                     <h4 class="text-dark" style="font-family: Times;">{{ comments.count }} comments</h4>
+                    {% if new_comment %}
+                    <div class="alert alert-success" role="alert">
+                    Your comment is awaiting moderation
+                    </div>
+                    {% else %}
+                    <h4 class="text-dark" style="font-family: Times; font-size: 20px;">Leave a comment</h4>
+                    <form method="post">
+                    {{ comment_form.name.as_hidden }}
+                    {{ comment_form.user_image.as_hidden }}
+                    {{ comment_form.email.as_hidden }}
+                    {{ comment_form.body |as_crispy_field}}
+                    <!--<textarea class="form-control" rows="5" placeholder="Enter Your Comment"></textarea>-->
+                    {% csrf_token %}
+                    <div class="text-right mt-2">
+                        <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+                    </div>
+                    </form>
+                    {% endif %}
                     {% for comment in comments %}
-                    <div class="comments">
+                    <div class="comments pt-4">
                       <div class="row border-left-primary" style="border-radius: 30px; background-color: #f6f6f9 !important;">
                       <div class="col-md-9 comment_body">
                           <a href="{{ the_user_url }}"><img class="img-profile rounded-circle ml-2 mt-2" width="33" height="33" src="{{comment.user_image}}">
@@ -60,9 +77,9 @@
                       </div>
                       </div>
                       {% if comment.replies.all%}
-                        <h6 class="ml-5" style="font-family: Times;">Replies</h6>
+                        <h6 class="ml-5 mt-2" style="font-family: Times;">Replies</h6>
                         {% for replay in comment.replies.all %}
-                        <div class="row border-left-danger ml-5" style="border-radius: 30px; background-color: #f6f6f9 !important;">
+                        <div class="row border-left-danger ml-5 mt-2" style="border-radius: 30px; background-color: #f6f6f9 !important;">
                           <div class="col-md-9">
                               <a href="{{ the_user_url }}"><img class="img-profile rounded-circle ml-2 mt-2" width="33" height="33" src="{{replay.user_image}}">
                               &nbsp;&nbsp;<strong class="list-group-item-heading"><a href=" ">{{ replay.name }}</a></strong>
@@ -84,12 +101,11 @@
                       {% else %}
                     {% endif %}
                     <div class="text-right pt-2">
-                      <button class="btn btn-outline-default text-primary btn-sm shower mr-4 border-0" data-target="#demo" aria-controls="demo"><i class="fas fa-reply-all"></i>&nbsp;&nbsp;Reply
+                      <button class="btn btn-outline-default text-primary btn-sm shower mr-4 border-0 comment-reply-btn"><i class="fas fa-reply-all"></i>&nbsp;&nbsp;Reply
                       </button>
-                      <button class="btn btn-outline-default btn-sm hidder border-0" data-target="#demo" aria-controls="demo"><i class="fas fa-close"></i>&nbsp;&nbsp;Close
-                      </button>
+                      
                     </div>
-                    <div class="collapse" id="demo">
+                    <div class="comment-reply" style="display: none;">
                     <h6 class="text-dark" style="font-family: Times;">Reply</h6>
                     <form method="post">
                       {{ comment_form.name.as_hidden }}
@@ -107,24 +123,6 @@
                    </div>
                 </div>
                 {% endfor %}
-                {% if new_comment %}
-                <div class="alert alert-success" role="alert">
-                  Your comment is awaiting moderation
-                </div>
-                {% else %}
-                <h4 class="text-dark" style="font-family: Times; font-size: 20px;">Leave a comment</h4>
-                <form method="post">
-                    {{ comment_form.name.as_hidden }}
-                    {{ comment_form.user_image.as_hidden }}
-                    {{ comment_form.email.as_hidden }}
-                    {{ comment_form.body |as_crispy_field}}
-                  <!--<textarea class="form-control" rows="5" placeholder="Enter Your Comment"></textarea>-->
-                  {% csrf_token %}
-                  <div class="text-left mt-2">
-                    <button type="submit" class="btn btn-primary btn-sm">Comment</button>
-                  </div>
-                </form>
-                {% endif %}
               </div>
               <div class="col-md-2">
 

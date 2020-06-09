@@ -57,10 +57,14 @@ from .views import(
     e_lib,
     e_books,
     recommend_book,
+    Search_book,
     ApprovalView,
 	AcceptView,
     declined,
     conversation,
+    privacy,
+    group_discussion,
+    start_discussion,
 	)
 
 app_name = "e_learning"
@@ -138,7 +142,12 @@ urlpatterns = [
     url(r'admin/approve/accept/$',AcceptView.as_view(), name='accept'),
     path('admin/approve/decline',declined,name='decline'),
     path('conversation/',conversation,name='conversation'),
-	path('conversation/<slug>/',conversation,name='conversation')
+	path('conversation/<slug>/',conversation,name='conversation'),
+    path('privacy/',privacy, name='privacy'),
+    path('group_discussion/',group_discussion, name='group_discussion'),
+    path('search_book/',Search_book,name='search_book'),
+    path('start_discussion/',start_discussion,name='start_discussion'),
+    path('start_discussion/<slug>/',start_discussion,name='start_discussion'),
 
 ]
 

@@ -7,3 +7,8 @@ def get_companion(user, chat):
         if u != user:
             return u
     return None
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)

@@ -48,6 +48,23 @@
 <!-- Stlyesheet -->
 <link rel="stylesheet" type="text/css" href="{% static 'e_learning/vendor/bootstrap/css/style.css' %}">
 
+<!--mdncss-->
+{% block extra_css %}
+
+{% endblock %}
+
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5eddef0a4a7c6258179a2241/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+
 
 </head>
 <body id="page-top">
@@ -71,7 +88,7 @@
 }
 .change-color:hover
 {
-color:black !important;
+color:#007bff !important;
 display: block;
 transform: scale(1.05)!important;
 transition: all 0.1s ease-in-out 0.1s !important;
@@ -85,7 +102,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
 
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white topbar sticky-top shadow pt-3 pb-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-white topbar sticky-top shadow-sm pt-3 pb-3">
 <a class="navbar-brand font-weight-normal display-1 mr-5" href="{% url 'e_learning:index' %}">
 <img src="{% static 'e_learning/image/logo.PNG' %}" width="43" height="43" class="d-inline-block" alt="">Virtual<span style="color: #428bca;">-Class</span>
 </a>
@@ -97,30 +114,33 @@ transition: all 0.1s ease-in-out 0.1s !important;
     {% if user.is_authenticated %}
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2 change-color" href="{% url 'e_learning:home_view' %}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-muted mr-2 change-color" href="{% url 'e_learning:home_view' %}" style="font-family:sans-serif !important;">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-dark-400 mr-2 change-color" href="{% url 'e_learning:about' %}">About<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-muted mr-2 change-color" href="{% url 'e_learning:about' %}" style="font-family:sans-serif !important;">About<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400 change-color" href="{% url 'e_learning:my_subjects' %}">My Subjects</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-muted change-color" href="{% url 'e_learning:my_subjects' %}" style="font-family:sans-serif !important;">My Subjects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-dark-400 change-color" href="{% url 'e_learning:e_lib' %}">E-Library</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-muted change-color" href="{% url 'e_learning:e_lib' %}" style="font-family:sans-serif !important;">E-Library</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mt-1 pt-2 mr-2 text-muted change-color" href="{% url 'e_learning:group_discussion' %}" style="font-family:sans-serif !important;">Group Discussion</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link change-color" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link change-color" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:sans-serif !important;">
           <img class="img-profile rounded-circle mr-2" src="{{ user.userprofile.image.url}}" width="33" height="33">
           <span class="mr-2 d-lg-inline text-gray-600 small">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-            {% if request.user.userprofile.role == 'Teacher' %}
+        {% if request.user.userprofile.role == 'Teacher' %}
           <a class="dropdown-item text-muted" href="{% url 'e_learning:teacher_homepage' %}" style="font-size: 14px !important;">
             <i class="fas fa-list fa-sm fa-fw mr-2 text-muted" style="color: #c4c0c0 !important;"></i>
             <span class="text-dark">Switch to teacher page</span>
           </a>
           {% else %}
-          <a class="dropdown-item text-muted" href="{% url 'e_learning:apply_to_teach' %}" style="font-size: 14px !important;">
+          <a class="dropdown-item text-muted" href="{% url 'e_learning:apply_to_teach' %}" style="font-size: 14px !important;font-family:sans-serif !important;">
               <i class="fas fa-list fa-sm fa-fw mr-2 text-muted" style="color: #c4c0c0 !important;"></i>
               <span class="text-dark">Apply to teach</span>
             </a>
@@ -145,22 +165,22 @@ transition: all 0.1s ease-in-out 0.1s !important;
     {% else %}
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:index' %}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:index' %}" style="font-family:sans-serif !important;">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:about' %}">About</a>
+        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:about' %}" style="font-family:sans-serif !important;">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:contact_us' %}">Contact&nbsp;Us</a>
+        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:contact_us' %}" style="font-family:sans-serif !important;">Contact&nbsp;Us</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:e_lib' %}">E-Library</a>
+        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:e_lib' %}" style="font-family:sans-serif !important;">E-Library</a>
       </li>
       <li class="nav-item">
-         <a href="{% url 'account_login' %}" class="nav-link mr-3 text-muted change-color">Sign in<span class="sr-only">(current)</span></a>
+         <a href="{% url 'account_login' %}" class="nav-link mr-3 text-muted change-color" style="font-family:sans-serif !important;">Sign in<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-      <a class="nav-link text-white btn btn-primary btn-sm mr-2 h-100 p-2 edit_sign_up change-colors" href="{% url 'account_signup' %}" >Sign Up Free</a>
+      <a class="nav-link text-white btn btn-primary btn-sm mr-2 h-100 p-2 edit_sign_up change-colors" href="{% url 'account_signup' %}" style="font-family:sans-serif !important;">Sign Up Free</a>
     </li>
   </ul>
   {% endif %}
@@ -180,10 +200,10 @@ transition: all 0.1s ease-in-out 0.1s !important;
 <div>
 
 <!-- Footer -->
-<footer class="page-footer sticky-footer font-small indigo bg-light p-2 mt-3">
+<footer class="page-footer sticky-footer font-small indigo bg-light p-2 mt-3" style="background-color: #007bff!important;">
 
   <!-- Footer Links -->
-  <div class="container text-center text-md-left">
+  <div class="container-fluid text-center">
 
     <!-- Grid row -->
     <div class="row">
@@ -192,9 +212,9 @@ transition: all 0.1s ease-in-out 0.1s !important;
       <div class="col-md-4 text-left">
 
         <!-- Links -->
-        <h6 class="mt-3 pb-2 pt-4" style="color: #555353 !important;font-family: Times;"><img src="{% static 'e_learning/image/logo.PNG' %}" width="20" height="20" class="d-inline-block align-top" alt="">&nbsp;VIRTUAL<span class="text-primary">-CLASS</span></h6>
-        <p class="text-dark pb-3" style="font-size: 14px">
-           Virtual<span class="text-primary">-Class</span> is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
+        <h6 class="mt-3 pb-2 pt-4 text-white" style="font-family: Times;"><img src="{% static 'e_learning/image/logo.PNG' %}" width="20" height="20" class="d-inline-block align-top" alt="">&nbsp;VIRTUAL-CLASS</h6>
+        <p class="text-white pb-3" style="font-size: 14px;">
+           Virtual-Class is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
         </p>
       </div>
       <!-- Grid column -->
@@ -203,13 +223,16 @@ transition: all 0.1s ease-in-out 0.1s !important;
       <div class="col-md-2 text-left">
 
         <!-- Links -->
-        <h6 class="mt-3 pb-2 pt-4" style="color: #555353 !important;font-family: Times;">ABOUT</h6>
+        <h6 class="mt-3 pb-2 pt-4 text-white" style="font-family: Times;">ABOUT</h6>
         <ul class="list-unstyled mb-3">
           <li>
-            <a class="text-dark mb-3" href="{% url 'e_learning:about' %}" style="font-size: 14px;">Virtual<span class="text-primary">-Class</span></a>
+            <a class="text-dark mb-3" href="{% url 'e_learning:about' %}" style="font-size: 14px;;color:white !important;">Virtual-Class</a>
           </li>
           <li>
-            <a class="text-dark mb-3" href="{% url 'e_learning:team' %}" style="font-size: 14px;">Team</a>
+            <a class="text-dark mb-3" href="{% url 'e_learning:team' %}" style="font-size: 14px;;color:white !important;">Our Team</a>
+          </li>
+          <li>
+            <a class="text-dark mb-3" href="{% url 'e_learning:privacy' %}" style="font-size: 14px;;color:white !important;">Privacy Policy</a>
           </li>
         </ul>
 
@@ -240,20 +263,20 @@ transition: all 0.1s ease-in-out 0.1s !important;
       <div class="col-md-3 text-left">
 
         <!-- Links -->
-        <h6 class="mt-3 pb-2 pt-4" style="color: #555353 !important;font-family: Times;"> QUICK LINKS</h6>
+        <h6 class="mt-3 pb-2 pt-4" style="color: white !important;font-family: Times;"> QUICK LINKS</h6>
 
         <ul class="list-unstyled pb-3">
           <li>
-            <a class="text-dark" href="{% url 'e_learning:frequently_asked_questions' %}" style="font-size: 14px;">F.A.Qs&nbsp;(Frequently Asked Questions)</a>
+            <a class="text-dark" href="{% url 'e_learning:frequently_asked_questions' %}" style="font-size: 14px;;color:white !important;">F.A.Qs&nbsp;(Frequently Asked Questions)</a>
           </li>
           <li>
-            <a class="text-dark" href="{% url 'e_learning:terms_and_conditions' %}" style="font-size: 14px;">Terms & Conditions</a>
+            <a class="text-dark" href="{% url 'e_learning:terms_and_conditions' %}" style="font-size: 14px;;color:white !important;">Terms & Conditions</a>
           </li>
           <li>
-            <a class="text-dark" href="{% url 'e_learning:contact_us' %}" style="font-size: 14px;">Contact_us</a>
+            <a class="text-dark" href="{% url 'e_learning:contact_us' %}" style="font-size: 14px;;color:white !important;">Contact_us</a>
           </li>
           <li>
-            <a class="text-dark" href="{% url 'e_learning:e_lib' %}" style="font-size: 14px;">E-Library</a>
+            <a class="text-dark" href="{% url 'e_learning:e_lib' %}" style="font-size: 14px;color:white !important;;">E-Library</a>
           </li>
         </ul>
 
@@ -263,17 +286,20 @@ transition: all 0.1s ease-in-out 0.1s !important;
       <div class="col-md-3 text-left">
 
         <!-- Links -->
-        <h6 class="mt-3 pb-2 pt-4" style="color: #555353 !important;font-family: Times;">CONTACT</h6>
+        <h6 class="mt-3 pb-2 pt-4" style="color: white !important;font-family: Times;">CONTACT</h6>
 
         <ul class="list-unstyled pb-3">
           <!--li>
             <a class="text-muted" style="font-size: 14px;"><i class="fas fa-map-marker-alt fa_map pb-3"></i>&nbsp;&nbsp;Arua, Kampala(U)</a>
           </li-->
           <li>
-            <a class="text-muted"  style="font-size: 14px;"><i class="fas fa-envelope pb-3"></i>&nbsp;&nbsp;admin@virtualclass.ug</a>
+            <a class="text-white"  style="font-size: 14px;"><i class="fas fa-envelope pb-3"></i>&nbsp;&nbsp;admin@virtualclass.ug</a>
           </li>
           <li>
-            <a class="text-muted"style="font-size: 14px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;+256(0) 7520 23621&nbsp <br><span class='ml-4'>+256(0) 777081799</span></a>
+            <a class="text-white"style="font-size: 14px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;+256(0) 7520 23621&nbsp</a>
+          </li>
+          <li>
+            <a class="text-white"style="font-size: 14px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;+256(0) 7770 81799</span></a>
           </li>
           <li>
           </li>
@@ -281,31 +307,29 @@ transition: all 0.1s ease-in-out 0.1s !important;
 
       </div>
       <!-- Grid column -->
+      <div class="col-md-12 col-lg-12 text-center pt-2 pb-3">
+        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
+        <a href="#"><i class="fab fa-twitter fa-1x ml-2" style="background-color: white;"></i></a>
+        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;background-color: white;"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 " style="background-color: white;"></i></a>
+      </div>
 
     </div>
     <!-- Grid row -->
 
   </div>
   <!-- Footer Links -->
-  <hr>
-
   <!-- Copyright -->
-  <div class="container-fluid">
-     <div class="row pb-4 pt-2">
-      <div class="col-md-9 pl-5">
-          <div class="footer-copyright py-3 mt-1 text-dark" style="font-size: 14px;">© 2020 Copyright:
-            <a href=" " class="text-dark">&nbsp;Virtual<span class="text-primary">-Class</span>&copy;2020</a>
-          </div>
-      </div>
-      <div class="col-md-3 pl-5 pt-2">
-        <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
-        <a href="#"><i class="fab fa-twitter fa-1x ml-2"></i></a>
-        <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in fa-1x ml-2 "></i></a>
-      </div>
-      </div>
-      </div>
 </footer>
+<div class="container-fluid" style="background-color: #0f59a8 !important;">
+     <div class="row pt-3 pb-3">
+      <div class="col-md-12 text-center">
+            <p class="text-white pt-3 text-uppercase" style="font-size: 12px !important;">
+             Copyright © 2020 Agricultural Cluster Development
+            </p>
+      </div>
+      </div>
+</div>
 
   <div class="modal fade text-muted" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -318,14 +342,14 @@ transition: all 0.1s ease-in-out 0.1s !important;
         </div>
         <div class="modal-body">{% trans 'Are you sure you want to sign out?' %}</div>
         <div class="modal-footer">
-          <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
           <form method="post" action="{% url 'account_logout' %}">
         {% csrf_token %}
         {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
         {% endif %}
         <div class="text-center">
-          <button class="btn btn-danger" type="submit">{% trans 'Sign Out' %}</button>
+          <button class="btn btn-outline-danger" type="submit">{% trans 'Sign Out' %}</button>
         </div>
       </form>
           <!--a class="btn btn-primary" href="login.html">Logout</a-->

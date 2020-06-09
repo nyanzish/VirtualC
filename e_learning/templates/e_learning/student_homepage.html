@@ -5,33 +5,33 @@
 {% block content %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
-      <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{% url 'e_learning:home_view' %}">Home</a>
+      <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{% url 'e_learning:home_view' %}">HOME</a>
       </li>
       <li class="breadcrumb-item" ><a href="#" class="text-dark"></a></li>
     </ol>
  </nav>
  <div class="container-fluid">
- 	<div class="row">
+ 	<div class="row justify-content-center">
  		<div class="col-md-6">
- 			<form action="{% url 'e_learning:search' %}">
+ 			<form action="{% url 'e_learning:search' %}" method="GET" enctype="multipart-form-data">
+                 {% csrf_token %}
  				<div class="input-group shadow-sm">
-				   <input type="text" class="form-control border-right-0 border" required="required" placeholder="Search for........." name="q" >
+				   <input type="text" class="form-control border-right-0 border pt-2 pb-2" required="required" placeholder="Search by Subject or Class........." name="q">
 				   <div class="input-group-append">
-				     <a class="btn btn-outline-primary border-left-0 border-right-0 border" href="{% url 'e_learning:search' %}" type="button">
-				       <i class="fa fa-search"></i>
-				      </a>
+				     <input class="btn btn-primary text-white border-left-0 border-right-0 border" value= "Search"   type="submit"
+				      />
 				    </div>
 				  </div>
  			</form>
  		</div>
- 		<div class="col-md-6">
- 		</div>
+ 		<!-- <div class="col-md-6">
+ 		</div> -->
  	</div>
  </div>
-<div class="container-fluid mt-3">
-	<div class="card shadow-sm mb-5 pb-4">
-		<h6 class="pt-4 pl-4 pb-1" style="font-size: 18px; font-family: Times;"><i class="fas fa-book-open fa-1x ml-2">&nbsp;&nbsp;On-going Subjects</i></h6>
-		<div class="row p-3">
+<div class="container-fluid mt-2">
+	<div class="mb-5 pb-4">
+		<h6 class="pt-3 pb-1" style="font-size: 18px; font-family: Times;"><i class="fa fa-th fa-1x ml-2"></i>&nbsp;&nbsp;On-going Subjects</i></h6>
+		<div class="row pt-1">
 			{% if overview %}
 			{% for item in overview %}
 			<div class="col-md-3 p-3">
@@ -62,8 +62,8 @@
 			</div>
 			{% endfor %}
 
-			{% if is_paginated %}
-            <nav aria-label="...">
+			    {% if is_paginated %}
+                <nav aria-label="...">
                     <ul class="pagination">
                         {% if page_obj.has_previous %}
                       <li class="page-item">
@@ -79,13 +79,12 @@
                       </li>
                       {% endif %}
                     </ul>
-                  </nav>
-            {% endif %}
-
+                </nav>
+                {% endif %}
 			{% else %}
 				<div class="col-md-12">
 					<h1 class="text-center mt-4 text-muted" style="font-family: Times;">No Such Results found for<br>"{{query_string}}"</h1>
-					<h6 class="text-center pt-4 pb-4"><a href="{% url 'e_learning:home_view' %}" class="text-primary">Back to Home</a></h6>
+					<h6 class="text-center pt-4 pb-4"><a href="{% url 'e_learning:home_view' %}" class="text-primary" style="font-family:sans-serif !important;">Back to Home</a></h6>
 				</div>
 			{% endif %}
 		</div>

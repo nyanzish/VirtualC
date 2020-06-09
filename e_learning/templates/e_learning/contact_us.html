@@ -17,20 +17,20 @@
   </div>
 <nav aria-label="breadcrumb" class="mt-2">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
-      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">Home</a>
+      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">HOME</a>
       </li>
-      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:contact_us' %}" >Contact&nbsp;Us</a></li>
+      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:contact_us' %}" >CONTACT&nbsp;US</a></li>
     </ol>
  </nav>
-<div class="container mb-5 mt-2">
+<div class="container-fluid mb-5 mt-2 pl-4 pr-4">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-md-12">
-         <div class="row">
+         <div class="row pl-4 pr-4">
         <div class="col-md-9 col-lg-9 col-sm-12">
 		  <div class="card mt-1">
 		  	<div class="card-body p-4 shadow-sm">
 			<h3 class="text-center text-primary pb-2">Get in touch</h3>
-			<p class="text-center text-dark pb-4">Let's talk about your problem</p>
+			<p class="text-center text-dark pb-4">Share Your Views</p>
 			<form action = "{% url 'e_learning:contact_us'%}" method ="POST">
 			    {% csrf_token %}
 				<div class="row">
@@ -70,9 +70,9 @@
 	                      <textarea class="form-control" rows="6" name ="message"></textarea>
 	                    </div>
 					</div>
-					<div class="col-md-12 text-center pt-2">
-				    	<button type="submit" class="btn btn-primary">SUBMIT</button>
-		    		</div>
+                    <div class="col-md-12 col-lg-12 text-center pt-2">
+                        <button type="submit" class="btn btn-primary pr-5 pl-5" style="font-family:sans-serif !important;">SUBMIT</button>
+                    </div>
 				</div>
 			</form>
 		     </div>
@@ -89,7 +89,8 @@
                     </p>
                     <h1 style="font-size: 18px;" class="text-bold text-left pt-1">Call Us</h1>
                     <p class="text-justify text-muted mt-2" style="font-size: 16px">
-                    <i class="fa fa-phone"></i>+256(0)752-023-621&nbsp;<br>&nbsp;+256(0)777-081-799
+                    <i class="fa fa-phone"></i>+256(0) 777-081-799<br>
+                    <i class="fa fa-phone"></i>+256(0) 752-023-621
                     </p>
                 </div>
             </div>

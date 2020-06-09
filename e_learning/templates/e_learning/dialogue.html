@@ -9,9 +9,9 @@
 {% load crispy_forms_tags %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb" style="background-color: #fdfdff !important;">
-    <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
+    <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">Dashboard</a>
     </li>
-    <li class="breadcrumb-item active text-primary" aria-current="page"><a href="{% url 'e_learning:dialogs' %}">Chatroom</a>
+    <li class="breadcrumb-item active text-primary text-uppercase" aria-current="page"><a href="{% url 'e_learning:dialogs' %}">Chatroom</a>
     </li>
   </ol>
 </nav>
@@ -22,8 +22,8 @@
                 <div class="col-md-11">
                 {% if chats.count == 0 %}
                 <div class="panel panel-body text-center p-4">
-                    <h4 class="text-dark" style="font-family: Times;">"There is not a single dialogue <br>started yet !" </h4>
-                    <p class="text-dark pt-4">Click&nbsp;<a href="{% url 'e_learning:choose' %}">here</a>&nbsp;inorder to start a chat</p>
+                    <h4 class="text-dark" style="font-family: Times;">"There is not a single chat <br>started yet !" </h4>
+                    <p class="text-dark pt-4">Click&nbsp;<a data-toggle="modal" data-target="#exampleModalCenter" href=" " class="text-primary"><u>here</u></a>&nbsp;inorder to start a chat</p>
                 </div>
                 </div>
                 {% else%}
@@ -32,7 +32,7 @@
                     <h5 class="text-dark p-2" style="font-family: Times; ">Available Chats</h5>
                 </div>
                 <div class="col-md-3">
-                    <a data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-sm btn-light bg-white text-center text-dark"><i class="fas fa-comments text-dark"></i>&nbsp;Start New Chat</a>
+                    <a data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-sm btn-primary text-center text-white"><i class="fas fa-comments text-white"></i>&nbsp;Start New Chat</a>
                 </div>
                 </div>
                     {% for chat in chats %}
@@ -40,8 +40,9 @@
                     <div class="col-md-12 comment_body">
                         <div class="container">
                             <h2 class="pt-3 text-center text-primary pb-2" style="color: #223f80 ;font-size: 18px;"><b>{{chat.title}}</b></h2>
+                            
                             <p class="text-center">
-                            <img class="img-profile rounded-circle ml-2 mt-2" width="39" height="39" src="{{chat.user_profile.userprofile.image.url}}">&nbsp;&nbsp;<span class="text-muted" style="font-size: 14px;">created by:</span><span class="text-capitalize text-dark" style="font-size: 14px;">&nbsp;&nbsp;{{chat.user_profile.userprofile.user.username}}</span><span class="ml-4 pl-4" style="font-size: 13px;"><i class="fa fa-calendar-alt"></i>&nbsp;&nbsp;{{chat.date_of_record}}&nbsp;&nbsp;&nbsp;<i class="fas fa-comment text-muted"></i>&nbsp;comments&nbsp;<span class="badge badge-danger" style="font-size: 12px !important;">5</span></span>
+                            <img class="img-profile rounded-circle ml-2 mt-2" width="39" height="39" src="{{chat.user_profile.userprofile.image.url}}">&nbsp;&nbsp;<span class="text-muted" style="font-size: 14px;">created by:</span><span class="text-capitalize text-dark" style="font-size: 14px;">&nbsp;&nbsp;{{chat.user_profile.userprofile.user.username}}</span><span class="ml-4 pl-4" style="font-size: 13px;"><i class="fa fa-calendar-alt"></i>&nbsp;&nbsp;{{chat.date_of_record}}&nbsp;&nbsp;&nbsp;<i class="fas fa-comment text-muted"></i>&nbsp;comments&nbsp;<span class="badge badge-danger" style="font-size: 12px !important;">{{both_dict|get_item:chat.title}}</span></span>
                             </p>
                             <div class="text-center pb-3"><a href="{{chat.get_chat_url}}" class="btn btn-light bg-white text-center">Join Chat</a></div>
                         </div>

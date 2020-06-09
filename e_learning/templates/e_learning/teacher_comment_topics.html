@@ -1,7 +1,7 @@
 {% extends 'teacher_base.html' %}
 
 {% load static %}
-
+{% load poll_extras %}
 {% block head_title %}Virtual-Class{% endblock %}
 {% block content %}
 {% load crispy_forms_tags %}
@@ -29,6 +29,7 @@
             <ul>
               <li>
                 <a href="{{ topic.get_teacher_alerts }}">{{topic.topic}}</a>
+                &nbsp;comments&nbsp;<span class="badge badge-danger" style="font-size: 12px !important;">{{both_dict|get_item:topic}}</span>
               </li>
             </ul>
           {% endfor %}

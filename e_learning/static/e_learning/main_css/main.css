@@ -6,6 +6,31 @@ i.fab {
   padding: 0.5em 0.6em;
 
 }
+li.a{
+    font-family:sans-serif !important;
+}
+p{
+    font-family:sans-serif !important;
+}
+h1{
+    font-family:sans-serif !important;
+}
+h2{
+    font-family:sans-serif !important;
+}
+h3{
+    font-family:sans-serif !important;
+}
+h4{
+    font-family:sans-serif !important;
+}
+h5{
+    font-family:sans-serif !important;
+}
+h6{
+    font-family:sans-serif !important;
+}
+
 @media only screen and (max-width: 600px) and (max-width: 767.98px) {
   .fa_phone {
     margin-left: 0px !important;

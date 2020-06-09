@@ -4,7 +4,6 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-#from django.utils import timezone
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -14,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, View
 from django.http import FileResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import CommentForm,ChatCommentForm,ChatRoomForm
+from .forms import CommentForm,ChatCommentForm,ChatRoomForm,StudentChatCommentForm
 import re
 import datetime
 from django.core.mail import send_mail,BadHeaderError,EmailMessage
@@ -50,7 +49,9 @@ from .models import (
     Chat,
     Message,
     Recommend_Subjects_Table,
-    ChatRoom
+    ChatRoom,
+    ChatComment,
+    StudentChatComment
 
 )
 
@@ -97,14 +98,19 @@ def Search(request):
         query_string = request.GET.get('q')
         print(query_string)
         overview = Subjects_overview.objects.filter(subject__subject_name__icontains = query_string)|Subjects_overview.objects.filter(class_n__name__icontains = query_string)
-    else:
-        overview = None
-
-    context = {
+        context = {
             'overview':overview,
             'query_string':query_string
-    }
-    return render(request,'student_homepage.html',context)
+        }
+        return render(request,'student_homepage.html',context)
+    else:
+        overview = None
+        query_string = request.GET.get('q')
+        context = {
+                'overview':overview,
+                'query_string':query_string
+        }
+        return render(request,'student_homepage.html',context)
 
 def subject_get(request):
     sub_id = request.POST.get('get_subject')
@@ -900,41 +906,21 @@ def e_lib(request):
     return render(request,'e_library.html',context)
 
 def subscription_approval(request,slug):
-    overview2=PaymentRecords.objects.get(subject_overview__exact=slug,student__exact=request.user)
-    overview=Subscription.objects.get(subject_overview__exact=slug,student__exact=request.user)
-    #print(overview.active)
-    #####################3check if payment is successful#############3
-    overview2.active=True
-    overview2.save()
-    overview.active=True
-    overview.save()
-    # print(overview.active,'ggggggggg')
-
-    # context ={
-    #         'overview':overview
-    # }
-    messages.info(request, "You have subscribed to this subject")
-    return redirect('e_learning:my_subjects')
-
-#@login_required
-def subject_overview(request,slug):
     overview=Subjects_overview.objects.get(id=slug)
-    recomend=Subjects_overview.objects.filter(class_n=overview.class_n)
     teacher = Teacher_apply.objects.get(user = overview.teacher.user)
-    for i in recomend:
-        print(i.price,i.teacher.user,i.class_n,i.subject,i.subject.subject_image)
-    recomended = recomend.count()
-    print(recomended)
-    context ={
-    'overview':overview,
-    'recomend':recomend,
-    'recomended':recomended,
-    'slug':slug,
-    }
     try:
-
-        check= Subscription.objects.get(student=request.user,class_n__exact=overview.class_n,subject__exact=overview.subject,teacher=teacher)
-
+        overview=Subscription.objects.get(subject_overview__exact=slug,student__exact=request.user)
+        overview2=PaymentRecords.objects.get(subject_overview__exact=slug,student__exact=request.user)
+        teacher = Teacher_apply.objects.get(user = overview.teacher.user)
+        
+        #####################3check if payment is successful#############3
+        overview2.active=True
+        overview2.save()
+        overview.active=True
+        overview.save()
+        
+        messages.info(request, "Aready subscribed to this subject")
+        return redirect('e_learning:my_subjects')
     except ObjectDoesNotExist:
         apply_data = Subscription(
                 student=request.user,
@@ -944,6 +930,7 @@ def subject_overview(request,slug):
                 subject =overview.subject ,
                 teacher = teacher,
                 Amount = overview.price,
+                active = True,
                 duration = overview.duration,
 
             )
@@ -956,18 +943,34 @@ def subject_overview(request,slug):
                 subject =overview.subject ,
                 teacher = teacher,
                 Amount = overview.price,
+                active = True,
                 duration = overview.duration,
 
             )
         payment.save()
-    except:
-        pass
+        messages.info(request, "You have succefully subscribed to this subject")
+        return redirect('e_learning:my_subjects')
+    except TypeError:
+        #messages.warning(request, "First sign in, or create an account if you do not have one.")
+        return redirect('account_login')
 
-    # if check.exist():
-    #     pass
-    #     #return render(request,'subject_overview.html',context)
-    # else:
-
+#@login_required
+def subject_overview(request,slug):
+    overview=Subjects_overview.objects.get(id=slug)
+    recomend=Subjects_overview.objects.filter(class_n=overview.class_n)
+    # for i in recomend:
+    #     print(i.price,i.teacher.user,i.class_n,i.subject,i.subject.subject_image)
+    recomended = recomend.count()
+    # print(recomended)
+    #################topics#################
+    topic_list=Upload_topics.objects.filter(overview__exact=slug)
+    context ={
+    'overview':overview,
+    'recomend':recomend,
+    'recomended':recomended,
+    'slug':slug,
+    'topic_list':topic_list,
+    }
     return render(request,'subject_overview.html',context)
 
 
@@ -1129,17 +1132,21 @@ def teacher_alerts(request,slug):
             return redirect('e_learning:teacher_homepage')
 
     else:
+        counter_list=[]
+        retrieved_commented_list=[]
         for my_studnts in list_of_students:
             print(my_studnts)
 
             retrieve_my_comments = Comment.objects.filter(name__exact=my_studnts,parent__exact = None)
             counter = retrieve_my_comments.count()
+            counter_list.append(counter)
             print(counter,'999000000000')
 
-            no_of_chats = Chat.objects.filter(members= request.user.id)
+            no_of_chats = ChatRoom.objects.all()
             no_of_chats = no_of_chats.count()
 
             retrieved_commented = retrieve_my_comments[:4]
+            retrieved_commented_list.append(retrieved_commented)
             print(retrieved_commented)
 
             for notification in retrieve_my_comments:
@@ -1185,14 +1192,15 @@ def teacher_alerts(request,slug):
                 else:
 
                     comment_form = CommentForm(initial={'name': request.user,'user_image':request.user.userprofile.image.url,'email':request.user.userprofile.email})
+                counter_list_no = sum(counter_list)
 
                 return render(request, 'teacher_alerts.html', {
                                                        'subject_two':subject_two,
                                                        'subject_one':subject_one,
-                                                       'counter':counter,
+                                                       'counter':counter_list_no,
                                                        'no_of_students':no_of_students,
                                                        'no_of_chats':no_of_chats,
-                                                       'retrieved_commented':retrieved_commented,
+                                                       'retrieved_commented':retrieved_commented_list[0],
                                                        'post': post,
                                                        'comments': comments,
                                                        'new_comment': new_comment,
@@ -1221,6 +1229,19 @@ def teacher_comment_topics(request,slug):
     my_teacher_id=Teacher_apply.objects.get(user= request.user.id)
     current_teacher = my_teacher_id.id
     print(current_teacher,'kkkkkkkk')
+    ########################
+    chatrooms = Upload_topics.objects.filter(subject = topics_idz)
+    chatroom_list=[]
+    chatroom_count_list=[]
+    both_dict={}
+    for chatroom in chatrooms:
+        print(chatroom)
+        post = get_object_or_404(Upload_topics, id=chatroom.id)
+        #print(post,'??????????????')
+        comments = post.comments.filter(active=True, parent__isnull=True)
+        #print(comments.count(),'??????????????')
+        chatroom_count_list.append(comments.count())
+        both_dict[post]=comments.count()
 
     list_of_students = []
 
@@ -1245,6 +1266,7 @@ def teacher_comment_topics(request,slug):
                 'no_of_students':no_of_students,
                 'no_of_chats':no_of_chats,
                 'topic_fields':topic_fields,
+                'both_dict':both_dict,
                 'materials_name':materials_name,
                 'materials_class':materials_class,
             }
@@ -1291,6 +1313,7 @@ def teacher_comment_topics(request,slug):
             'retrieved_commented':retrieved_commented_list[0],
             'teacher_students':teacher_students,
             'topic_fields':topic_fields,
+            'both_dict':both_dict,
             'materials_name':materials_name,
             'materials_class':materials_class,
         }
@@ -1384,6 +1407,76 @@ def teacher_to_alerts(request):
 
 def about(request):
 	return render(request,'about.html')
+
+def group_discussion(request):
+    subject_discussion = Subjects.objects.all()
+    chatrooms_ = Subjects.objects.all()
+    chatroom_list=[]
+    chatroom_count_list=[]
+    both_dict={}
+    c=[1,2]
+    for chatroom in chatrooms_:
+        #print(chatroom.id,'ppppppppppppppppppppp')
+        post = get_object_or_404(Subjects, id=chatroom.id)
+        #print(post,'??????????????')
+        comments = post.comments.filter(active=True, parent__isnull=True)
+        #print(comments.count(),'??????????????')
+        chatroom_count_list.append(comments.count())
+        both_dict[post.subject_name]=comments.count()
+
+    context={
+        'subject_discussion':subject_discussion,
+        'both_dict':both_dict
+        }
+    return render(request,'group_discussion.html',context)
+
+@login_required
+def start_discussion(request,slug):
+    subject_discuss = Subjects.objects.get(id = slug)
+    subject_to_discuss = subject_discuss.subject_name
+    template_name = 'start_discussion.html'
+    post = get_object_or_404(Subjects, id=subject_discuss.id)
+    comments = post.comments.filter(active=True, parent__isnull=True)
+    new_comment = None
+
+    # Comment posted
+    if request.method == 'POST':
+        comment_form = StudentChatCommentForm(data=request.POST)
+        if comment_form.is_valid():
+            parent_obj = None
+            # get parent comment id from hidden input
+            try:
+                # id integer e.g. 15
+                parent_id = int(request.POST.get('parent_id'))
+            except:
+                parent_id = None
+            # if parent_id has been submitted get parent_obj id
+            if parent_id:
+                parent_obj = StudentChatComment.objects.get(id=parent_id)
+                # if parent object exist
+                if parent_obj:
+                    # create replay comment object
+                    replay_comment = comment_form.save(commit=False)
+                    # assign parent_obj to replay comment
+                    replay_comment.parent = parent_obj
+
+            # Create Comment object but don't save to database yet
+            new_comment = comment_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.topic = post
+            # Save the comment to the database
+            new_comment.save()
+            return HttpResponseRedirect(post.get_start_discussion_url())
+            #return render(reverse('e_learning:open_content',kwargs={'slug':open_content.id}))
+    else:
+
+        comment_form = CommentForm(initial={'name': request.user,'user_image':request.user.userprofile.image.url,'email':request.user.userprofile.email})
+
+    return render(request, template_name, {'post': post,
+                                           'comments': comments,
+                                           'new_comment': new_comment,
+                                           'subject_to_discuss':subject_to_discuss,
+                                           'comment_form': comment_form})
 
 @login_required
 def error_404_view(request,exception):
@@ -1980,9 +2073,32 @@ def recommend_book(request):
         messages.info(request, "A New Book Has Been Recommended")
         return redirect('e_learning:e_books')
 
+@login_required
+def Search_book(request):
+    if ('dd' in request.GET) and request.GET['dd'].strip():
+        query_string = request.GET.get('dd')
+        print(query_string)
+        over_view = Recommend_Subjects_Table.objects.filter(subject_name__icontains = query_string)|Recommend_Subjects_Table.objects.filter(book_title__icontains = query_string)
+        context = {
+            'over_view': over_view,
+            'query' : query_string,      
+        }
+        return render(request,'search_book_.html',context)
+    else:
+        over_view = None
+        query_string = request.GET.get('dd')
+        context = {
+            'over_view': over_view,
+            'query' : query_string,      
+        }
+        return render(request,'search_book_.html',context)
+
 
 def FAQ(request):
 	return render(request,'FAQ.html')
+
+def privacy(request):
+	return render(request,'privacy.html')
 
 # def my_profile(request):
 # 	return render(request,'my_profile.html')
@@ -2717,6 +2833,20 @@ class DialogsView(View):
         no_of_chats = ChatRoom.objects.all()
         no_of_chats = no_of_chats.count()
         chats = ChatRoom.objects.all().order_by('-id')
+        #############
+        chatrooms = ChatRoom.objects.all()
+        chatroom_list=[]
+        chatroom_count_list=[]
+        both_dict={}
+        c=[1,2]
+        for chatroom in chatrooms:
+            #print(chatroom.id,'ppppppppppppppppppppp')
+            post = get_object_or_404(ChatRoom, id=chatroom.id)
+            #print(post,'??????????????')
+            comments = post.comments.filter(active=True, parent__isnull=True)
+            #print(comments.count(),'??????????????')
+            chatroom_count_list.append(comments.count())
+            both_dict[post.title]=comments.count()
         #comments
         list_of_students = []
         my_teacher_id=Teacher_apply.objects.get(user= request.user.id)
@@ -2733,6 +2863,7 @@ class DialogsView(View):
                 'user_profile': request.user,
                 'no_of_chats':no_of_chats,
                 'chats':chats,
+                'both_dict':both_dict,
                 'form': form
 
             }
@@ -3046,6 +3177,7 @@ def conversation(request,slug):
         new_comment = None
         
         counter_list=[]
+        retrieved_commented_list=[]
         context={
             'subject_two':subject_two,
             'subject_one':subject_one,
@@ -3064,7 +3196,8 @@ def conversation(request,slug):
             counter_list.append(counter)
             print(counter)
             retrieved_commented = retrieve_my_comments[:4]
-            context['retrieved_commented'] = retrieved_commented
+            retrieved_commented_list.append(retrieved_commented)
+            context['retrieved_commented'] = retrieved_commented_list[0]
             print (counter_list,sum(counter_list))
             counter_list_no = sum(counter_list)
             context['counter'] = counter_list_no
@@ -3130,6 +3263,7 @@ def conversation(request,slug):
         new_comment = None
         
         counter_list=[]
+        retrieved_commented_list=[]
         context={
             'subject_two':subject_two,
             'subject_one':subject_one,
@@ -3146,7 +3280,8 @@ def conversation(request,slug):
             counter_list.append(counter)
             print(counter)
             retrieved_commented = retrieve_my_comments[:4]
-            context['retrieved_commented'] = retrieved_commented
+            retrieved_commented_list.append(retrieved_commented)
+            context['retrieved_commented'] = retrieved_commented_list[0]
             print (counter_list,sum(counter_list))
             counter_list_no = sum(counter_list)
             context['counter'] = counter_list_no

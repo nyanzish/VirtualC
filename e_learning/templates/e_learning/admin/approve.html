@@ -27,9 +27,10 @@
 {% block content %}
 <div id="content-main">
     {% if not applied %}
-    <h1> No new applicants</h1>
+    <h1 class="text-muted" style="font-family:sans-serif !important;font-size:20px !important;"> Applications from Teachers </h1><hr>
+    <h1 class="text-muted text-center pt-3" style="font-family:sans-serif !important;font-size:23px !important;"> No new applicants</h1>
     {% else %}
-    <h1> Applications from Teachers </h1>
+    <h1 class="text-muted" style="font-family:sans-serif !important;font-size:20px !important;"> Applications from Teachers </h1>
   
         
         <table class="table table-hover">
@@ -51,7 +52,7 @@
                 {% for applie in applied %}
                     <tr>
                    
-                    <td>{{ applie.user_profile.id}}</td>
+                    <td>{{ applie.user_profile.firstname}}</td>
                     <td>{{ applie.user_profile.lastname}}</td>
                     <td>{{ applie.schools_taught}}</td>
                     <td>{{ applie.current_school}}</td>
@@ -59,8 +60,8 @@
                     <td>{{ applie.subject_one }} , {{ applie.subject_two }}</td>
                     <td>{{ applie.Brief_Self_description }}</td>
                     <td>{{ applie.date_of_record }}</td>
-                    <td><a class="btn btn-primary btn-sm" href="{{applie.get_absolute_urls}}">Accept</a> |
-                        <a class="btn btn-secondary  btn-sm" href="{{applie.get_absolute_urls}}" data-toggle="modal" data-target="#staticBackdrop">Decline</a>
+                    <td><a class="btn btn-primary btn-sm text-white" href="{{applie.get_absolute_urls}}">Accept</a>&nbsp;&nbsp;
+                        <a class="btn btn-danger text-white btn-sm" href="{{applie.get_absolute_urls}}" data-toggle="modal" data-target="#staticBackdrop">Decline</a>
 
                     </td>
 
@@ -71,7 +72,7 @@
                         <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Reason for Decline</h5>
+                            <h5 class="modal-title text-primary" id="staticBackdropLabel">APPLICATION DENIAL</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -81,13 +82,14 @@
                             <form action="{% url 'e_learning:decline' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-group">
+                                    <label class="text-muted" style="font-family:sans-serif !important;">Reason For Decline</label>
                                     <textarea id="my-textarea" class="form-control" name="declines" rows="3"></textarea>
                                     <input type="hidden" value="{{applie.user_profile.email}}" name ="starboy">
                                 </div>
-            
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning">Submit</button>
-            
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             </form>
             
                             </div>

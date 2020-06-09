@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb" class="mt-2">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:index' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary text-uppercase" ><a href="{% url 'e_learning:e_lib' %}" >E-Library</a></li>
+    </ol>
+ </nav>
+ <div class="container-fluid">
+ 	<div class="row justify-content-center">
+ 		<div class="col-md-6">
+ 			<form action="{% url 'e_learning:search_book' %}" method="GET" enctype="multipart-form-data">
+ 				<div class="input-group shadow-sm">
+				   <input type="text" class="form-control border-right-0 border pt-2 pb-2" required="required" placeholder="Search by book title or subject" name="dd" >
+				   <div class="input-group-append">
+				     <input class="btn btn-primary border-left-0 border-right-0 border text-white" value= "Search"   type="submit"
+				      />
+				    </div>
+				  </div>
+ 			</form>
+ 		</div>
+ 		<!-- <div class="col-md-6">
+ 		</div> -->
+ 	</div>
+ </div>
+
+<div class="container pb-4 pt-4">
+    <h2 class="text-center pb-1 text-dark" style="font-size: 22px;"><b>BOOKS</b></h2>
+    <div class="row justify-content-center">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="card shadow-sm mb-3 pb-3 h-100 pl-2 pr-2 pt-2">
+        <div class="row">
+            
+            {% if over_view %}
+                {% for item in over_view %}
+                    <div class="col-md-2 col-lg-2">
+                    <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{item.book_title}}</h1>
+                    <h1 class="text-muted text-center pt-2" style="font-size: 17px;">{{item.class_level}}</h1>
+                    <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{item.book_cover_image.url}}"></div>
+                    <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{item.attach_book.url}}">{{my_recommends.attach_book}}</a></h1>
+                    <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{item.recommended_by}}</h1>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12 col-lg-12">
+                <h1 class="text-muted text-center pt-5 pb-5" style="font-size: 30px !important;font-family:sans-serif !important;">No search results for <br><q>{{ query }}</q> </h1>
+            </div>
+            {% endif %}
+        </div>
+        
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

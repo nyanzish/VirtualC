@@ -152,6 +152,10 @@ transition: all 0.1s ease-in-out 0.1s !important;
             <i class="fa fa-money-bill-alt fa-sm fa-fw mr-2 text-gray-400"></i>
             Payment Details
           </a>
+          <a class="dropdown-item" href="{% url 'e_learning:settings_page' %}">
+            <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+            Settings
+          </a>
           <div class="dropdown-divider"></div>
           {% if user.is_authenticated %}
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

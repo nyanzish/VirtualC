@@ -65,6 +65,9 @@ from .views import(
     privacy,
     group_discussion,
     start_discussion,
+    student_video,
+    settings_page,
+    delete_my_account,
 	)
 
 app_name = "e_learning"
@@ -148,6 +151,9 @@ urlpatterns = [
     path('search_book/',Search_book,name='search_book'),
     path('start_discussion/',start_discussion,name='start_discussion'),
     path('start_discussion/<slug>/',start_discussion,name='start_discussion'),
+    path('student_video/<id>/',student_video,name='student_video'),
+    path('settings_page/',settings_page, name='settings_page'),
+    path('delete_my_account/',delete_my_account, name='delete_my_account'),
 
 ]
 

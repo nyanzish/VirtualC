@@ -14,9 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path,include
+from e_learning.forms import UserCreationForm1
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf import settings
 
 admin.site.site_header = 'VirtualClass admin'
 admin.site.site_title = 'VirtualClass admin'
@@ -30,7 +33,18 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('e_learning.urls', namespace='e_learning')),
     path('subject_overview/<slug>/', include('e_learning.urls')),
+    path('accounts/login/', auth_views.LoginView.as_view(template_name='users/login.html', authentication_form=UserCreationForm1), name='login'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+elif getattr(settings, 'FORCE_SERVE_STATIC', False):
+    settings.DEBUG = True
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    settings.DEBUG = False
 
 handler404 = 'e_learning.views.error_404_view'
 

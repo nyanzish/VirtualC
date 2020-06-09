@@ -1,0 +1,79 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+      <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active text-primary text-uppercase" ><a href="{% url 'e_learning:settings_page' %}" >settings</a></li>
+    </ol>
+</nav>
+<div class="container pb-4 mt-2">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-primary text-center" style="font-size:19px !important;font-family:sans-serif !important;">Account Settings</h1><hr>
+                <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4 h-100">
+                            <div class="card-body">
+                            <div class="text-center ml-1">
+                            <img class="img-thumbnail img-fluid" src="{{user.userprofile.image.url}}" style="height:200px;width: 200px;">
+                            </div>
+                            <hr>
+                            <div class="mt-4">
+                                <p class="text-muted"><i class="fas fa-address-book"></i> Name:&nbsp;&nbsp;<span class="text-primary text-capitalize">{{ content.firstname}} {{content.lastname}}</span></p>
+                                <p class="text-muted pt-1"><i class="fa fa-envelope"></i> Email:&nbsp;&nbsp;<span class="text-primary">{{ content.email}}</span>
+                                </p>
+                                <p class="text-muted pt-1"><i class="fa fa-phone"></i> Phone number:&nbsp;&nbsp;<span class="text-primary">{{ content.telephone}}</span>
+                                </p>
+                                <p class="text-muted pt-1"><i class="fa fa-user"></i> Account:&nbsp;&nbsp;<span class="text-primary text-capitalize ml-2">{{ content.role}}</span>
+                                </p>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4 h-100">
+                            <div class="card-body">
+                            <h1 class="text-primary text-center" style="font-size:19px !important;font-family:sans-serif !important;">#Actions</h1><hr>
+                            <p class="pt-3"><i class="fa fa-user"></i>&nbsp;&nbsp<a href="{% url 'e_learning:my_profile' %}" >Edit My Profile</a></p>
+                            <p class="pt-3"><i class="fa fa-money-bill-alt"></i>&nbsp;&nbsp<a href="{% url 'e_learning:payment_details' %}" >Payment Details</a></p>
+                            <p class="text-danger pt-2"><i class="fa fa-trash"></i>&nbsp;&nbsp<a href=" " class="text-danger" data-toggle="modal" data-target="#exampleModalCenter">Delete My Account</a></p>
+                            </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-warning" id="exampleModalLongTitle"><i class="fa fa-exclamation-triangle text-warning"></i>
+Warning!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-dark">
+        When you delete your account all your data will be lost on our servers and is not recoverable ! 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        <a href="{% url 'e_learning:delete_my_account' %}" class="btn btn-danger">Confirm</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

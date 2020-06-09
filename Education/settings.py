@@ -23,7 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'je)%51vc&+par^d51&xcbwb$xxc7+pr$n$^o0-0xr3eph&%5q='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
 
 ALLOWED_HOSTS = ['69.163.224.206','virtualclass.ug','www.virtualclass.ug']
 
@@ -131,9 +132,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.dirname(BASE_DIR) + '/public/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/home/virtualclass/virtualclass.ug/static',
+    '/home/virtualclass/virtualclass.ug/public/static'
+]
+
+FORCE_SERVE_STATIC = True
 #authentication
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',

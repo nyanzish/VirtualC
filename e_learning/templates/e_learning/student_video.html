@@ -1,0 +1,30 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:teacher_homepage' %}">home</a>
+    </li>
+    <li class="breadcrumb-item text-uppercase" ><a class="text-dark" href=" " >My Subjects</a>
+    </li>
+    <li class="breadcrumb-item text-uppercase" ><a class="text-dark" href=" " >Subject name</a>
+    </li>
+    <li class="breadcrumb-item active text-primary text-uppercase" ><a href=" " >watch video</a>
+    </li>
+  </ol>
+</nav>
+<div class="container-fluid bg-white mb-2">
+
+<div class="embed-responsive embed-responsive-16by9 hoverable">
+  <video class="embed-responsive-item" controls>
+    <source src="{{ object.videos.url }}" type="video/mp4">
+  </video>
+</div>
+
+</div>
+
+{% endblock %}

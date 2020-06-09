@@ -1,7 +1,22 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.forms import ModelForm
 from phonenumber_field.formfields import PhoneNumberField
 from .models import ChatRoom,Teacher_apply,Upload_topics,Subjects_overview,Comment,ChatComment,Message,Chat,UserProfile,StudentChatComment
+
+
+class UserCreationForm1(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username','password']
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username no spaces'})
+        # widgets = {
+        #     'username':forms.TextInput(attrs={'placeholder':'user-name'}),
+
+        #     }
 
 # class Contentform(forms.ModelForm):
 #     class Meta:
@@ -35,6 +50,8 @@ class SignupForm(ModelForm):
     telephone = PhoneNumberField()
     telephone= forms.CharField(widget= forms.TextInput
                            (attrs={'placeholder':'+256702-0000'}))
+    # username= forms.CharField(widget= forms.TextInput
+    #                        (attrs={'class':'validate','placeholder':'user-name'}))
 
     class Meta:
         model = UserProfile
@@ -42,10 +59,12 @@ class SignupForm(ModelForm):
 
         widgets = {
             'date_of_birth':forms.DateInput(attrs={'type':'date'}, format = 'YYYY-MM-DD'),
+            
 
             }
 
         # date_of_birth = forms.DateField(widget = forms.DateInput(attrs={'placeholder':'YYYY-MM-DD','required':'required'})),
+        # 'username':forms.TextInput(attrs={'placeholder':'user-name'}),
 
     def signup(self, request, user):
         user.userprofile.firstname = self.cleaned_data['firstname']
@@ -72,10 +91,10 @@ class Uploadform(forms.ModelForm):
         'videos'
         ,]
         widgets = {
-          'video': forms.ClearableFileInput(attrs={'class' : ' ','multiple': True}),
+            'videos': forms.FileInput(attrs={'accept':'video/*'}),
+            'attached_file':forms.FileInput(attrs={'accept':'application/pdf, application/vnd.ms-excel,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'})
+            }
 
-
-        }
 # widgets = {
 #         #'topic': forms.TextInput(attrs={'class': 'form-control w-50'}),
 #         'Notes': forms.FileInput(attrs={'class' : ''}),
@@ -100,6 +119,10 @@ class Overviewform(forms.ModelForm):
         labels ={
                 'video':'Video [leave blank if you donot a video at the moment, but you can still upload later!]',
         }
+        widgets = {
+            'videos': forms.FileInput(attrs={'accept':'video/*'}),
+            'image':forms.FileInput(attrs={'accept':'image/*'})
+            }
 
 class Applyform(forms.ModelForm):
     class Meta:

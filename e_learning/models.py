@@ -250,6 +250,10 @@ class Upload_topics(models.Model):
     def get_delete_url(self):
         return reverse("e_learning:topic_delete", args=[str(self.pk)
         ])
+    
+    def get_student_video_url(self):
+        return reverse("e_learning:student_video", args=[str(self.pk)
+        ])
 
 class Comment(models.Model):
     user_image = models.CharField(default='default.png',max_length=800)

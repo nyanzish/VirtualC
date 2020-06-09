@@ -163,6 +163,19 @@ def my_profile(request):
         messages.success(request, 'Profile details updated.')
     return render(request,'my_profile.html',context)
 
+@login_required
+def settings_page(request):
+    content = UserProfile.objects.get(user= request.user)
+    print(content)
+    context = {
+        'content':content,
+        }
+    return render(request,'settings_page.html',context)
+
+@login_required
+def delete_my_account(request):
+    content = User.objects.get(username= request.user).delete()
+    return redirect('e_learning:index')
 
 @login_required
 def upload(request):
@@ -403,11 +416,11 @@ def upload_to(request):
                     return render(request, 'error.html')
                 save_form.video= request.FILES['videos']
 
-                file_type2 = save_form.video.url.split('.')[-1]
-                file_type2 = file_type2.lower()
-                if file_type2 not in VID_FILE_TYPES:
-                    messages.warning(request, 'Please check the video you uploaded')
-                    return render(request, 'error.html')
+                # file_type2 = save_form.video.split('.')[-1]
+                # file_type2 = file_type2.lower()
+                # if file_type2 not in VID_FILE_TYPES:
+                #     messages.warning(request, 'Please check the video you uploaded')
+                #     return render(request, 'error.html')
                 attached_file = request.FILES['attached_file']
                 print(attached_file)
                 videos = request.FILES['videos']
@@ -800,6 +813,12 @@ def open_content(request,slug):
                                            'subject_namez':subject_namez,
                                            'class_object':class_object,
                                            'comment_form': comment_form})
+
+@login_required
+def student_video(request,id):
+    obj= Upload_topics.objects.get(id=id)
+
+    return render(request, 'student_video.html')
 
 @login_required
 def apply_to_teach(request):

@@ -31,7 +31,7 @@
 		  	<div class="card-body p-4 shadow-sm">
 			<h3 class="text-center text-primary pb-2">Get in touch</h3>
 			<p class="text-center text-dark pb-4">Share Your Views</p>
-			<form action = "{% url 'e_learning:contact_us'%}" method ="POST">
+			<form action = "{% url 'e_learning:contact_us'%}" method ="POST" required >
 			    {% csrf_token %}
 				<div class="row">
 					<div class="col-md-4">
@@ -41,7 +41,7 @@
 						      	<i class="fas fa-user"></i>
 						      </span>
 						    </div>
-						    <input type="text" class="form-control" placeholder="Your name" name="your_name">
+						    <input type="text" class="form-control" placeholder="Your name" name="your_name" required="required">
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -51,7 +51,7 @@
 						      	<i class="fas fa-phone"></i>
 						      </span>
 						    </div>
-						    <input type="text" class="form-control" placeholder="Your phone number" name ="phone_no">
+						    <input type="text" class="form-control" placeholder="Your phone number" name ="phone_no" required="required">
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -61,13 +61,13 @@
 						      	<i class="fas fa-envelope"></i>
 						      </span>
 						    </div>
-						    <input type="text" class="form-control" placeholder="Your email" name ="email">
+						    <input type="text" class="form-control" placeholder="Your email" name ="email" required="required">
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group mt-4">
 	                      <label class="text-muted">Message</label>
-	                      <textarea class="form-control" rows="6" name ="message"></textarea>
+	                      <textarea class="form-control" rows="6" name ="message"required="required" ></textarea>
 	                    </div>
 					</div>
                     <div class="col-md-12 col-lg-12 text-center pt-2">

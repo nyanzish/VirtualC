@@ -19,7 +19,9 @@
 			{% for my_subject in student_subjects %}
 			<div class="col-md-3 p-3">
 				<div class="card shadow w-100 h-100" style="width: 18rem;">
+                    <a href="{{ my_subject.get_subject_start_learning_id }}">
 				  <img class="card-img-top" src="{{ my_subject.subject_overview.image.url}}" alt="Card image cap" style="height: 200px;">
+                  </a>
 				  <div class="card-body text-center">
 				    <h6 class="card-title text-primary" style="font-family:sans-serif !important;"><b>{{my_subject.subject.subject_name}}</b></h6>
 					<h6 class="text-center"><b>{{my_subject.class_n.name}}</b></h6>

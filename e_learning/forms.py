@@ -7,6 +7,7 @@ from .models import ChatRoom,Teacher_apply,Upload_topics,Subjects_overview,Comme
 
 
 class UserCreationForm1(UserCreationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'User Name'}),required = True)
     class Meta:
         model = User
         fields = ['username','password']
@@ -117,7 +118,7 @@ class Overviewform(forms.ModelForm):
         'price'
         ,]
         labels ={
-                'video':'Video [leave blank if you donot a video at the moment, but you can still upload later!]',
+                'video':'Video [leave blank if you do not have a video at the moment, but you can still upload later!]',
         }
         widgets = {
             'videos': forms.FileInput(attrs={'accept':'video/*'}),
@@ -153,7 +154,7 @@ class CommentForm(forms.ModelForm):
         }
 
         widgets = {
-            'body': forms.Textarea(attrs={'rows':4})}
+            'body': forms.Textarea(attrs={'rows':4,'class':'element'})}
 
 class ChatCommentForm(forms.ModelForm):
     class Meta:
@@ -164,7 +165,7 @@ class ChatCommentForm(forms.ModelForm):
         }
 
         widgets = {
-            'body': forms.Textarea(attrs={'rows':4})}
+            'body': forms.Textarea(attrs={'rows':4,'class':'element'})}
 
 class StudentChatCommentForm(forms.ModelForm):
     class Meta:

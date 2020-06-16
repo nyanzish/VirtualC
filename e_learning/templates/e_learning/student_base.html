@@ -46,6 +46,18 @@
 <!-- Custom styles for this template-->
 <link href="{% static 'e_learning/css/sb-admin-2.min.css' %}" rel="stylesheet">
 
+<!--emojis-->
+<link rel="stylesheet" href="css/jquery.emojipicker.css">
+<!-- Twitter Emoji -->
+<link rel="stylesheet" href="css/jquery.emojipicker.tw.css">
+<!-- Apple Emoji -->
+<link rel="stylesheet" href="css/jquery.emojipicker.a.css">
+<!-- Android Emoji -->
+<link rel="stylesheet" href="css/jquery.emojipicker.g.css">
+<!-- Emoji data -->
+<script src="js/jquery.emojis.js"></script>
+
+
 {% block extra_css %}
 
 {% endblock %}
@@ -84,7 +96,7 @@ s0.parentNode.insertBefore(s1,s0);
 }
 .change-color:hover
 {
-color:#007bff !important;
+color:white !important;
 display: block;
 transform: scale(1.05)!important;
 transition: all 0.1s ease-in-out 0.1s !important;
@@ -96,75 +108,74 @@ transform: scale(1.05)!important;
 transition: all 0.1s ease-in-out 0.1s !important;
 }
 .dropdown:hover .on_click {color: black !important;}
-
 </style>
 
 <!--navbar start--->
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm pt-3 pb-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm pt-3 pb-3" style="background-color:#007bff !important;">
   <a class="navbar-brand font-weight-normal display-1" href="/">
-  <img src="{% static 'e_learning/image/logo.PNG' %}" width="43" height="43" class="d-inline-block" alt="">Virtual<span style="color: #428bca;">-Class</span>
+  <img src="{% static 'e_learning/image/logo.PNG' %}" width="43" height="43" class="d-inline-block" alt=""><span style="color: white;"> Virtual-Class</span>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="" role="button" ><i class="fa fa-bars" aria-hidden="true" style="color:white;font-size:20px;"></i></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-muted mr-2 change-color" href="{% url 'e_learning:home_view' %}" style="font-family:sans-serif !important;">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-white mr-2 change-color" href="{% url 'e_learning:home_view' %}" style="font-family:sans-serif !important;">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-muted mr-2 change-color" href="{% url 'e_learning:about' %}" style="font-family:sans-serif !important;">About<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-white mr-2 change-color" href="{% url 'e_learning:about' %}" style="font-family:sans-serif !important;">About<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-muted change-color" href="{% url 'e_learning:my_subjects' %}" style="font-family:sans-serif !important;">My Subjects</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-white change-color" href="{% url 'e_learning:my_subjects' %}" style="font-family:sans-serif !important;">My Subjects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-muted change-color" href="{% url 'e_learning:e_lib' %}" style="font-family:sans-serif !important;">E-Library</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-white change-color" href="{% url 'e_learning:e_lib' %}" style="font-family:sans-serif !important;">E-Library</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-muted change-color" href="{% url 'e_learning:group_discussion' %}" style="font-family:sans-serif !important;">Group Discussion</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-white change-color" href="{% url 'e_learning:group_discussion' %}" style="font-family:sans-serif !important;">Group Discussion</a>
       </li>
       <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle text-muted" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:sans-serif !important;">{% if user.is_authenticated %}
+        <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:sans-serif !important;">{% if user.is_authenticated %}
           <img class="img-profile rounded-circle mr-2" src="{{ user.userprofile.image.url}}" width="33" height="33">
           {% endif %}
-          <span class="mr-2 d-lg-inline text-gray-600 small  change-colors on_click">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
+          <span class="mr-2 d-lg-inline text-white small  change-color">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
         </a>
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
             {% if request.user.userprofile.role == 'Teacher' %}
           <a class="dropdown-item" href="{% url 'e_learning:teacher_homepage' %}">
-            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+            <i class="fas fa-list fa-sm fa-fw mr-2 text-dark"></i>
             Switch to teacher page
           </a>
           {% else %}
           <a class="dropdown-item" href="{% url 'e_learning:apply_to_teach' %}">
-              <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+              <i class="fas fa-list fa-sm fa-fw mr-2 text-dark"></i>
               Apply to teach
             </a>
           {% endif %}
           <a class="dropdown-item" href="{% url 'e_learning:my_profile' %}">
-            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+            <i class="fas fa-user fa-sm fa-fw mr-2 text-dark"></i>
             My Profile
           </a>
           <a class="dropdown-item" href="{% url 'e_learning:payment_details' %}">
-            <i class="fa fa-money-bill-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            <i class="fa fa-money-bill-alt fa-sm fa-fw mr-2 text-dark"></i>
             Payment Details
           </a>
           <a class="dropdown-item" href="{% url 'e_learning:settings_page' %}">
-            <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+            <i class="fa fa-cogs fa-sm fa-fw mr-2 text-dark"></i>
             Settings
           </a>
           <div class="dropdown-divider"></div>
           {% if user.is_authenticated %}
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-dark"></i>
             Logout
           </a>
           {% else %}
           <a class="dropdown-item" href="{% url 'account_login' %}">
-            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-dark"></i>
             Login
           </a>
           {% endif %}
@@ -217,7 +228,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
         <!-- Links -->
         <h6 class="mt-3 pb-2 pt-4 text-white" style="font-family: Times;"><img src="{% static 'e_learning/image/logo.PNG' %}" width="20" height="20" class="d-inline-block align-top" alt="">&nbsp;VIRTUAL-CLASS</h6>
         <p class="text-white pb-3" style="font-size: 14px;">
-           Virtual-Class is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
+           Virtual-Class is an online learning platform with an e-library as one of the key functionalities. The platform enables learners to access learning materials and interact with their teachers in a way similar to a traditional classroom. It also enables a teacher to chat with colleagues in the similar subject areas.
         </p>
       </div>
       <!-- Grid column -->
@@ -327,11 +338,11 @@ transition: all 0.1s ease-in-out 0.1s !important;
 <div class="container-fluid" style="background-color: #0f59a8 !important;">
      <div class="row pt-3 pb-3">
       <div class="col-md-12 text-center">
-            <p class="text-white pt-3 text-uppercase" style="font-size: 12px !important;">
-             Copyright © 2020 Agricultural Cluster Development
+            <p class="text-white pt-3 text-capitalize" style="font-size: 12px !important;">
+             COPYRIGHT © 2020 AGRICULTURAL CLUSTER DEVELOPMENT<br><span class="pt-1"><a href="https://drapari.com" class="text-white" target="blank">Proudly powered by: Drapari</a></span>
             </p>
       </div>
-      </div>
+      </div> 
 </div>
 
     <!-- Scroll to Top Button-->
@@ -370,6 +381,45 @@ transition: all 0.1s ease-in-out 0.1s !important;
     <script src="{% static 'e_learning/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'e_learning/assets/js/bs-animation.js' %}"></script>
     <script src="{% static 'e_learning/vendor/popper/popper.min.js' %}"></script>
+    <!--emojis-->
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="js/jquery.emojipicker.js"></script>
+
+    <script type="text/javascript">
+        $('.element').emojiPicker({
+        width: '200',
+        height: '350',
+        position: 'right',
+        fadeTime: 100,
+        iconColor: 'black',
+        iconBackgroundColor: '#eee',
+        recentCount: 36,
+        emojiSet: 'apple',
+        container: 'body',
+        button: true
+        });
+    </script>
+    <script type="text/javascript">
+        $('.element').emojiPicker({
+        onShow: function(picker, settings, isActive) {
+            // ...
+        },
+        onHide: function(picker, settings, isActive) {
+            // ...
+        }
+        });
+    </script>
+
+    <script type="text/javascript">
+        // toggle the emoji picker on/off
+        $('.element').emojiPicker('toggle');
+
+        // destroy the plugin and remove the emoji picker from DOM
+        $('.element').emojiPicker('destroy');
+    </script>
+
+
+
     <script type="text/javascript">
      $(".comment-reply-btn").click(function(event){
        event.preventDefault();
@@ -378,6 +428,14 @@ transition: all 0.1s ease-in-out 0.1s !important;
      
      
      </script>
+     <script type="text/javascript">
+     $(".video-display-btn").click(function(event){
+       event.preventDefault();
+       $(this).addClass("active"); 
+       $(this).parent().next(".video-display").fadeToggle();
+     })
+     </script>
+     
 
     </body>
     

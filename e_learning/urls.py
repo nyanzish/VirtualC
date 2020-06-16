@@ -68,12 +68,14 @@ from .views import(
     student_video,
     settings_page,
     delete_my_account,
+    charcha_serviceworker,
 	)
 
 app_name = "e_learning"
 
 urlpatterns = [
 	path('',index, name='index'),
+    url(r'^charcha-serviceworker(.*.js)$', charcha_serviceworker, name='charcha_serviceworker'),
     path('homepage/',student_homepage, name='home'),
     path('my_subjects/',student_personal_homepage, name='my_subjects'),
     path('apply_to_teach/',apply_to_teach, name='apply_to_teach'),
@@ -151,7 +153,8 @@ urlpatterns = [
     path('search_book/',Search_book,name='search_book'),
     path('start_discussion/',start_discussion,name='start_discussion'),
     path('start_discussion/<slug>/',start_discussion,name='start_discussion'),
-    path('student_video/<id>/',student_video,name='student_video'),
+    path('view_full_course_content/',student_video,name='view_full_course_content'),
+    path('view_full_course_content/<slug_vids>/',student_video,name='view_full_course_content'),
     path('settings_page/',settings_page, name='settings_page'),
     path('delete_my_account/',delete_my_account, name='delete_my_account'),
 

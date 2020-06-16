@@ -11,7 +11,7 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
-<link rel="shortcut icon" type="image/x-icon" href="{% static 'e_learning/image/logo.PNG' %}">
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'e_learning/image/logo.png' %}">
 
 <!-- Font Awesome CSS-->
 <link rel="stylesheet" href="{% static 'e_learning/fontawesome/css/all.min.css' %}">
@@ -64,7 +64,15 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-
+<link rel="manifest" href="{% static 'e_learning/jquery/manifest.json'%}">
+<style> 
+.add_hander {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  display : none;}
+  
+</style>
 
 </head>
 <body id="page-top">
@@ -88,7 +96,7 @@ s0.parentNode.insertBefore(s1,s0);
 }
 .change-color:hover
 {
-color:#007bff !important;
+color:white !important;
 display: block;
 transform: scale(1.05)!important;
 transition: all 0.1s ease-in-out 0.1s !important;
@@ -99,67 +107,92 @@ color:white !important;
 transform: scale(1.05)!important;
 transition: all 0.1s ease-in-out 0.1s !important;
 }
-
+/* .bar {
+  height: 3px;
+  background-color:blue;
+  width: 0;
+} */
 </style>
+<!-- <div class="progressBar">
+  <div class="bar"></div>
+</div><script type="text/javascript">
+  let progress = 0;
+  const progressBar = document.querySelector('.progressBar');
+  const bar = progressBar.querySelector('.bar')
+  const progressBarText = progressBar.querySelector('h3');
+  const interval = setInterval(() => {
+    progress += 25;
+    if (progress >= 100) {
+      clearInterval(interval);
+      bar.style.width = '100%';
+      progressBarText.innerHTML = '100%';
+    } else {
+      bar.style.width = progress + '%';
+      progressBarText.innerHTML = `${progress} %`;
+    }
+  }, 1000,function() {
+    $(this).closest('.progress').fadeOut();
+});
+  </script> -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white topbar sticky-top shadow-sm pt-3 pb-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary topbar sticky-top shadow-sm pt-3 pb-3" style="background-color:white !important">
 <a class="navbar-brand font-weight-normal display-1 mr-5" href="{% url 'e_learning:index' %}">
-<img src="{% static 'e_learning/image/logo.PNG' %}" width="43" height="43" class="d-inline-block" alt="">Virtual<span style="color: #428bca;">-Class</span>
+<img src="{% static 'e_learning/image/logo.PNG' %}" width="43" height="43" class="d-inline-block" alt="">Virtual<span class="text-primary">-Class</span>
 </a>
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-<span class="navbar-toggler-icon"></span>
+<span class=""> <i class="fas fa-bars" style="color:black; font-size:20px;"></i></span>
 </button>
 <div class="collapse navbar-collapse" id="navbarNav">
   <!-- <li class="nav-item"> -->
     {% if user.is_authenticated %}
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-muted mr-2 change-color" href="{% url 'e_learning:home_view' %}" style="font-family:sans-serif !important;">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-dark mr-2 change-color" href="{% url 'e_learning:home_view' %}" style="font-family:sans-serif !important;">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-muted mr-2 change-color" href="{% url 'e_learning:about' %}" style="font-family:sans-serif !important;">About<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-dark mr-2 change-color" href="{% url 'e_learning:about' %}" style="font-family:sans-serif !important;">About<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-muted change-color" href="{% url 'e_learning:my_subjects' %}" style="font-family:sans-serif !important;">My Subjects</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-dark change-color" href="{% url 'e_learning:my_subjects' %}" style="font-family:sans-serif !important;">My Subjects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-muted change-color" href="{% url 'e_learning:e_lib' %}" style="font-family:sans-serif !important;">E-Library</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-dark change-color" href="{% url 'e_learning:e_lib' %}" style="font-family:sans-serif !important;">E-Library</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-2 text-muted change-color" href="{% url 'e_learning:group_discussion' %}" style="font-family:sans-serif !important;">Group Discussion</a>
+        <a class="nav-link mt-1 pt-2 mr-2 text-dark change-color" href="{% url 'e_learning:group_discussion' %}" style="font-family:sans-serif !important;">Group Discussion</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link change-color" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:sans-serif !important;">
+        <a class="nav-link text-dark" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:sans-serif !important;">
           <img class="img-profile rounded-circle mr-2" src="{{ user.userprofile.image.url}}" width="33" height="33">
-          <span class="mr-2 d-lg-inline text-gray-600 small">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
+          <span class="mr-2 d-lg-inline text-dark small">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
         {% if request.user.userprofile.role == 'Teacher' %}
-          <a class="dropdown-item text-muted" href="{% url 'e_learning:teacher_homepage' %}" style="font-size: 14px !important;">
-            <i class="fas fa-list fa-sm fa-fw mr-2 text-muted" style="color: #c4c0c0 !important;"></i>
+          <a class="dropdown-item text-white" href="{% url 'e_learning:teacher_homepage' %}" style="font-size: 14px !important;">
+            <i class="fas fa-list fa-sm fa-fw mr-2 text-dark"></i>
             <span class="text-dark">Switch to teacher page</span>
           </a>
           {% else %}
-          <a class="dropdown-item text-muted" href="{% url 'e_learning:apply_to_teach' %}" style="font-size: 14px !important;font-family:sans-serif !important;">
-              <i class="fas fa-list fa-sm fa-fw mr-2 text-muted" style="color: #c4c0c0 !important;"></i>
+          <a class="dropdown-item text-white" href="{% url 'e_learning:apply_to_teach' %}" style="font-size: 14px !important;font-family:sans-serif !important;">
+              <i class="fas fa-list fa-sm fa-fw mr-2 text-dark"></i>
               <span class="text-dark">Apply to teach</span>
             </a>
           {% endif %}
           <a class="dropdown-item text-muted" href="{% url 'e_learning:my_profile' %}" style="font-size: 14px !important;">
-            <i class="fas fa-user fa-sm fa-fw mr-2 text-muted" style="color: #c4c0c0 !important;"></i>
+            <i class="fas fa-user fa-sm fa-fw mr-2 text-dark"></i>
             <span class="text-dark">My Profile</span>
           </a>
           <a class="dropdown-item text-muted" href="{% url 'e_learning:payment_details' %}" style="font-size: 14px !important;">
-            <i class="fa fa-money-bill-alt fa-sm fa-fw mr-2 text-muted" style="color: #c4c0c0 !important;"></i>
+            <i class="fa fa-money-bill-alt fa-sm fa-fw mr-2 text-muted"></i>
             <span class="text-dark">Payment Details</span>
           </a>
           <a class="dropdown-item text-muted" href="{% url 'e_learning:settings_page' %}" style="font-size: 14px !important;">
-            <i class="fa fa-cogs fa-sm fa-fw mr-2 text-muted" style="color: #c4c0c0 !important;"></i>
+            <i class="fa fa-cogs fa-sm fa-fw mr-2 text-dark"></i>
             <span class="text-dark">Settings</span>
           </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item text-muted" href="#" data-toggle="modal" data-target="#logoutModal" style="font-size: 14px !important;">
-            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-muted" style="color: #c4c0c0 !important;"></i>
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-dark""></i>
             <span class="text-dark">Logout</span>
           </a>
         </div>
@@ -169,27 +202,30 @@ transition: all 0.1s ease-in-out 0.1s !important;
     {% else %}
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:index' %}" style="font-family:sans-serif !important;">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link text-dark mr-3 change-color" href="{% url 'e_learning:index' %}" style="font-family:sans-serif !important;">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:about' %}" style="font-family:sans-serif !important;">About</a>
+        <a class="nav-link text-dark mr-3 change-color" href="{% url 'e_learning:about' %}" style="font-family:sans-serif !important;">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:contact_us' %}" style="font-family:sans-serif !important;">Contact&nbsp;Us</a>
+        <a class="nav-link text-dark mr-3 change-color" href="{% url 'e_learning:contact_us' %}" style="font-family:sans-serif !important;">Contact&nbsp;Us</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-muted mr-3 change-color" href="{% url 'e_learning:e_lib' %}" style="font-family:sans-serif !important;">E-Library</a>
+        <a class="nav-link text-dark mr-3 change-color" href="{% url 'e_learning:e_lib' %}" style="font-family:sans-serif !important;">E-Library</a>
       </li>
       <li class="nav-item">
-         <a href="{% url 'account_login' %}" class="nav-link mr-3 text-muted change-color" style="font-family:sans-serif !important;">Sign in<span class="sr-only">(current)</span></a>
+         <a href="{% url 'account_login' %}" class="nav-link mr-3 text-dark change-color" style="font-family:sans-serif !important;">Sign in<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-      <a class="nav-link text-white btn btn-primary btn-sm mr-2 h-100 p-2 edit_sign_up change-colors" href="{% url 'account_signup' %}" style="font-family:sans-serif !important;">Sign Up Free</a>
+      <a class="nav-link text-white btn btn-primary mr-2 edit_sign_up change-color" href="{% url 'account_signup' %}" style="font-family:sans-serif !important">Sign Up Free</a>
     </li>
   </ul>
   {% endif %}
 </div>
 </nav>
+<div class="add_hander">
+    <button class="add-button "></button>
+</div>
 {% block content %}
 
 {% endblock content %}
@@ -218,7 +254,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
         <!-- Links -->
         <h6 class="mt-3 pb-2 pt-4 text-white" style="font-family: Times;"><img src="{% static 'e_learning/image/logo.PNG' %}" width="20" height="20" class="d-inline-block align-top" alt="">&nbsp;VIRTUAL-CLASS</h6>
         <p class="text-white pb-3" style="font-size: 14px;">
-           Virtual-Class is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
+           Virtual-Class is an online learning platform with an e-library as one of the key functionalities. The platform enables learners to access learning materials and interact with their teachers in a way similar to a traditional classroom. It also enables a teacher to chat with colleagues in the similar subject areas.
         </p>
       </div>
       <!-- Grid column -->
@@ -328,8 +364,8 @@ transition: all 0.1s ease-in-out 0.1s !important;
 <div class="container-fluid" style="background-color: #0f59a8 !important;">
      <div class="row pt-3 pb-3">
       <div class="col-md-12 text-center">
-            <p class="text-white pt-3 text-uppercase" style="font-size: 12px !important;">
-             Copyright © 2020 Agricultural Cluster Development
+            <p class="text-white pt-3 text-capitalize" style="font-size: 12px !important;">
+             COPYRIGHT © 2020 AGRICULTURAL CLUSTER DEVELOPMENT<br><span class="pt-1"><a href="https://drapari.com" class="text-white" target="blank">Proudly powered by: Drapari</a></span>
             </p>
       </div>
       </div>
@@ -372,6 +408,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
 <script src="{% static 'e_learning/jquery/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'e_learning/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'e_learning/assets/js/bs-animation.js' %}"></script>
+<script src="{% static 'e_learning/jquery/index.js' %}"></script>
 
 </body>
 </html>

@@ -105,7 +105,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
 <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar h-25">
 
 <!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'e_learning:teacher_homepage' %}">
   <div class="sidebar-brand-icon mt-5 pt-3 mb-3">
     <img class="img-profile rounded-circle mt-5" src="{{ user.userprofile.image.url}}" width="50" height="50">
     <p class="mt-2">{{user.username}}</p>
@@ -360,7 +360,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
         <!-- Links -->
         <h6 class="mt-3 pb-2 pt-4 text-white" style="font-family: Times;"><img src="{% static 'e_learning/image/logo.PNG' %}" width="20" height="20" class="d-inline-block align-top" alt="">&nbsp;VIRTUAL-CLASS</h6>
         <p class="text-white pb-3" style="font-size: 14px;">
-           Virtual-Class is an online learning platform that focuses on facilitating and accelerating the teaching and learning processes of different subjects in Uganda focusing mainly on Secondary school students both Ordinary and Advanced Level.
+           Virtual-Class is an online learning platform with an e-library as one of the key functionalities. The platform enables learners to access learning materials and interact with their teachers in a way similar to a traditional classroom. It also enables a teacher to chat with colleagues in the similar subject areas.
         </p>
       </div>
       <!-- Grid column -->
@@ -470,8 +470,8 @@ transition: all 0.1s ease-in-out 0.1s !important;
 <div class="container-fluid" style="background-color: #0f59a8 !important;">
      <div class="row pt-3 pb-3">
       <div class="col-md-12 text-center">
-            <p class="text-white pt-3 text-uppercase" style="font-size: 12px !important;">
-             Copyright © 2020 Agricultural Cluster Development
+            <p class="text-white pt-3 text-capitalize" style="font-size: 12px !important;">
+             COPYRIGHT © 2020 AGRICULTURAL CLUSTER DEVELOPMENT<br><span class="pt-1"><a href="https://drapari.com" class="text-white" target="blank">Proudly powered by: Drapari</a></span>
             </p>
       </div>
       </div>

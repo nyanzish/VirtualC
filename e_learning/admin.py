@@ -32,7 +32,11 @@ from .models import(
     Recommend_Subjects_Table,
     ChatRoom,
     ChatComment,
-    StudentChatComment
+    StudentChatComment,
+    Lugbara_Ti,
+    Literature,
+    Economics,
+    Divinity,
 )
 
 
@@ -87,6 +91,11 @@ admin.site.register(Message,MessageAdmin)
 admin.site.register(ChatRoom)
 admin.site.register(ChatComment)
 admin.site.register(StudentChatComment)
+admin.site.register(Lugbara_Ti)
+admin.site.register(Literature)
+admin.site.register(Economics)
+admin.site.register(Divinity)
+
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

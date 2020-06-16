@@ -45,7 +45,8 @@
                     <th scope="col">Subjects taught</th>
                     <th scope="col">Description</th>
                     <th scope="col">Date applied</th>
-                    <th scope="col">actions</th>
+                    <th scope="col">action1</th>
+                    <th scope="col">action2</th>
               </tr>
             </thead>
             <tbody>
@@ -60,9 +61,11 @@
                     <td>{{ applie.subject_one }} , {{ applie.subject_two }}</td>
                     <td>{{ applie.Brief_Self_description }}</td>
                     <td>{{ applie.date_of_record }}</td>
-                    <td><a class="btn btn-primary btn-sm text-white" href="{{applie.get_absolute_urls}}">Accept</a>&nbsp;&nbsp;
+                    <td>
+                        <a class="btn btn-primary btn-sm text-white" href="{{applie.get_absolute_urls}}">Accept</a>
+                    </td>
+                    <td>
                         <a class="btn btn-danger text-white btn-sm" href="{{applie.get_absolute_urls}}" data-toggle="modal" data-target="#staticBackdrop">Decline</a>
-
                     </td>
 
 

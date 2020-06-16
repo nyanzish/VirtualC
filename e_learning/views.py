@@ -16,8 +16,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from .forms import CommentForm,ChatCommentForm,ChatRoomForm,StudentChatCommentForm
 import re
 import datetime
+from django.db.models import Q
 from django.core.mail import send_mail,BadHeaderError,EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template.loader import get_template
+from django.http import HttpResponse
 from .models import (
     UserProfile,
     Class_table,
@@ -174,7 +177,10 @@ def settings_page(request):
 
 @login_required
 def delete_my_account(request):
-    content = User.objects.get(username= request.user).delete()
+    user = request.user
+    user.is_active = False
+    user.save()
+    #messages.success(request,'Your account was deleted.')
     return redirect('e_learning:index')
 
 @login_required
@@ -701,7 +707,21 @@ class HomeView(ListView):
     paginate_by = 12
     template_name = 'student_homepage.html'
     # Code block for GET request
-    overview=Subjects_overview.objects.all()
+    active_user_holder = []
+    teacher_holder = []
+    all_active_users = User.objects.filter(Q(is_active = True))
+    for all_active_user in all_active_users:
+        active_user_holder.append(all_active_user)
+    new_holder = active_user_holder
+    print(new_holder,'new_holder')
+
+    teacher_active=Teacher_apply.objects.filter(user__in = new_holder)
+    for all_teacher_active in teacher_active:
+        teacher_holder.append(all_teacher_active)
+    new_holder2 = teacher_holder
+    print(new_holder2,'active_teacher')
+
+    overview=Subjects_overview.objects.filter(teacher__in = new_holder2)   
     # for i in overview:
     #     print(i.price,i.teacher.user,i.class_n,i.subject,i.subject.subject_image)
     #     teacher_user=i.teacher.user
@@ -751,8 +771,9 @@ def start_reading(request,slug):
     material_name = start_learning.subject.subject_name
     material_class = start_learning.class_n
     material_teacher = start_learning.teacher
+    material_overview = start_learning.subject_overview
     #container = eval(start_learning.subject.subject_name)
-    my_reading_material = Upload_topics.objects.filter(teacher = material_teacher)
+    my_reading_material = Upload_topics.objects.filter(overview = material_overview)
     context ={
     'my_reading_material':my_reading_material,
     'material_name':material_name,
@@ -764,6 +785,7 @@ def start_reading(request,slug):
 def open_content(request,slug):
     open_content=Upload_topics.objects.get(id=slug)
     print(open_content.id)
+    slug_vids = open_content.overview.id
     subject_namez=Subjects.objects.get(id = open_content.subject)
     print(subject_namez)
     class_object=Class_table.objects.get(id = open_content.class_level)
@@ -810,15 +832,19 @@ def open_content(request,slug):
                                            'comments': comments,
                                            'new_comment': new_comment,
                                            'open_content':open_content,
+                                           'slug_vids':slug_vids,
                                            'subject_namez':subject_namez,
                                            'class_object':class_object,
                                            'comment_form': comment_form})
 
 @login_required
-def student_video(request,id):
-    obj= Upload_topics.objects.get(id=id)
-
-    return render(request, 'student_video.html')
+def student_video(request,slug_vids):
+    student_caller=Subjects_overview.objects.get(id=slug_vids)
+    student_videoz = Upload_topics.objects.filter(overview = student_caller)
+    context = {
+        'student_videoz':student_videoz
+    }
+    return render(request, 'student_video.html',context)
 
 @login_required
 def apply_to_teach(request):
@@ -882,24 +908,31 @@ def subject_topic(request):
 
 @login_required
 def e_lib(request):
-    recommended_math_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Mathematics')
-    recommended_english_book = Recommend_Subjects_Table.objects.filter(subject_name = 'English')
-    recommended_physics_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Physics')
-    recommended_chemistry_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Chemistry')
-    recommended_biology_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Biology')
-    recommended_agric_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Agriculture')
-    recommended_geography_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Geography')
-    recommended_history_book = Recommend_Subjects_Table.objects.filter(subject_name = 'History')
-    recommended_computer_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Computer')
-    recommended_lugbara_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Lugbara Ti')
-    recommended_art_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Art')
-    recommended_french_book = Recommend_Subjects_Table.objects.filter(subject_name = 'French')
+    active_user_holder = []
+    all_active_users = User.objects.filter(Q(is_active = True))
+    for all_active_user in all_active_users:
+        active_user_holder.append(all_active_user)
+    new_holder = active_user_holder
+    print(new_holder,'new_holder')
+    
+    recommended_math_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Mathematics',user__in = new_holder)
+    recommended_english_book = Recommend_Subjects_Table.objects.filter(subject_name = 'English',user__in = new_holder)
+    recommended_physics_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Physics',user__in = new_holder)
+    recommended_chemistry_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Chemistry',user__in = new_holder)
+    recommended_biology_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Biology',user__in = new_holder)
+    recommended_agric_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Agriculture',user__in = new_holder)
+    recommended_geography_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Geography',user__in = new_holder)
+    recommended_history_book = Recommend_Subjects_Table.objects.filter(subject_name = 'History',user__in = new_holder)
+    recommended_computer_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Computer',user__in = new_holder)
+    recommended_lugbara_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Lugbara Ti',user__in = new_holder)
+    recommended_art_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Art',user__in = new_holder)
+    recommended_french_book = Recommend_Subjects_Table.objects.filter(subject_name = 'French',user__in = new_holder)
     recommended_german_book = Recommend_Subjects_Table.objects.filter(subject_name = 'German')
-    recommended_kiswahili_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Kiswahili')
-    recommended_chinese_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Chinese')
-    recommended_general_paper_book = Recommend_Subjects_Table.objects.filter(subject_name = 'General paper')
-    recommended_luganda_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Luganda')
-    recommended_Islam_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Islam')
+    recommended_kiswahili_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Kiswahili',user__in = new_holder)
+    recommended_chinese_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Chinese',user__in = new_holder)
+    recommended_general_paper_book = Recommend_Subjects_Table.objects.filter(subject_name = 'General paper',user__in = new_holder)
+    recommended_luganda_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Luganda',user__in = new_holder)
+    recommended_Islam_book = Recommend_Subjects_Table.objects.filter(subject_name = 'Islam',user__in = new_holder)
 
     context={
             'recommended_math_book':recommended_math_book,
@@ -2081,6 +2114,7 @@ def recommend_book(request):
         attach_book = request.FILES.get('attach_book')
         recommended_by = request.POST.get('recommended_by')
         recommend_form = Recommend_Subjects_Table(
+                    user = request.user,
                     subject_name=subject_name,
                     class_level=class_level,
                     book_title=book_title,
@@ -3338,3 +3372,7 @@ def conversation(request,slug):
         
         return render(request, 'conversation.html',context)
 
+def charcha_serviceworker(request, js):
+    template = get_template('charcha-serviceworker.js')
+    html = template.render()
+    return HttpResponse(html, content_type="application/x-javascript")

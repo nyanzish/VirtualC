@@ -54,10 +54,14 @@ CATEGORY_SUBJECTS = (
     ('CRE', 'CRE'),
     ('Agriculture', 'Agriculture'),
     ('Computer', 'Computer'),
+    ('Economics', 'Economics'),
+    ('Divinity', 'Divinity'),
+    ('Literature', 'Literature'),
     ('TechnicalDrawing', 'TechnicalDrawing'),
     ('Art', 'Art'),
     ('French', 'French'),
     ('German', 'German'),
+    ('Lugbara_Ti', 'Lugbara_Ti'),
     ('Chinese', 'Chinese'),
     ('Luganda', 'Luganda'),
     ('GeneralPaper','GeneralPaper'),
@@ -125,6 +129,7 @@ class Subjects(models.Model):
         ])
 
 class Recommend_Subjects_Table(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     subject_name = models.CharField(max_length=30)
     class_level = models.CharField(max_length=30)
     book_title = models.CharField(max_length=30)
@@ -495,3 +500,28 @@ class GeneralPaper(models.Model):
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
     topic_name = models.CharField( max_length=30)
     date_of_record = models.DateTimeField(default=timezone.now)
+
+class Economics(models.Model):
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
+    class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
+    topic_name = models.CharField( max_length=30)
+    date_of_record = models.DateTimeField(default=timezone.now)
+
+class Divinity(models.Model):
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
+    class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
+    topic_name = models.CharField( max_length=30)
+    date_of_record = models.DateTimeField(default=timezone.now)
+
+class Literature(models.Model):
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
+    class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
+    topic_name = models.CharField( max_length=30)
+    date_of_record = models.DateTimeField(default=timezone.now)
+
+class Lugbara_Ti(models.Model):
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
+    class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
+    topic_name = models.CharField( max_length=30)
+    date_of_record = models.DateTimeField(default=timezone.now)
+

@@ -21,7 +21,7 @@
               <div class="col-md-7" style="border-right: 2px solid  #a4a0a0;">
                 <h4 class="text-center text-primary" style="font-family: Times;"><b>{{subject_namez}}</b></h4>
                 <h5 class="text-center text-primary" style="font-family: Times;"><b>{{class_object}}</b></h5><hr>
-                <h5 class="mt-2 mb-3 text-center" style="font-family: Times;">Topic:<span class="text-primary text-capitalize" style="font-family: Times;" >&nbsp;{{open_content.topic}}</span></h5>
+                <h5 class="mt-2 mb-3 text-center" style="font-family: Times;">Topic:<span class="text-primary text-capitalize" style="font-family: Times;" >&nbsp;{{open_content.topic}}</span>{{open_content.overview.id}}</h5>
                 <div class="card">
                   <div class="card-body" style="height:480px;overflow-y: scroll; font-family: Times; color: #3e3838;  font-size: 20px;">
                     {{open_content.content | safe}}
@@ -35,9 +35,10 @@
                   <source src="{{ open_content.videos.url }}" type="video/mp4">
                 </video>
               </div>
-              <div class="mt-2 text-center">
-                  <a href="{{ open_content.videos.url }}" target="_self">Watch Now</a>
-              </div>
+              <!-- <div class="mt-4 text-center">
+                  <a href="{% url 'e_learning:view_full_course_content' slug_vids %}" target="_self">View full Course</a>
+                  <a href="{% url 'e_learning:view_full_course_content' %}" target="_self">View full Course</a> 
+              </div> -->
               <div class="mt-5">
                 <h6 class="mt-2" style="font-family: Times; color: #3e3838;">Reference Books(Download)</h6>
                 <a href="{{ open_content.attached_file.url}}" target="_blank">{{ open_content.attached_file }}</a>

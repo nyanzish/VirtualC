@@ -1,0 +1,47 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">HOME</a>
+    </li>
+    <li class="breadcrumb-item text-uppercase" ><a class="text-primary" href="{% url 'e_learning:assignments' %}" >Assignments</a>
+    </li>
+  </ol>
+</nav>
+<div class="container">
+    <div class="row pb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="row pt-4 pb-5 pl-5 pr-5">
+                        {% if assignment_content %}
+                        {% for assgn in assignment_content %}
+                        <div class="col-md-12">
+                            <h2 class="text-primary" style="font-family:sans-serif !important;font-size:20px important;">Assignment 1</h2>
+                            <p class="ml-5 mt-3 text-warning"><i class="fa fa-file"></i>&nbsp;&nbsp;<a href="{{ assgn.add_submissions }}">{{assgn.assignment_title}}</a></p>
+                            <hr>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="col-md-12">
+                            <h2 class="text-primary pt-3" style="font-family:sans-serif !important;font-size:20px important;">Assignment 1</h2>
+                            <p class="ml-5 mt-3 text-danger"><i class="fa fa-file"></i>&nbsp;&nbsp;(No Assignment has been posted yet!) </p>
+                            <hr>
+                            <h2 class="text-primary pt-3" style="font-family:sans-serif !important;font-size:20px important;">Assignment 2</h2><hr>
+                            <h2 class="text-primary pt-3" style="font-family:sans-serif !important;font-size:20px important;">Assignment 3</h2><hr>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

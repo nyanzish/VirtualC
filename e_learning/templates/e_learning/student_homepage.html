@@ -30,14 +30,14 @@
  </div>
 <div class="container-fluid mt-2">
 	<div class="mb-5 pb-4">
-		<h6 class="pt-3 pb-1" style="font-size: 18px; font-family: Times;"><i class="fa fa-th fa-1x ml-2"></i>&nbsp;&nbsp;On-going Subjects</i></h6>
+		<h6 class="pt-3 pb-1 text-primary" style="font-size: 18px; font-family: Times;"><i class="fa fa-th fa-1x ml-2"></i>&nbsp;&nbsp;On-going Subjects</i></h6>
 		<div class="row pt-1">
 			{% if overview %}
 			{% for item in overview %}
 			<div class="col-md-3 p-3">
 				<div class="card shadow w-100 h-100" style="width: 18rem;">
 				    <a href="{{ item.get_absolute_url }}">
-				        <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">
+				        <img class="card-img-top" src="{{ item.image.url}}" alt="No Image" style="height: 200px;">
 				    </a>
 				  <div class="card-body text-center">
 				    <h6 class="card-title text-primary"><b>{{ item.subject }}</b>

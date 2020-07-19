@@ -6,7 +6,7 @@ div.jumbotron.carousel-hero {
   padding-top: 100px;
   padding-bottom: 100px;
   margin-bottom: 0;
-  height: 500px;
+  height: 620px;
 }
 
 div.jumbotron.hero-nature {
@@ -21,9 +21,14 @@ div.jumbotron.hero-technology {
   background-image: url('../../assets/img/');
 }
 
+div.jumbotron.hero-technology {
+  background-image: url('../../assets/img/');
+}
+
 h1.hero-title, h2.hero-title, h3.hero-title {
   text-shadow: 0 3px 3px rgba(0,0,0,0.4);
   color: #fff;
+  text-transform: uppercase;
 }
 
 p.hero-subtitle {

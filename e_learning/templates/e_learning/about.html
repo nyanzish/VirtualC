@@ -7,46 +7,78 @@
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
       <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">HOME</a>
       </li>
-      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:about' %}" >ABOUT</a></li>
+      <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:about' %}" >ABOUT US</a></li>
     </ol>
  </nav>
 <div class="container-fluid mb-3 mt-1">
-    <h1 style="font-size: 21px;font-family:sans-serif !important;" class="text-center text-bold text-dark">ABOUT VIRTUAL<span class="text-primary">-CLASS</span></h1><hr>
 	<div class="row mt-1 justify-content-center pb-4">
 		<div class="col-md-11">
             <div class="row justify-content-center">
             <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="mx-auto testimonial-item mb-lg-0"><img class="img-fluid img-thumbnail mb-3" src="{% static 'e_learning/image/about.jpg' %}"  style="width: 100%;">
+                <h1 style="font-family:sans-serif !important;font-size:24px !important;" class="text-center about_heading">WHAT IS VIRTUAL<span class="text-primary">-CLASS</span></h1><hr>
+                  <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted pt-3">
+                    Virtual<span class="text-primary">-Class</span> is an online learning platform with an e-library as one of the key functionalities.The e-library enables all users to access books that can aid thier learning. The platform enables learners to access learning materials and interact with their teachers in a way similar to a traditional classroom. It also enables teachers to interact among themselves. <br><br>Additionally, the system has an e-library that is accessible to all users; enabling a book-by-book access of all books in a typical secondary school library. Teachers also have an opportunity to recommend books for their learners.
+                  </p>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="mx-auto testimonial-item mb-lg-0"><img class="img-fluid" src="{% static 'e_learning/image/new_about.PNG' %}"  style="width: 100%;height:405px !important;">
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                  <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted pt-3">
-                    Virtual<span class="text-primary">-Class</span> is an online learning platform with an e-library as one of the key functionalities. The platform enables learners to access learning materials and interact with their teachers in a way similar to a traditional classroom. It also enables a teacher to chat with colleagues in the similar subject areas.<br><br>Additionally, the system has an e-library that is accessible to all users; enabling a book-by-book access of all books in a typical secondary school library. Teachers also have an opportunity to recommend books for their learners.
-                  </p>
-                  <h1 style="font-size: 18px;font-family:sans-serif !important;" class="text-left text-bold text-dark text-center">Our Motto:</h1>
- <p style="font-size: 18px;font-family:sans-serif !important;" class="text-center text-danger">
-                <q>Learn anything, anytime</q></p>
+                <div class="col-md-12 col-sm-12 col-lg-12">
+                    <div class="row pt-1">
+                        <div class="col-md-4 col-lg-4 col-sm-12">
+                            <div class="card shadow-sm mt-2">
+                                <div class="card-body">
+                                   <h1 style="font-size: 18px;font-family:sans-serif !important;" class="text-center text-bold text-primary">MISSION</h1>
+                                    <p style="font-size: 18px;font-family:sans-serif !important;" class="text-success">To be the leading platform that supports, encourages and enables students to embrace e-learning and build the capacity of teachers and trainers in using digital technologies for enhancing teaching.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12">
+                            <div class="card shadow-sm mt-2">
+                                <div class="card-body">
+                                    <h1 style="font-size: 18px;font-family:sans-serif !important;" class="text-left text-bold text-primary text-center">MOTTO</h1>
+                                    <p style="font-size: 18px;font-family:sans-serif !important;" class="text-center text-danger">
+                                        <q>Learn anything, anytime</q>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12">
+                            <div class="card shadow-sm mt-2">
+                                <div class="card-body">
+                                    <h1 style="font-size: 18px;font-family:sans-serif !important;" class="text-center text-bold text-primary">VISION</h1>
+                                    <p style="font-size: 18px;font-family:sans-serif !important;" class="text-warning">A generation that embraces Information Technology as a fulcrum of academic and professional excellence.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12">
-                    <h1 style="font-size: 20px;font-family:sans-serif !important;" class="text-center text-primary pt-4">OTHER FEATURES</h1>
-                  <h1 style="font-size: 18px;font-family:sans-serif !important;" class="text-left text-dark">E-Library</h1>
+                <h1 style="font-size: 20px;font-family:sans-serif !important;" class="text-center text-dark pt-4">OTHER FEATURES</h1>
+                  
                   <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">
-                   The system has an e-library where learners and teachers can access soft copies of most books in their school libraries at any time. With this service, learners from schools that have no library can access educational content just like those students from schools with very good libraries. 
-                  </p>
-                  <h1 style="font-size: 18px;font-family:sans-serif !important;" class="text-left text-bold text-dark">E-Book</h1>
-                  <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">
-                   This is a special feature on that enables teachers to recommend and upload specific books to their learners for reference or additional revision.</p>
-                   <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">The virtual class team comprises a talent pool of professionals from the fields of Education and Information Technology. The team is broadly divided into three categories: A quality assurance/policy expert; Subject Heads of Departments and the IT team.</p>
-                   <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">The quality assurance/policy expert is responsible for providing the overall framework for the operation of the system and ensuring everything posted on the platform is in compliance with the policies of the government and the ministry of Education and Sports.</p>
-                    <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">The Subject department heads are responsible for ensuring the quality of the content uploaded by the different subject teachers. The IT is responsible for the overall management; update and security of data of the users.</p>
-                    <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">Virtual Class platform is owned by Agriculture Cluster Development Limited; a private company incorporated in Uganda.  However, the platform operates as a semi-autonomous entity with a separate management team.</p>
-                    <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">For more information on how the system works, click on the <a href="{% url 'e_learning:frequently_asked_questions' %}" >Frequently Asked Questions (FAQs)</a>.</p>
+                   <span class="text-primary">E-Book</span> is a special feature on that enables teachers to recommend and upload specific books to their learners for reference or additional revision.</p>
+                   <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">
+                   <span class="text-primary">Group Discussion</span> this system feature enables students share ideas with their colleagues regarding particular subject topics.
+                   </p>
+                   <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">
+                   <span class="text-primary">ChatRoom</span> is a system feature that enables teachers to interact among themselves.</p>
+                   <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">The <a href="{% url 'e_learning:team' %}" class="text-primary" style="text-decoration:none !important;">virtual class team</a> comprises a talent pool of professionals from the fields of Education and Information Technology. The team is broadly divided into three categories: A quality assurance/policy expert; Subject Heads of Departments and the IT team.</p>
+                   <ul>
+                    <li class="text-muted">
+                        <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">The quality assurance/policy expert is responsible for providing the overall framework for the operation of the system and ensuring everything posted on the platform is in compliance with the policies of the government and the ministry of Education and Sports.</p>
+                    </li>
+                    <li class="text-muted">
+                        <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">The Subject departmental heads are responsible for ensuring the quality of the content uploaded by the different subject teachers meets set standards.</p>
+                    </li>
+                    <li class="text-muted">
+                        <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">The IT team is responsible for the overall management; update and security of data of the users.</p>
+                    </li>
+                   </ul>
+                <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">For more information on how the system works, click on the <a href="{% url 'e_learning:frequently_asked_questions' %}" class="text-primary" style="text-decoration:none !important;">frequently asked questions</a>.</p>
 
                   </p>
-                  <h1 style="font-size: 18px;font-family:sans-serif !important;" class="text-left text-bold text-primary">Our Vision:</h1>
-                   <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">A generation that embraces Information Technology as a fulcrum of academic and professional excellence.</p>
-                  <h1 style="font-size: 18px;font-family:sans-serif !important;" class="text-left text-bold text-primary">Our Mission:</h1>
-                   <p style="font-size: 18px;font-family:sans-serif !important;" class="text-justify text-muted">To be the leading platform that supports, encourages and enables students to embrace e-learning and build the capacity of teachers and trainers in using digital technologies for enhancing teaching.</p>
                 </div>
             </div>
 	   </div>

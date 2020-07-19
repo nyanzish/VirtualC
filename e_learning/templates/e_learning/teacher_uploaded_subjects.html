@@ -22,16 +22,15 @@
 
 <!-- Content Row -->
 <div class="row p-3">
+{% if teacher_uploaded_subject%}
   {% for teacher_uploader in teacher_uploaded_subject %}
-  <div class="col-md-4 p-2">
-    <div class="card shadow mb-3">
-      <div class="text-center mt-2">
-        <img class="rounded-circle" src="{% static 'e_learning/image/logo.PNG' %}" class="card-img-top" width="120" height="120" alt="...">
-        </div>
-      <div class="card-body">
-        <h6 class="card-title text-primary text-center"><b>{{teacher_uploader.subject}}</b></h6>
-        <h6 class="text-center"><b>{{ teacher_uploader.class_n }}</b></h6>
-        <hr>
+  <div class="col-md-4 pb-2">
+    <div class="card shadow w-100 h-100" style="width: 18rem;">
+        <img class="card-img-top" src="{{ teacher_uploader.image.url }}" alt="No Image" style="height: 200px;">
+        <div class="card-body text-center">
+        <h6 class="card-title text-primary"><b>{{teacher_uploader.subject}}</b>
+        </h6>
+        <h6 class="text-center"><b>{{ teacher_uploader.class_n }}</b></h6><hr>
         <div class="row">
           <div class="col-md-6 pl-5 col_edit">
             <a href="{{ teacher_uploader.edit_subject_uploaded_url }}" class="btn btn-outline-primary btn-sm edit_subject">Edit</a>
@@ -39,14 +38,59 @@
           <div class="col-md-6 pl-5 col_delete">
             <a href="{{ teacher_uploader.get_subject_uploaded_url }}" class="btn btn-outline-danger hero-button plat btn-sm delete_subject" >Delete</a>
           </div>
+        </div><hr>
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <a type="button" class="btn btn-success btn-sm text-white" data-toggle="modal" data-target="#exampleModalCenter">
+    <i class="fa fa-plus"></i> Add Assignment
+    </a>
+            </div>
         </div>
-      </div>
+        </div>
     </div>
-  </div>
+</div>
   {% endfor %}
+  {% else %}
+  <div class="pb-5 mb-5">
+      <p class="text-center text-danger" style="font-size:20px !important;">Ooops!</p>
+      <p class="text-center" style="font-size:18px !important;">You havent uploaded any subject Yet!</p>
+  </div>
+{% endif %}
 </div>
 </div>
 <!-- /.container-fluid -->
+<!--modal-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-center text-primary modal-title" style="font-size: 20px;" id="exampleModalLongTitle">Add An Assignment</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action = "{% url 'e_learning:add_assignment'%}" method ="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Assignment Title</label>
+            <input type="text" class="form-control" placeholder="e.g. Advantages of ICT in Uganda today" name="assignment_title" required="required">
+        </div>
+        <div class="form-group mt-4 pt-2">
+            <label><i class="fas fa-paperclip" aria-hidden="true" ></i>&nbsp;Attach Assignment:&nbsp;&nbsp;</label>
+            <input type="file" name='attach_assignment' accept="application/pdf, application/vnd.ms-excel,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required="required">
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="form-control" name="assignment_id" required="required" value="{{subject_id_for_assignment}}">
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Upload Assignment</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

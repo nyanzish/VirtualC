@@ -28,7 +28,7 @@ admin.site.index_title = 'VirtualClass administration'
 admin.empty_value_display = '**Empty**'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/VC/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('e_learning.urls', namespace='e_learning')),
@@ -36,7 +36,7 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(template_name='users/login.html', authentication_form=UserCreationForm1), name='login'),
 ]
 if settings.DEBUG:
-    urlpatterns += static(
+    urlpatterns +=static(
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 elif getattr(settings, 'FORCE_SERVE_STATIC', False):
     settings.DEBUG = True

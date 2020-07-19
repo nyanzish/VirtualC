@@ -37,6 +37,8 @@ from .models import(
     Literature,
     Economics,
     Divinity,
+    Assignments_Table,
+    Response_Table,
 )
 
 
@@ -95,7 +97,8 @@ admin.site.register(Lugbara_Ti)
 admin.site.register(Literature)
 admin.site.register(Economics)
 admin.site.register(Divinity)
-
+admin.site.register(Assignments_Table)
+admin.site.register(Response_Table)
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

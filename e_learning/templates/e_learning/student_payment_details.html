@@ -5,7 +5,7 @@
 {% block content %}
 <nav aria-label="breadcrumb" class="mt-2">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
-      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home' %}">Home</a>
+      <li class="breadcrumb-item" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">Home</a>
       </li>
       <li class="breadcrumb-item active text-primary" ><a href="{% url 'e_learning:payment_details' %}" >My Invoices</a></li>
     </ol>
@@ -47,6 +47,17 @@
 			            </tr>
 			            {% endfor %}
 			            {% else %}
+                        <tr>
+                            <td></td>
+                            <td>None</td>
+                            <td>None</td>
+                            <td>None</td> 
+                            <td>None</td>
+                            <td>None</td>
+                            <td>0</td> 
+                            <td>0</td>
+                        </tr>
+                        </tbody>
 			            {% endif %}
 			          </tbody>
 					  </table>

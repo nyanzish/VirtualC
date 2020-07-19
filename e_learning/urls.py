@@ -69,6 +69,13 @@ from .views import(
     settings_page,
     delete_my_account,
     charcha_serviceworker,
+    offline,
+    add_assignment,
+    past_papers,
+    assignments,
+    add_submission,
+    delete_book,
+    add_response
 	)
 
 app_name = "e_learning"
@@ -76,7 +83,7 @@ app_name = "e_learning"
 urlpatterns = [
 	path('',index, name='index'),
     url(r'^charcha-serviceworker(.*.js)$', charcha_serviceworker, name='charcha_serviceworker'),
-    path('homepage/',student_homepage, name='home'),
+    url(r'^offline/$', offline, name='offline'),
     path('my_subjects/',student_personal_homepage, name='my_subjects'),
     path('apply_to_teach/',apply_to_teach, name='apply_to_teach'),
     path('subject_topic/',subject_topic, name='subject_topic'),
@@ -157,6 +164,14 @@ urlpatterns = [
     path('view_full_course_content/<slug_vids>/',student_video,name='view_full_course_content'),
     path('settings_page/',settings_page, name='settings_page'),
     path('delete_my_account/',delete_my_account, name='delete_my_account'),
+    path('add_assignment/',add_assignment,name='add_assignment'),
+    path('past_papers/',past_papers,name='past_papers'),
+    path('assignments/',assignments,name='assignments'),
+    path('add_submission/',add_submission,name='add_submission'),
+	path('add_submission/<slug>/',add_submission,name='add_submission'),
+    path('delete_book/',delete_book,name='delete_book'),
+	path('delete_book/<slug>/',delete_book,name='delete_book'),
+    path('add_response/',add_response,name='add_response'),
 
 ]
 

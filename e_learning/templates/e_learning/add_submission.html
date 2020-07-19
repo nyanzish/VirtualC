@@ -1,0 +1,117 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">HOME</a>
+    </li>
+    <li class="breadcrumb-item text-uppercase" ><a class="text-dark" href="{% url 'e_learning:assignments' %}" >Assignments</a>
+    </li>
+    <li class="breadcrumb-item text-uppercase" ><a class="text-primary" href="{% url 'e_learning:assignments' %}" >Add Submission</a>
+    </li>
+  </ol>
+</nav>
+<div class="container">
+    <div class="row pb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="row pt-2 pb-5 pl-3 pr-3">
+                        <div class="col-md-12">
+                            <p style="font-size: 23px;" class="pt-1 text-warning text-center">Assignment&nbsp;{{ add_my_submission.id }}</p>
+                            <p style="font-size: 23px;" class="pt-1 text-dark">{{ add_my_submission.subject_overview.class_n}}&nbsp;&nbsp;{{ add_my_submission.subject_overview.subject}}<span class="ml-5" style="font-size: 15px !important;color:grey !important;">Posted by: <span class="text-dark">{{ add_my_submission.subject_overview.teacher.user_profile.firstname}}&nbsp;{{ add_my_submission.subject_overview.teacher.user_profile.lastname}}</span></span></p><hr>                       
+                            <p style="font-size: 20px;" class="pt-2 text-muted pl-4"><i class="fa fa-file text-warning"></i>&nbsp;<a href="{{ add_my_submission.attach_assignment.url }}" target="_blank">{{ add_my_submission.assignment_title }}</a></p>
+                            <p style="font-size: 15px;" class="text-dark pl-5"><a href="{{ add_my_submission.attach_assignment.url }}" target="_blank">{{ add_my_submission.attach_assignment }}</a></p>
+                            <p style="font-size: 20px;" class="pt-3 text-primary text-center">Submission Status</p>
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr>
+                                    <th>Submission Status</th>
+                                    <td>No Attempt</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Grading Status</th>
+                                    <td>Not Graded</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Post Date</th>
+                                    <td>{{ add_my_submission.date_of_record }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Due Date</th>
+                                    <td>Open</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Time remaining</th>
+                                    <td> ---- </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 pt-5 text-center">
+                                <a type="button" class="btn btn-success text-white" data-toggle="modal" data-target="#exampleModalCenter">
+                                Add Submission
+                                </a>
+                                <p style="font-size: 15px;" class="pt-2 text-danger">(You have not made a submission yet!)</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-center text-primary modal-title" style="font-size: 20px;" id="exampleModalLongTitle">Add Submission</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action = "{% url 'e_learning:add_response'%}" method ="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group mt-2 pt-2">
+            <label><i class="fas fa-paperclip" aria-hidden="true" ></i>&nbsp;Attach Your Response Here:&nbsp;&nbsp;</label>
+            <input type="file" name='add_submission' accept="application/pdf, application/vnd.ms-excel,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required="required">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="assignment_id" value="{{ add_my_submission.id }}">
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Upload Submission</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

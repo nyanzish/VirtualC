@@ -51,7 +51,7 @@ CATEGORY_SUBJECTS = (
     ('Geography', 'Geography'),
     ('English', 'English'),
     ('Islam','Islam'),
-    ('CRE', 'CRE'),
+    ('Cre', 'Cre'),
     ('Agriculture', 'Agriculture'),
     ('Computer', 'Computer'),
     ('Economics', 'Economics'),
@@ -133,11 +133,14 @@ class Recommend_Subjects_Table(models.Model):
     subject_name = models.CharField(max_length=30)
     class_level = models.CharField(max_length=30)
     book_title = models.CharField(max_length=30)
-    book_cover_image = models.ImageField()
+    book_cover_image = models.ImageField(default='book_vector.png')
     attach_book = models.FileField()
     recommended_by = models.CharField(max_length=30)
     date_of_record = models.DateTimeField(default=timezone.now)
 
+    def get_the_book(self):
+        return reverse("e_learning:delete_book", args=[str(self.pk)
+        ])
 
 class Teacher_apply(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -207,6 +210,23 @@ class Subscription(models.Model):
         return reverse("e_learning:start_reading", args=[str(self.pk)
         ])
 
+class Assignments_Table(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    subject_overview = models.ForeignKey(Subjects_overview,on_delete=models.CASCADE)
+    assignment_title = models.CharField(max_length=300)
+    attach_assignment = models.FileField()
+    date_of_record = models.DateTimeField(default=timezone.now)
+
+    def add_submissions(self):
+        return reverse("e_learning:add_submission", args=[str(self.pk)
+        ])
+
+class Response_Table(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    assignments = models.ForeignKey(Assignments_Table,on_delete=models.CASCADE)
+    add_response = models.FileField()
+    date_of_record = models.DateTimeField(default=timezone.now)
+
 class PaymentRecords(models.Model):
     student = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
@@ -228,7 +248,7 @@ class Upload_topics(models.Model):
     teacher = models.ForeignKey(Teacher_apply ,on_delete=models.CASCADE)
     topic = models.CharField( max_length=900)
     content = RichTextUploadingField()
-    videos = models.FileField()
+    videos = models.FileField(null=True, blank=True,default='comingsoon_topic.mp4')
     attached_file = models.FileField()
     date_of_record = models.DateTimeField(default=timezone.now)
 
@@ -396,132 +416,132 @@ class Message(models.Model):
 class Mathematics(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Physics(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Chemistry(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Biology(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Geography(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class English(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class History(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Islam(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class CRE(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Agriculture(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Computer(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class TechnicalDrawing(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Art(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class French(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class German(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Chinese(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Luganda(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class GeneralPaper(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Economics(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Divinity(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Literature(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 
 class Lugbara_Ti(models.Model):
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     class_n = models.ForeignKey(Class_table,on_delete=models.CASCADE)
-    topic_name = models.CharField( max_length=30)
+    topic_name = models.CharField( max_length=300)
     date_of_record = models.DateTimeField(default=timezone.now)
 

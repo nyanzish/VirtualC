@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="shortcut icon" type="image/x-icon" href="{% static 'e_learning/image/logo.PNG' %}">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'e_learning/image/logo.png' %}">
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -65,18 +65,24 @@ s0.parentNode.insertBefore(s1,s0);
   }
 .change-color:hover
 {
-color:#007bff !important;
+color:white !important;
 display: block;
 transform: scale(1.05)!important;
 transition: all 0.1s ease-in-out 0.1s !important;
 }
+.footer{
+padding-top: 60px;
+background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url({% static 'e_learning/assets/img/5.jpg' %}) center center;
+background-size: cover;
+background-color: #ddd;
+}
 .change-colors:hover
 {
-color:black !important;
+color:white !important;
 transform: scale(1.05)!important;
 transition: all 0.1s ease-in-out 0.1s !important;
 }
-.dropdown:hover .on_click {color: black !important;}
+.dropdown:hover .on_click {color: white !important;}
 .glow {
   font-size: 80px;
   color: #fff;
@@ -158,6 +164,11 @@ transition: all 0.1s ease-in-out 0.1s !important;
     <i class="fas fa-comments fa-fw"></i>
     <span>Chat&nbsp;room</span></a>
 </li>
+<!-- <li class="nav-item">
+  <a class="nav-link" href="https://virtualclass.rocket.chat">
+    <i class="fas fa-comments fa-fw"></i>
+    <span>Live&nbsp;Chat</span></a>
+</li> -->
 
 <hr class="sidebar-divider">
 
@@ -195,40 +206,40 @@ transition: all 0.1s ease-in-out 0.1s !important;
 <div id="content" style="background-color:white !important;">
 
   <!-- Topbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow pt-3 pb-3">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow pt-3 pb-3" style="background-color:#278ff2 !important">
   <a class="navbar-brand font-weight-normal display-1 mr-3" href="#">
-  <img src="{% static 'e_learning/image/logo.PNG' %}" width="43" height="43" class="d-inline-block" alt="">Virtual<span style="color: #428bca;">-Class</span>
+  <img src="{% static 'e_learning/image/logo.png' %}" width="43" height="43" class="d-inline-block" alt=""><span style="color: white;">Virtual-Class</span>
   </a>
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="" role="button" ><i class="fa fa-bars" aria-hidden="true" style="color:white;font-size:20px;"></i></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav" >
     <!-- Topbar Search-->
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 text-muted mr-1 change-color" href="{% url 'e_learning:teacher_homepage' %}" style="font-family:sans-serif !important;">Dashboard<span class="sr-only">(current)</span></a>
+        <a class="nav-link mt-1 pt-2 text-white mr-1 change-color" href="{% url 'e_learning:teacher_homepage' %}" style="font-family:sans-serif !important;font-size:14px !important;">Dashboard<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-1 text-muted change-color" href="{% url 'e_learning:my_uploaded_subjects' %}" style="font-family:sans-serif !important;">My Uploads</a>
+        <a class="nav-link mt-1 pt-2 mr-1 text-white change-color" href="{% url 'e_learning:my_uploaded_subjects' %}" style="font-family:sans-serif !important;font-size:14px !important;">My Uploads</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-1 text-muted change-color" href="{% url 'e_learning:transaction_details' %}" style="font-family:sans-serif !important;">My Transactions</a>
+        <a class="nav-link mt-1 pt-2 mr-1 text-white change-color" href="{% url 'e_learning:transaction_details' %}" style="font-family:sans-serif !important;font-size:14px !important;">My Transactions</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-1 text-muted change-color" href="{% url 'e_learning:my_students' %}" style="font-family:sans-serif !important;">My Students</a>
+        <a class="nav-link mt-1 pt-2 mr-1 text-white change-color" href="{% url 'e_learning:my_students' %}" style="font-family:sans-serif !important;font-size:14px !important;">My Students</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-1 text-muted change-color" href="{% url 'e_learning:e_books' %}" style="font-family:sans-serif !important;">E-Books</a>
+        <a class="nav-link mt-1 pt-2 mr-1 text-white change-color" href="{% url 'e_learning:e_books' %}" style="font-family:sans-serif !important;font-size:14px !important;">E-Books</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mt-1 pt-2 mr-1 text-muted change-color" href="{% url 'e_learning:dialogs' %}" style="font-family:sans-serif !important;">Chat&nbsp;room
+        <a class="nav-link mt-1 pt-2 mr-1 text-white change-color" href="{% url 'e_learning:dialogs' %}" style="font-family:sans-serif !important;font-size:15px !important;">Chat&nbsp;room
             <span class="badge badge-danger badge-counter mt-1" style="font-size: 11px;">{{no_of_chats}}</span>
         </a>
       </li>
       <!-- Nav Item for notifications - Alerts -->
       <li class="nav-item dropdown no-arrow mt-2" style="font-size: 14px;">
-        <a class="nav-link dropdown-toggle change-color text-muted" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:sans-serif !important;">
+        <a class="nav-link dropdown-toggle change-color text-white" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:sans-serif !important;">
           <i class="fas fa-bell fa-fw"></i>
           <!-- Counter - Alerts -->
           <span class="badge badge-danger badge-counter" style="font-size: 11px;">{{counter}}</span>
@@ -260,9 +271,9 @@ transition: all 0.1s ease-in-out 0.1s !important;
 
       <!-- Nav Item - User Information -->
       <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle text-muted change-color" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:sans-serif !important;">
+        <a class="nav-link dropdown-toggle text-white change-color" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:sans-serif !important;">
           <img class="img-profile rounded-circle mr-2" src="{{ user.userprofile.image.url}}" width="33" height="33">
-          <span class="mr-2 d-lg-inline text-gray-600 small change-color on_click">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
+          <span class="mr-2 d-lg-inline text-white small change-color on_click">{{user.username}}&nbsp;<i class="fa fa-caret-down"></i></span>
         </a>
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -346,7 +357,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
 <!--start footer-->
 <div>
 <!-- Footer -->
-<footer class="page-footer sticky-footer font-small indigo bg-light p-2 mt-3" style="background-color: #007bff!important;">
+<footer class="page-footer sticky-footer font-small indigo bg-light p-2 mt-3 footer" >
 
   <!-- Footer Links -->
   <div class="container-fluid text-center">
@@ -358,8 +369,8 @@ transition: all 0.1s ease-in-out 0.1s !important;
       <div class="col-md-4 text-left">
 
         <!-- Links -->
-        <h6 class="mt-3 pb-2 pt-4 text-white" style="font-family: Times;"><img src="{% static 'e_learning/image/logo.PNG' %}" width="20" height="20" class="d-inline-block align-top" alt="">&nbsp;VIRTUAL-CLASS</h6>
-        <p class="text-white pb-3" style="font-size: 14px;">
+        <h6 class="mt-3 pb-2 pt-4 text-white" style="font-family: sans-serif;"><img src="{% static 'e_learning/image/logo.png' %}" width="20" height="20" class="d-inline-block align-top" alt="">&nbsp;VIRTUAL-CLASS</h6>
+        <p class="text-white pb-3" style="font-size: 15px;font-family:sans-serif !important;">
            Virtual-Class is an online learning platform with an e-library as one of the key functionalities. The platform enables learners to access learning materials and interact with their teachers in a way similar to a traditional classroom. It also enables a teacher to chat with colleagues in the similar subject areas.
         </p>
       </div>
@@ -369,60 +380,37 @@ transition: all 0.1s ease-in-out 0.1s !important;
       <div class="col-md-2 text-left">
 
         <!-- Links -->
-        <h6 class="mt-3 pb-2 pt-4 text-white" style="font-family: Times;">ABOUT</h6>
+        <h6 class="mt-3 pb-2 pt-4 text-white" style="font-family: sans-serif;">ABOUT</h6>
         <ul class="list-unstyled mb-3">
           <li>
-            <a class="text-dark mb-3" href="{% url 'e_learning:about' %}" style="font-size: 14px;;color:white !important;">Virtual-Class</a>
+            <a class="text-dark mb-3" href="{% url 'e_learning:about' %}" style="font-size: 15px;color:white !important;font-family:sans-serif !important;">Virtual-Class</a>
           </li>
           <li>
-            <a class="text-dark mb-3" href="{% url 'e_learning:team' %}" style="font-size: 14px;;color:white !important;">Our Team</a>
+            <a class="text-dark mb-3" href="{% url 'e_learning:team' %}" style="font-size: 15px;color:white !important;font-family:sans-serif !important;">Our Team</a>
           </li>
           <li>
-            <a class="text-dark mb-3" href="{% url 'e_learning:privacy' %}" style="font-size: 14px;;color:white !important;">Privacy Policy</a>
+            <a class="text-dark mb-3" href="{% url 'e_learning:privacy' %}" style="font-size: 15px;color:white !important;font-family:sans-serif !important;">Privacy Policy</a>
           </li>
         </ul>
 
       </div>
-      <!-- Grid column -->
-
-      <!-- Grid column -->
-      <!--div class="col-md-2 text-left">
-
-        <!-- Links -->
-        <!--h6 class="mt-3 pb-2 pt-4" style="color: #555353 !important;font-family: Times;">PARTNERS</h6>
-
-          <ul class="list-unstyled pb-3">
-          <li>
-             <a href="https://www.westnileweb.com/">
-                <img src="{% static 'e_learning/image/westnile_web.PNG' %}" width="150" height="50" class="d-inline-block" alt="">
-             </a>
-          </li>
-          <li class="pt-3">
-            <a class="">
-                <img src="{% static 'e_learning/image/acd.PNG' %}" width="70" height="60" class="d-inline-block" alt="">
-            </a>
-          </li>
-        </ul>
-
-      </div-->
-      <!-- Grid column -->
       <div class="col-md-3 text-left">
 
         <!-- Links -->
-        <h6 class="mt-3 pb-2 pt-4" style="color: white !important;font-family: Times;"> QUICK LINKS</h6>
+        <h6 class="mt-3 pb-2 pt-4" style="color: white !important;font-family: sans-serif;"> QUICK LINKS</h6>
 
         <ul class="list-unstyled pb-3">
           <li>
-            <a class="text-dark" href="{% url 'e_learning:frequently_asked_questions' %}" style="font-size: 14px;;color:white !important;">F.A.Qs&nbsp;(Frequently Asked Questions)</a>
+            <a class="text-dark" href="{% url 'e_learning:frequently_asked_questions' %}" style="font-size: 15px;color:white !important;font-family:sans-serif !important;">F.A.Qs&nbsp;(Frequently Asked Questions)</a>
           </li>
           <li>
-            <a class="text-dark" href="{% url 'e_learning:terms_and_conditions' %}" style="font-size: 14px;;color:white !important;">Terms & Conditions</a>
+            <a class="text-dark" href="{% url 'e_learning:terms_and_conditions' %}" style="font-size: 15px;color:white !important;font-family:sans-serif !important;">Terms & Conditions</a>
           </li>
           <li>
-            <a class="text-dark" href="{% url 'e_learning:contact_us' %}" style="font-size: 14px;;color:white !important;">Contact_us</a>
+            <a class="text-dark" href="{% url 'e_learning:contact_us' %}" style="font-size: 15px;color:white !important;font-family:sans-serif !important;">Contact_us</a>
           </li>
           <li>
-            <a class="text-dark" href="{% url 'e_learning:e_lib' %}" style="font-size: 14px;color:white !important;;">E-Library</a>
+            <a class="text-dark" href="{% url 'e_learning:e_lib' %}" style="font-size: 15px;color:white !important;font-family:sans-serif !important;">E-Library</a>
           </li>
         </ul>
 
@@ -432,20 +420,20 @@ transition: all 0.1s ease-in-out 0.1s !important;
       <div class="col-md-3 text-left">
 
         <!-- Links -->
-        <h6 class="mt-3 pb-2 pt-4" style="color: white !important;font-family: Times;">CONTACT</h6>
+        <h6 class="mt-3 pb-2 pt-4" style="color: white !important;font-family: sans-serif;">CONTACT</h6>
 
         <ul class="list-unstyled pb-3">
           <!--li>
             <a class="text-muted" style="font-size: 14px;"><i class="fas fa-map-marker-alt fa_map pb-3"></i>&nbsp;&nbsp;Arua, Kampala(U)</a>
           </li-->
           <li>
-            <a class="text-white"  style="font-size: 14px;"><i class="fas fa-envelope pb-3"></i>&nbsp;&nbsp;admin@virtualclass.ug</a>
+            <a class="text-white"  style="font-size: 15px;font-family:sans-serif !important;"><i class="fas fa-envelope pb-3"></i>&nbsp;&nbsp;admin@virtualclass.ug</a>
           </li>
           <li>
-            <a class="text-white"style="font-size: 14px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;+256(0) 7520 23621&nbsp</a>
+            <a class="text-white"style="font-size: 15px;font-family:sans-serif !important;"><i class="fas fa-phone"></i>&nbsp;&nbsp;+256(0) 7520 23621&nbsp</a>
           </li>
           <li>
-            <a class="text-white"style="font-size: 14px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;+256(0) 7770 81799</span></a>
+            <a class="text-white"style="font-size: 15px;font-family:sans-serif !important;"><i class="fas fa-phone"></i>&nbsp;&nbsp;+256(0) 7770 81799</span></a>
           </li>
           <li>
           </li>
@@ -453,7 +441,7 @@ transition: all 0.1s ease-in-out 0.1s !important;
 
       </div>
       <!-- Grid column -->
-      <div class="col-md-12 col-lg-12 text-center pt-2 pb-3">
+      <div class="col-md-12 col-lg-12 text-center pb-1">
         <a href="#"><i class="fab fa-facebook fa-1x ml-2" style="background-color: white;"></i></a>
         <a href="#"><i class="fab fa-twitter fa-1x ml-2" style="background-color: white;"></i></a>
         <a href="#"><i class="fab fa-instagram fa-1x ml-2" style="color: maroon;background-color: white;"></i></a>
@@ -466,16 +454,16 @@ transition: all 0.1s ease-in-out 0.1s !important;
   </div>
   <!-- Footer Links -->
   <!-- Copyright -->
-</footer>
-<div class="container-fluid" style="background-color: #0f59a8 !important;">
-     <div class="row pt-3 pb-3">
+  <div class="container-fluid">
+     <div class="row pt-2 pb-3">
       <div class="col-md-12 text-center">
-            <p class="text-white pt-3 text-capitalize" style="font-size: 12px !important;">
+            <p class="text-white pt-2 text-capitalize" style="font-size: 12px !important;">
              COPYRIGHT © 2020 AGRICULTURAL CLUSTER DEVELOPMENT<br><span class="pt-1"><a href="https://drapari.com" class="text-white" target="blank">Proudly powered by: Drapari</a></span>
             </p>
       </div>
-      </div>
+      </div> 
 </div>
+</footer>
 
   <!--footer-->
 

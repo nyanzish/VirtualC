@@ -21,15 +21,16 @@
 <form class="form-horizontal" action="{% url 'e_learning:upload_to' %}" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.media}}
-  <select class="form-control" id="cars" name="topic">
+  <!-- <select class="form-control" id="cars" name="topic">
     {% for item in result %}
         <option value="{{item.topic_name}}">{{item.topic_name}}</option>
     {% endfor %}
-      </select>
+      </select> -->
       {{ form.overview.as_hidden }}
     {{ form.class_level.as_hidden }}
     {{ form.subject.as_hidden }}
     {{ form.teacher.as_hidden}}
+    {{ form.topic |as_crispy_field }}
   {{ form.content |as_crispy_field }}
   {{ form.attached_file |as_crispy_field }}
   {{ form.videos |as_crispy_field }}

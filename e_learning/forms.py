@@ -81,6 +81,7 @@ class SignupForm(ModelForm):
 class Uploadform(forms.ModelForm):
     class Meta:
         model = Upload_topics
+        # exclude = ['overview']
         fields = [
         'subject',
         'class_level',
@@ -91,6 +92,9 @@ class Uploadform(forms.ModelForm):
         'attached_file',
         'videos'
         ,]
+        labels ={
+                'videos':'Video [leave blank if you do not have a video at the moment, but you can still upload it later via Edit!]',
+        } 
         widgets = {
             'videos': forms.FileInput(attrs={'accept':'video/*'}),
             'attached_file':forms.FileInput(attrs={'accept':'application/pdf, application/vnd.ms-excel,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'})
@@ -118,10 +122,10 @@ class Overviewform(forms.ModelForm):
         'price'
         ,]
         labels ={
-                'video':'Video [leave blank if you do not have a video at the moment, but you can still upload later!]',
+                'video':'Video [leave blank if you do not have a video at the moment, but you can still upload it later via Edit!]',
         }
         widgets = {
-            'videos': forms.FileInput(attrs={'accept':'video/*'}),
+            'video': forms.FileInput(attrs={'accept':'video/*'}),
             'image':forms.FileInput(attrs={'accept':'image/*'})
             }
 

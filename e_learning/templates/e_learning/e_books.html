@@ -36,9 +36,14 @@
                 <div class="col-md-3 col-lg-3">
                 <h1 class="text-muted text-center pt-2" style="font-size: 18px;">{{my_subject_one.book_title}}</h1>
                 <h1 class="text-muted text-center pt-2" style="font-size: 14px;">{{my_subject_one.class_level}}</h1>
-                        <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_subject_one.book_cover_image.url}}"></div>
+                        <div class="text-center"><a href="{{my_subject_one.attach_book.url }}">
+                            <img class="img-holders  img-fluid mb-3" src="{{my_subject_one.book_cover_image.url}}">
+                            </a>
+                            </div>
                 <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_subject_one.attach_book.url}}">{{my_subject_one.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_subject_one.recommended_by}}</h1>
+                
+                <a type="button" href="{{my_subject_one.get_the_book }}" class="btn btn-outline-danger btn-block btn-sm" >Delete</a>
                 </div>
            {% endfor %}
            {% else %}
@@ -59,6 +64,8 @@
                     <div class="text-center"><img class="img-holders  img-fluid mb-3" src="{{my_subject_two.book_cover_image.url}}"></div>
                 <h1 class="text-muted text-center pt-2" style="font-size: 14px;"><a href="{{my_subject_two.attach_book.url}}">{{my_subject_two.attach_book}}</a></h1>
                 <h1 class="text-muted text-center" style="font-size: 14px;">Recommended By:{{my_subject_two.recommended_by}}</h1>
+                
+                <a type="button" href="{{my_subject_two.get_the_book }}" class="btn btn-outline-danger btn-block btn-sm" >Delete</a>
                 </div>
             {% endfor %}
             {% else %}
@@ -91,7 +98,7 @@
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Book Title:</label>
-            <input type="text" class="form-control" placeholder="book-title" name="book_title">
+            <input type="text" class="form-control" placeholder="book-title" name="book_title" required="required">
         </div>
         <div class="form-group mt-4">
             <label for="exampleFormControlSelect1">Level of Education:</label>
@@ -102,12 +109,12 @@
             </select>
         </div>
         <div class="form-group mt-4">
-            <label><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>&nbsp;Choose Book Cover:&nbsp;&nbsp;</label>
-            <input type="file" name='book_cover_image' accept="image/*">
+            <label><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>&nbsp;Choose Book Cover Image:&nbsp;&nbsp;</label>
+            <input type="file" name='book_cover_image' accept="image/*" >
         </div>
         <div class="form-group mt-4 pt-2">
             <label><i class="fas fa-paperclip" aria-hidden="true" ></i></i>&nbsp;Attach Recommended Book:&nbsp;&nbsp;</label>
-            <input type="file" name='attach_book' accept="application/pdf, application/vnd.ms-excel,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            <input type="file" name='attach_book' accept="application/pdf, application/vnd.ms-excel,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required="required">
         </div>
         <div class="form-group">
             <input type="hidden" class="form-control" name="recommended_by" value="{{user.userprofile.firstname}} {{user.userprofile.lastname}}">

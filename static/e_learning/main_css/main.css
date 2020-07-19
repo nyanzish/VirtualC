@@ -101,6 +101,9 @@ h6{
   .preview_video{
     padding-top: 0px !important;
   }
+  .about_heading{
+      font-size:22px !important; 
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -158,6 +161,9 @@ h6{
   }
   .preview_video{
     padding-top: 0px !important;
+  }
+  .about_heading{
+      font-size:22px !important; 
   }
 }
 
@@ -272,5 +278,8 @@ h6{
   }
   .preview_video{
     padding-top: 0px !important;
+  }
+  .about_heading{
+      font-size:22px !important; 
   }
 }

@@ -11,6 +11,11 @@
     left: 25px;
     z-index: 7;
   }
+  .subscribe:hover
+    {
+    transform: scale(1.1)!important;
+    transition: all 0.1s ease-in-out 0.1s !important;
+    }
 </style>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="background-color: #fdfdff !important;">
@@ -42,11 +47,6 @@
                 <source src="{{ overview.video.url }}" type="video/mp4">
               </video>
             </div>
-            <div class="pt-3 pb-1 text-center">
-                <a href="{% url 'e_learning:subscription_approval' slug %}" class="btn btn-primary mt-2">
-                    Subscribe Now
-                </a>
-            </div>
           </div>
         </div>
       </div>
@@ -56,8 +56,8 @@
   </div>
 </div>
 </div>
-<div class="container-fluid mt-4 pb-2">
-  <div class="row">
+<div class="container-fluid mt-5 pb-2">
+  <div class="row mt-5">
     <div class="col-md-6">
        <h3 class="text-left pt-1 subject_content" style="font-size: 22px;color: black;">Subject Content</h3>
       <div class="card">
@@ -79,8 +79,20 @@
       </div>
     </div>
   </div>
+<div class="container-fluid">
+<div class="row mt-3">
+    <div class="col-md-12">
+    <div class="pt-2 pb-1 text-center">
+        <a href="{% url 'e_learning:subscription_approval' slug %}" class="btn btn-primary mt-2 subscribe" style="font-size:20px !important;">
+            Subscribe Now
+        </a>
+    </div>
+    </div>
+</div>
+</div>
+<hr style="border: 0.5px solid #c1cdcd;">
 <div class="container-fluid mt-3 pb-5">
-  <h5 class="text-center pt-3 pb-2"><u>Teacher Details</u></h5>
+  <h5 class="text-center pt-3 pb-2 text-dark"><u>Teacher Details</u></h5>
     <div class="row mt-3 mb-3">
     <div class="col-md-2 text-center">
         <div class="pt-2 pb-2 text-center">
@@ -116,7 +128,7 @@
         {% if recomended == 1 %}
         <div class="row">
             {% for item in recomend %}
-            <div class="col-md-9 col-lg-9 p-3">
+            <div class="col-md-12 col-lg-12 p-3">
               <div class="card shadow w-100 h-100" style="width: 18rem;">
                 <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">
                 <div class="card-body text-center">
@@ -170,7 +182,7 @@
         {% else %}
           <div class="row">
             {% for item in recomend %}
-            <div class="col-md-3 p-3">
+            <div class="col-md-4 p-3">
               <div class="card shadow w-100 h-100" style="width: 18rem;">
                 <a href="{{ item.get_absolute_url }}" >
                 <img class="card-img-top" src="{{ item.image.url}}" alt="Card image cap" style="height: 200px;">

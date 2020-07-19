@@ -1,0 +1,32 @@
+{% extends 'student_base.html' %}
+
+{% load static %}
+
+{% block head_title %}Virtual-Class{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color: #fdfdff !important;">
+    <li class="breadcrumb-item text-uppercase" aria-current="page"><a class="text-dark" href="{% url 'e_learning:home_view' %}">HOME</a>
+    </li>
+    <li class="breadcrumb-item text-uppercase" ><a class="text-primary" href="{% url 'e_learning:past_papers' %}" >PAST PAPERS</a>
+    </li>
+  </ol>
+</nav>
+
+<div class="container">
+    <div class="row pb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="row pt-4 pb-5 pl-5 pr-5">
+                        my pappers
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
